@@ -2,28 +2,31 @@
 
 ### By Dana Angela Neria
 
-A recipe-managing and decision-making application for indecisive people! What's Cookin' helps you
-decide what to eat whenever you're feeling hungry but can't figure out what you want to eat. It also 
-helps you store recipes you know and love!
+A recipe-managing application for indecisive people; What's Cookin' not only stores your recipes for you,
+but also helps you decide what to cook or eat when you just can't decide! 
 
-When making it choose a meal, you can let it make all the necessary decisions for you, or you can decide some
-things and let it decide the rest (like whether you want it to choose a meal from your
-personal recipe book or from your favourite restaurants!)
+If you want to eat in,
+it can go through your recipes and give you breakfast, lunch, or dinner recommendations depending on the time of day.
+It also has the option of giving you a random recipe regardless of what time it is!
 
-It can be general or specific, from a general type of cuisine, to a specific meal in any cuisine, to a
-specific meal in a specific cuisine!
+If you want take-out, the application can suggest just the general type of cuisine that you should go for,
+or it can recommend one of your favourite restaurants.
 
-I'm starting this project as I am a very indecisive person. I would like
-to stop annoying my friends and family by finally being able to give them an answer
-whenever they ask me "So, what do you want to eat?"
+If you can't even decide between eating in and taking out, 
+then you can let What's Cookin' make that decision for you!
+
+This project is of interest to me because I'm a very indecisive person when it comes to food and have
+trouble planning my meals. I want to make something that will not only
+help me answer the daily question of "What do you want to eat?" but that will also help
+me keep track of the recipes I can make.
 
 
 ## User Stories
 
 - As a user, I want to be able to click a button and have it give me a suggestion on
-what meal I should have.
-- As a user, I want to be able to choose whether I want it to grab a meal from my
-recipe book, from my chosen restaurants, or just a general cuisine
+what meal I should have
+- As a user, I want to be able to choose whether to give an eat-in or take-out suggestion
+- As a user, I want to be able to add my favourite restaurants to a list
 - As a user, I want to be able to put my dietary restrictions so that it will not give me
 suggestions for cuisines or meals I cannot/do not want to have
 - As a user, I want to be able to add a homemade recipe to my collection
