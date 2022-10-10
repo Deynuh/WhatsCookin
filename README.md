@@ -23,13 +23,14 @@ me keep track of the recipes I can make.
 
 ## User Stories
 
+- As a user, I want to be able to add multiple recipes to a recipe manager
+- As a user, I want to be able to add multiple restaurants to a restaurant manager
 - As a user, I want to be able to click a button and have it give me a suggestion on
 what meal I should have
 - As a user, I want to be able to choose whether to give an eat-in or take-out suggestion
 - As a user, I want to be able to add my favourite restaurants to a list
-- As a user, I want to be able to put my dietary restrictions so that it will not give me
-suggestions for cuisines or meals I cannot/do not want to have
-- As a user, I want to be able to add a homemade recipe to my collection
-- As a user, I want to be able to view a list of the titles of the recipes in my collection
-- As a user, I want to be able to select a recipe in my collection and view the recipe in detail
-- As a user, I want to be able to delete recipes from my collection
+- As a user, I want to be able to add a homemade recipe to my list
+- As a user, I want to be able to view a list of my recipes
+- As a user, I want to be able to select a recipe in my list and view the recipe in detail
+- As a user, I want to be able to delete recipes from my list
+
