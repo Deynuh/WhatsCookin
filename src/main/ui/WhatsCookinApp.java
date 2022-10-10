@@ -7,12 +7,14 @@ import model.RestaurantList;
 
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Random;
 
 // Recipe-managing application called "What's Cookin'"
 public class WhatsCookinApp {
     private RecipeBook recipeBook;
     private RestaurantList restaurantList;
-    private Scanner key;
+    private Scanner key = new Scanner(System.in);
+    private Random random = new Random();
 
     // EFFECTS: runs the application
     public WhatsCookinApp() {
@@ -47,22 +49,20 @@ public class WhatsCookinApp {
 
     }
 
-    // REQUIRES: a non-empty recipe book
-    // EFFECTS:  returns a random recipe from recipe book
-    private Recipe randomRecipe() {
-
-    }
-
-    // REQUIRES: a non-empty restaurant list
-    // EFFECTS:  returns a random recipe from restaurant list
-    private Restaurant randomRestaurant() {
-
-    }
 
     // MODIFIES: this
     // EFFECTS:  adds a restaurant to the restaurant list
-    private void addRestaurant(Restaurant restaurant) {
+    private void addRestaurant() {
+        Restaurant restaurant = new Restaurant("", "");
 
+        System.out.println("Restaurant name: ");
+        restaurant.setName(key.next()); //try nextLine if buggy
+
+        System.out.println("Restaurant description: \n Input 's' to skip");
+        restaurant.setDescription(key.next().equals("s") ? "No description." : key.next());
+
+        restaurantList.addRestaurant(restaurant);
+        System.out.println("Restaurant added successfully!");
     }
 
     // MODIFIES: this
@@ -95,9 +95,28 @@ public class WhatsCookinApp {
         recipeBook.addRecipe(recipe);
         System.out.println("Recipe added successfully!");
 
+    }
 
-        //ceebs for now
-        /*System.out.println("----------------------------------------");
+    // EFFECTS:  displays all the details of a recipe
+    private void viewRecipe(Recipe recipe) {
+        System.out.println("Name: " + recipe.getName());
+        System.out.println("Description: " + recipe.getDescription());
+        System.out.println("Duration: " + recipe.getDuration());
+        System.out.println("Ingredients: ");
+        for (String i : recipe.getIngredients()) { //might be buggy?
+            System.out.println(i);
+        }
+    }
+
+    // EFFECTS:  displays a restaurant's name and cuisine type
+    private void viewRestaurant(Restaurant restaurant) {
+        System.out.println("Name: " + restaurant.getName());
+        System.out.println("Cuisine Type: " + restaurant.getCuisine());
+    }
+
+    //ceebs for now
+    /*private boolean confirmCorrectInfo {
+        System.out.println("----------------------------------------");
         System.out.println("Is this information correct?");
         System.out.println("Recipe name: " + recipe.getName());
         System.out.println("       description: " + recipe.getDescription());
@@ -126,25 +145,6 @@ public class WhatsCookinApp {
                 System.out.println("Recipe addition cancelled.");
                 recipeBook.removeRecipe(recipe);
                 break;
-        } */
-
-    }
-
-    // EFFECTS:  displays all the details of a recipe
-    private void viewRecipe(Recipe recipe) {
-        System.out.println("Name: " + recipe.getName());
-        System.out.println("Description: " + recipe.getDescription());
-        System.out.println("Duration: " + recipe.getDuration());
-        System.out.println("Ingredients: ");
-        for (String i : recipe.getIngredients()) { //might be buggy?
-            System.out.println(i);
         }
-    }
-
-    // EFFECTS:  displays a restaurant's name and cuisine type
-    private void viewRestaurant(Restaurant restaurant) {
-        System.out.println("Name: " + restaurant.getName());
-        System.out.println("Cuisine Type: " + restaurant.getCuisine());
-    }
-
+    } */
 }

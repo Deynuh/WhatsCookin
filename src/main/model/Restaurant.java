@@ -4,24 +4,31 @@ package model;
 public class Restaurant {
 
     private String name;
-    private String cuisine;
+    private String description;
 
-    public Restaurant(String name, String cuisine) {
+    public Restaurant(String name, String description) {
         this.name = name;
-        this.cuisine = cuisine;
+        this.description = description;
     }
 
     public String getName() {
         return this.name;
     }
 
-    public String getCuisine() {
-        return this.cuisine;
+    public String getDescription() {
+        return this.description;
     }
 
-    // EFFECTS: sets the type of cuisine a restaurant has
-    private void setCuisine() {
+    // MODIFIES: this
+    // EFFECTS: sets a restaurant's name
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    // MODIFIES: this
+    // EFFECTS: sets a restaurant's description
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 }
