@@ -26,8 +26,7 @@ public class Recipe {
     }
 
     public ArrayList<String> getIngredients() {
-
-        return ingredientList;
+        return this.ingredients;
     }
 
     public int getDuration() {

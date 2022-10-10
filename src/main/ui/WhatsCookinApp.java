@@ -6,10 +6,11 @@ import model.RecipeBook;
 import model.RestaurantList;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 // Recipe-managing application called "What's Cookin'"
 public class WhatsCookinApp {
-    private RecipeBook recipeList;
+    private RecipeBook recipeBook;
     private RestaurantList restaurantList;
     private Scanner key;
 
@@ -65,10 +66,11 @@ public class WhatsCookinApp {
     }
 
     // MODIFIES: this
-    // EFFECTS:  adds a recipe to the recipe book
-    private void addRecipe(Recipe recipe) {
+    // EFFECTS:  adds a recipe to the recipe book, lets user input and edit recipe information
+    private void addRecipe() {
+        Recipe recipe = new Recipe("", "",0,null);
+
         System.out.println("Recipe name: ");
-        Recipe newRecipe = new Recipe();
         recipe.setName(key.next()); //try nextLine if buggy
 
         System.out.println("Recipe description: \n Input 's' to skip");
@@ -77,17 +79,54 @@ public class WhatsCookinApp {
         System.out.println("Recipe duration: \n Input 's' to skip (will default to 0 minutes)");
         recipe.setDuration(key.next().equals("s") ? 0 : key.nextInt());
 
-        System.out.println("Recipe ingredients: \n Input 's' to skip");
-        recipe.setDescription(key.next().equals("s") ? "No ingredients listed." : key.next());
+        System.out.println("Number of recipe ingredients: \n Input 's' to skip");
+        if (key.next().equals("s")) {
+            recipe.setIngredients(null);
+        } else if (key.hasNextInt()) {
+            ArrayList<String> listedIngredients = new ArrayList<>(key.nextInt());
 
-        //do i ceebs this
-        System.out.println("----------------------------------------");
-        System.out.println("Confirm information:");
+            for (String i : listedIngredients) { // probably buggy!
+                System.out.println("Input ingredient #" + i);
+                listedIngredients.add(key.next());
+            }
+            recipe.setIngredients(listedIngredients);
+        }
+
+        recipeBook.addRecipe(recipe);
+        System.out.println("Recipe added successfully!");
+
+
+        //ceebs for now
+        /*System.out.println("----------------------------------------");
+        System.out.println("Is this information correct?");
         System.out.println("Recipe name: " + recipe.getName());
         System.out.println("       description: " + recipe.getDescription());
         System.out.println("       duration: " + recipe.getDuration());
-        System.out.println("       ingredients: " + recipe.getIngredients());
+        System.out.println("       ingredients: ");
+        for (String i : recipe.getIngredients()) {
+            System.out.println(i);
+        }
 
+        System.out.println("Input '1' to accept, '2' to edit, or '3' to cancel");
+        switch (key.nextInt()) {
+            case 1:
+                recipeBook.addRecipe(recipe);
+                break;
+            case 2:
+                System.out.println("What would you like to edit?");
+                System.out.println("1: Recipe name");
+                System.out.println("2: Recipe description");
+                System.out.println("3: Recipe duration");
+                System.out.println("4: Recipe ingredients");
+
+                switch () {
+
+                }
+            case 3:
+                System.out.println("Recipe addition cancelled.");
+                recipeBook.removeRecipe(recipe);
+                break;
+        } */
 
     }
 
@@ -97,7 +136,7 @@ public class WhatsCookinApp {
         System.out.println("Description: " + recipe.getDescription());
         System.out.println("Duration: " + recipe.getDuration());
         System.out.println("Ingredients: ");
-        for (String i : recipe.getIngredients()) {
+        for (String i : recipe.getIngredients()) { //might be buggy?
             System.out.println(i);
         }
     }
