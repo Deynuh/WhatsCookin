@@ -5,6 +5,8 @@ import model.Restaurant;
 import model.RecipeBook;
 import model.RestaurantList;
 
+import java.sql.SQLOutput;
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Random;
@@ -13,8 +15,8 @@ import java.util.Random;
 public class WhatsCookinApp {
     private RecipeBook recipeBook;
     private RestaurantList restaurantList;
-    private Scanner key = new Scanner(System.in);
-    private Random random = new Random();
+    private Scanner key;
+    private Random random;
 
     // EFFECTS: runs the application
     public WhatsCookinApp() {
@@ -24,90 +26,168 @@ public class WhatsCookinApp {
     // MODIFIES: this
     // EFFECTS: processes user input
     private void runApp() {
+        boolean keepGoing = true;
+        int command = 0;
 
+        init();
+
+        while (keepGoing) {
+            displayMenu();
+            command = key.nextInt();
+
+            if (command == 4) {
+                keepGoing = false;
+            } else {
+                processCommand(command);
+            }
+        }
+        System.out.println("Goodbye!");
     }
 
-    // MODIFIES: this
-    // EFFECTS: processes user command
-    private void processCommand(String command) {
+    private void processCommand(int command) {
+        boolean keepGoing = true;
 
-    }
-
-    // MODIFIES: this
-    // EFFECTS: initializes recipe book and recipe list
-    private void init() {
-
-    }
-
-    // EFFECTS: displays menu of options
-    private void displayMenu() {
-        boolean invalid = true;
-
-        System.out.println("Welcome to What's Cookin! \n Select from:");
-        System.out.println("1: Random Meal Suggestion \n 2: Recipes \n 3: Restaurants");
-
-        while (invalid) {
-            switch (key.nextInt()) {
+        while (keepGoing) {
+            switch (command) {
                 case 1:
                     chooseRandom();
-                    invalid = false;
+                    keepGoing = false;
                     break;
                 case 2:
                     displayRecipesMenu();
-                    invalid = false;
+                    keepGoing = false;
                     break;
                 case 3:
                     displayRestaurantsMenu();
-                    invalid = false;
+                    keepGoing = false;
                     break;
                 default:
                     System.out.println("That is not a valid input.");
                     break;
             }
         }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: initializes recipe book and recipe list
+    private void init() {
+        recipeBook = new RecipeBook();
+        restaurantList = new RestaurantList();
+        key = new Scanner(System.in);
+        key.useDelimiter("\n"); //not sure what this does, remove if key buggy
+        random = new Random();
+    }
+
+    // EFFECTS: displays menu of options
+    private void displayMenu() {
+        boolean keepGoing = true;
+
+        System.out.println("Welcome to What's Cookin!");
+        System.out.println("Select from: \n 1: Random Meal Suggestion \n 2: Recipes \n 3: Restaurants \n 4: Exit");
 
     }
 
     // EFFECTS: displays menu for recipe options
-    // !!!
+    // !!! SHORTEN
     private void displayRecipesMenu() {
+        boolean keepGoing = true;
         System.out.println("------- Recipes --------");
-        System.out.println("1: Add a recipe \n 2: Delete a recipe \n 3: View all recipes \n 4: View a recipe");
+        System.out.println("1: Add a recipe \n 2: Delete a recipe \n 3: View all recipes \n 4: Previous menu");
+
+        while (keepGoing) {
+            switch (key.nextInt()) {
+                case 1:
+                    addRecipe();
+                    keepGoing = false;
+                    break;
+                case 2:
+                    System.out.println("Which recipe would you like to delete?");
+                    showRecipes();
+                    recipeBook.removeRecipe(key.nextInt());
+                    keepGoing = false;
+                    break;
+                case 3:
+                    showRecipes();
+                    keepGoing = false;
+                    break;
+                case 4:
+                    displayMenu();
+                    break;
+                default:
+                    System.out.println("That is not a valid input.");
+                    break;
+            }
+        }
     }
+
 
     // EFFECTS: displays menu for restaurant options
     // !!!
     private void displayRestaurantsMenu() {
+        boolean keepGoing = true;
+
         System.out.println("------- Restaurants --------");
         System.out.println("1: Add a restaurant \n 2: Delete a restaurant ");
         System.out.println("\n 3: View all restaurants \n 4: View a restaurant");
+
+        while (keepGoing) {
+            switch (key.nextInt()) {
+                case 1:
+                    keepGoing = false;
+                    break;
+                case 2:
+                    keepGoing = false;
+                    break;
+                case 3:
+                    keepGoing = false;
+                    break;
+                case 4:
+                    keepGoing = false;
+                    break;
+                default:
+                    System.out.println("That is not a valid input.");
+                    break;
+            }
+        }
     }
 
     // REQUIRES: non-empty recipe book and restaurant list
     // EFFECTS:  gives the user either a random recipe or restaurant based on their choice
     private void chooseRandom() {
-        boolean invalid = true;
-        System.out.println("1: Give me a recipe \n + 2: Give me a restaurant \n 3: Choose for me");
+        boolean keepGoing = true;
+        System.out.println(" 1: Give me a recipe \n 2: Give me a restaurant \n 3: Choose for me");
 
-        while (invalid) {
-            switch (key.nextInt()) {
-                case 1:
-                    System.out.println("You should make " + recipeBook.randomRecipe().getName());
-                    invalid = false;
-                    break;
-                case 2:
-                    System.out.println("You should get " + restaurantList.randomRestaurant().getName());
-                    invalid = false;
-                    break;
-                case 3:
-                    chooseForMe();
-                    invalid = false;
-                    break;
-                default:
-                    System.out.println("That is not a valid input.");
-                    chooseRandom(); //might be buggy?
-                    break;
+        try {
+            while (keepGoing) {
+                switch (key.nextInt()) {
+                    case 1:
+                        getRandomRecipe();
+                        keepGoing = false;
+                        break;
+                    case 2:
+                        System.out.println("You should get " + restaurantList.randomRestaurant().getName());
+                        keepGoing = false;
+                        break;
+                    case 3:
+                        chooseForMe();
+                        keepGoing = false;
+                        break;
+                    default:
+                        System.out.println("That is not a valid input.");
+                        chooseRandom(); //might be buggy?
+                        break;
+                }
             }
+        } catch (Exception e) {
+            System.out.println("There was a problem with the Random Meal Generator.");
+        }
+    }
+
+    private void getRandomRecipe() {
+        if (recipeBook.getRecipeBook() == null) {
+            System.out.println("There is nothing in your recipe book!");
+        } else {
+            System.out.println("You should make " + recipeBook.randomRecipe().getName());
         }
     }
 
@@ -166,6 +246,12 @@ public class WhatsCookinApp {
         recipeBook.addRecipe(recipe);
         System.out.println("Recipe added successfully!");
 
+    }
+
+    //!!!
+    // needs to be able to show all recipes in recipe book
+    // in this method: should be able to view a single recipe as well
+    private void showRecipes() {
     }
 
     // EFFECTS:  displays all the details of a recipe

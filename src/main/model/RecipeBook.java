@@ -26,13 +26,18 @@ public class RecipeBook {
     // MODIFIES: this
     // REQUIRES: a non-empty recipe list
     // EFFECTS:  deletes a recipe from the recipe book
-    public void removeRecipe(Recipe recipe) {
-        recipeBook.remove(recipe);
+    public void removeRecipe(int index) {
+        recipeBook.remove(index);
     }
 
     // REQUIRES: a non-empty recipe book
     // EFFECTS:  returns a random recipe from recipe book
     public Recipe randomRecipe() {
-        return recipeBook.get(random.nextInt(recipeBook.size()));
+        try {
+            return recipeBook.get(random.nextInt(recipeBook.size()));
+        } catch (Exception e) {
+            System.out.println("ye no");
+            return null;
+        }
     }
 }
