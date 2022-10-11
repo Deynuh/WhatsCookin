@@ -41,54 +41,85 @@ public class WhatsCookinApp {
 
     // EFFECTS: displays menu of options
     private void displayMenu() {
+        boolean invalid = true;
+
         System.out.println("Welcome to What's Cookin! \n Select from:");
         System.out.println("1: Random Meal Suggestion \n 2: Recipes \n 3: Restaurants");
 
-        switch (key.nextInt()) {
-            case 1:
-                chooseRandom();
-            case 2:
-                System.out.println("------- Recipes --------");
-                System.out.println("1: Add a recipe \n 2: Delete a recipe \n 3: View all recipes \n 4: View a recipe");
-                //!!!
-            case 3:
-                System.out.println("------- Restaurants --------");
-                System.out.println("1: Add a restaurant \n 2: Delete a restaurant ");
-                System.out.println("\n 3: View all restaurants \n 4: View a restaurant");
-                //!!!
-            default:
-                System.out.println("That is not a valid input.");
-                break;
+        while (invalid) {
+            switch (key.nextInt()) {
+                case 1:
+                    chooseRandom();
+                    invalid = false;
+                    break;
+                case 2:
+                    displayRecipesMenu();
+                    invalid = false;
+                    break;
+                case 3:
+                    displayRestaurantsMenu();
+                    invalid = false;
+                    break;
+                default:
+                    System.out.println("That is not a valid input.");
+                    break;
+            }
         }
 
+    }
+
+    // EFFECTS: displays menu for recipe options
+    // !!!
+    private void displayRecipesMenu() {
+        System.out.println("------- Recipes --------");
+        System.out.println("1: Add a recipe \n 2: Delete a recipe \n 3: View all recipes \n 4: View a recipe");
+    }
+
+    // EFFECTS: displays menu for restaurant options
+    // !!!
+    private void displayRestaurantsMenu() {
+        System.out.println("------- Restaurants --------");
+        System.out.println("1: Add a restaurant \n 2: Delete a restaurant ");
+        System.out.println("\n 3: View all restaurants \n 4: View a restaurant");
     }
 
     // REQUIRES: non-empty recipe book and restaurant list
-    // EFFECTS:  gives the user a random recipe or restaurant
+    // EFFECTS:  gives the user either a random recipe or restaurant based on their choice
     private void chooseRandom() {
+        boolean invalid = true;
         System.out.println("1: Give me a recipe \n + 2: Give me a restaurant \n 3: Choose for me");
 
-        switch (key.nextInt()) {
-            case 1:
-                System.out.println("You should make " + recipeBook.randomRecipe().getName());
-                break;
-            case 2:
-                System.out.println("You should get " + restaurantList.randomRestaurant().getName());
-                break;
-            case 3:
-                if (random.nextInt(2) == 1) {
+        while (invalid) {
+            switch (key.nextInt()) {
+                case 1:
                     System.out.println("You should make " + recipeBook.randomRecipe().getName());
-                } else {
+                    invalid = false;
+                    break;
+                case 2:
                     System.out.println("You should get " + restaurantList.randomRestaurant().getName());
-                }
-                break;
-            default:
-                System.out.println("That is not a valid input.");
-                chooseRandom(); //might be buggy?
-                break;
+                    invalid = false;
+                    break;
+                case 3:
+                    chooseForMe();
+                    invalid = false;
+                    break;
+                default:
+                    System.out.println("That is not a valid input.");
+                    chooseRandom(); //might be buggy?
+                    break;
+            }
         }
     }
 
+    // REQUIRES: non-empty recipe book and restaurant list
+    // EFFECTS:  gives the user a completely random recipe or restaurant
+    private void chooseForMe() {
+        if (random.nextInt(2) == 1) {
+            System.out.println("You should make " + recipeBook.randomRecipe().getName());
+        } else {
+            System.out.println("You should get " + restaurantList.randomRestaurant().getName());
+        }
+    }
 
     // MODIFIES: this
     // EFFECTS:  adds a restaurant to the restaurant list
