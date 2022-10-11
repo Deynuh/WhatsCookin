@@ -41,12 +41,52 @@ public class WhatsCookinApp {
 
     // EFFECTS: displays menu of options
     private void displayMenu() {
+        System.out.println("Welcome to What's Cookin! \n Select from:");
+        System.out.println("1: Random Meal Suggestion \n 2: Recipes \n 3: Restaurants");
+
+        switch (key.nextInt()) {
+            case 1:
+                chooseRandom();
+            case 2:
+                System.out.println("------- Recipes --------");
+                System.out.println("1: Add a recipe \n 2: Delete a recipe \n 3: View all recipes \n 4: View a recipe");
+                //!!!
+            case 3:
+                System.out.println("------- Restaurants --------");
+                System.out.println("1: Add a restaurant \n 2: Delete a restaurant ");
+                System.out.println("\n 3: View all restaurants \n 4: View a restaurant");
+                //!!!
+            default:
+                System.out.println("That is not a valid input.");
+                break;
+        }
 
     }
 
-    // EFFECTS: !!!
+    // REQUIRES: non-empty recipe book and restaurant list
+    // EFFECTS:  gives the user a random recipe or restaurant
     private void chooseRandom() {
+        System.out.println("1: Give me a recipe \n + 2: Give me a restaurant \n 3: Choose for me");
 
+        switch (key.nextInt()) {
+            case 1:
+                System.out.println("You should make " + recipeBook.randomRecipe().getName());
+                break;
+            case 2:
+                System.out.println("You should get " + restaurantList.randomRestaurant().getName());
+                break;
+            case 3:
+                if (random.nextInt(2) == 1) {
+                    System.out.println("You should make " + recipeBook.randomRecipe().getName());
+                } else {
+                    System.out.println("You should get " + restaurantList.randomRestaurant().getName());
+                }
+                break;
+            default:
+                System.out.println("That is not a valid input.");
+                chooseRandom(); //might be buggy?
+                break;
+        }
     }
 
 
@@ -68,7 +108,7 @@ public class WhatsCookinApp {
     // MODIFIES: this
     // EFFECTS:  adds a recipe to the recipe book, lets user input and edit recipe information
     private void addRecipe() {
-        Recipe recipe = new Recipe("", "",0,null);
+        Recipe recipe = new Recipe("", "", 0, null);
 
         System.out.println("Recipe name: ");
         recipe.setName(key.next()); //try nextLine if buggy
@@ -111,7 +151,7 @@ public class WhatsCookinApp {
     // EFFECTS:  displays a restaurant's name and cuisine type
     private void viewRestaurant(Restaurant restaurant) {
         System.out.println("Name: " + restaurant.getName());
-        System.out.println("Cuisine Type: " + restaurant.getCuisine());
+        System.out.println("Description: " + restaurant.getDescription());
     }
 
     //ceebs for now
