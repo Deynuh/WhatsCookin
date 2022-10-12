@@ -25,7 +25,7 @@ public class WhatsCookinApp {
     // EFFECTS: processes user input
     private void runApp() {
         boolean keepGoing = true;
-        int command = 0;
+        int command;
 
         init();
 
@@ -80,54 +80,49 @@ public class WhatsCookinApp {
 
     // EFFECTS: displays menu of options
     private void displayMenu() {
-        boolean keepGoing = true;
-
         System.out.println("Welcome to What's Cookin'!");
         System.out.println("Select from: \n 1: Random Meal Suggestion \n 2: Recipes \n 3: Restaurants \n 4: Exit");
 
     }
 
     // EFFECTS: displays menu for recipe options
-    // !!! SHORTEN
     private void displayRecipesMenu() {
         boolean keepGoing = true;
         System.out.println("------- Recipes --------");
         System.out.println(" 1: Add a recipe \n 2: Delete a recipe \n 3: View all recipes \n 4: Previous menu");
 
         while (keepGoing) {
-            switch (key.nextInt()) {
-                case 1:
-                    addRecipe();
-                    keepGoing = false;
-                    break;
-                case 2:
-                    System.out.println("Which recipe would you like to delete?");
-                    showRecipes();
-                    recipeBook.removeRecipe(key.nextInt());
-                    keepGoing = false;
-                    break;
-                case 3:
-                    showRecipes();
-                    keepGoing = false;
-                    break;
-                case 4:
-                    runApp();
-                    break;
-                default:
-                    System.out.println("That is not a valid input.");
-                    break;
+            if (key.nextInt() == 1) {
+                addRecipe();
+                keepGoing = false;
+            } else if (key.nextInt() == 2) {
+                System.out.println("Which recipe would you like to delete?");
+                showRecipes();
+                recipeBook.removeRecipe(key.nextInt());
+                keepGoing = false;
+            } else if (key.nextInt() == 3) {
+                showRecipes();
+                keepGoing = false;
+            } else if (key.nextInt() == 4) {
+                runApp();
+            } else {
+                System.out.println("That is not a valid input.");
             }
         }
     }
 
     // EFFECTS: displays menu for restaurant options
-    // !!!
     private void displayRestaurantsMenu() {
-        boolean keepGoing = true;
-
         System.out.println("------- Restaurants --------");
         System.out.println(" 1: Add a restaurant \n 2: Delete a restaurant ");
         System.out.println("\n 3: View all restaurants \n 4: Previous Menu");
+
+        restaurantsMenu();
+    }
+
+    // EFFECTS: displays restaurants menu
+    private void restaurantsMenu() {
+        boolean keepGoing = true;
 
         while (keepGoing) {
             switch (key.nextInt()) {
@@ -136,9 +131,7 @@ public class WhatsCookinApp {
                     keepGoing = false;
                     break;
                 case 2:
-                    System.out.println("Which restaurant would you like to delete?");
-                    showRestaurants();
-                    restaurantList.removeRestaurant(key.nextInt());
+                    deleteRestaurant();
                     keepGoing = false;
                     break;
                 case 3:
@@ -155,38 +148,58 @@ public class WhatsCookinApp {
         }
     }
 
+    // EFFECTS: displays menu for deleting a restaurant
+    private void deleteRestaurant() {
+        System.out.println("Which restaurant would you like to delete?");
+        showRestaurants();
+        restaurantList.removeRestaurant(key.nextInt());
+    }
+
     // REQUIRES: non-empty recipe book and restaurant list
     // EFFECTS:  gives the user either a random recipe or restaurant based on their choice
-    // !!! shorten
     private void chooseRandom() {
         boolean keepGoing = true;
         System.out.println(" 1: Give me a recipe \n 2: Give me a restaurant \n 3: Choose for me");
 
         try {
             while (keepGoing) {
-                switch (key.nextInt()) {
-                    case 1:
-                        getRandomRecipe();
-                        keepGoing = false;
-                        break;
-                    case 2:
-                        System.out.println("You should get " + restaurantList.randomRestaurant().getName());
-                        keepGoing = false;
-                        break;
-                    case 3:
-                        chooseForMe();
-                        keepGoing = false;
-                        break;
-                    default:
-                        System.out.println("That is not a valid input.");
-                        chooseRandom(); //might be buggy?
-                        break;
+                if (key.nextInt() == 1) {
+                    getRandomRecipe();
+                    keepGoing = false;
+                } else if (key.nextInt() == 2) {
+                    System.out.println("You should get " + restaurantList.randomRestaurant().getName());
+                    keepGoing = false;
+                } else if (key.nextInt() == 3) {
+                    chooseForMe();
+                    keepGoing = false;
+                } else {
+                    System.out.println("That is not a valid input.");
                 }
             }
         } catch (Exception e) {
             System.out.println("There was a problem with the Random Meal Generator.");
         }
     }
+
+//while (keepGoing) {
+//        switch (key.nextInt()) {
+//            case 1:
+//                getRandomRecipe();
+//                keepGoing = false;
+//                break;
+//            case 2:
+//                System.out.println("You should get " + restaurantList.randomRestaurant().getName());
+//                keepGoing = false;
+//                break;
+//            case 3:
+//                chooseForMe();
+//                keepGoing = false;
+//                break;
+//            default:
+//                System.out.println("That is not a valid input.");
+//                break;
+//        }
+//    }
 
     private void getRandomRecipe() {
         if (recipeBook.getRecipeBook() == null) {
