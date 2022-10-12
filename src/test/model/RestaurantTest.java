@@ -20,4 +20,16 @@ class RestaurantTest {
         assertEquals("Canadian rotisserie and grill", swissChalet.getDescription());
     }
 
+    @Test
+    void testSetName() {
+        swissChalet.setName("Good Chicken Restaurant");
+        assertEquals("Good Chicken Restaurant", swissChalet.getName());
+    }
+
+    @Test
+    void testSetDescription() {
+        swissChalet.setDescription("Not in Vancouver");
+        assertEquals("Not in Vancouver", swissChalet.getDescription());
+    }
+
 }
