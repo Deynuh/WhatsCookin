@@ -5,10 +5,8 @@ import java.util.Random;
 
 // Represents a list of restaurants
 public class RestaurantList {
-
-    private Restaurant restaurant;
-    private Random random = new Random();
-    private ArrayList<Restaurant> restaurantList;
+    private final Random random = new Random();
+    private final ArrayList<Restaurant> restaurantList;
 
     public RestaurantList(ArrayList<Restaurant> restaurantList) {
         this.restaurantList = restaurantList;

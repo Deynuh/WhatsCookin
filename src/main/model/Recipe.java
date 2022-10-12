@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
-// Represents a recipe having a name, description, list of ingredients, and duration to make it (in minutes)
+// Represents a recipe having a name, description, duration to make it (in minutes), and ingredients
 public class Recipe {
 
     private String name;
@@ -15,10 +15,6 @@ public class Recipe {
         this.description = description;
         this.duration = duration; //eventually use for a short meal option in randomizer?
         this.ingredients = ingredients;
-    }
-
-    public Recipe(String name) {
-        this.name = name;
     }
 
     public String getName() {

@@ -1,0 +1,49 @@
+package model;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class RecipeBookTest {
+    private RecipeBook testRecipeBook;
+    private ArrayList<Recipe> testArrayList;
+    private Recipe recipe2;
+    private Recipe recipe3;
+
+    @BeforeEach
+    void runBefore() {
+        Recipe recipe1 = new Recipe("Random1","First recipe", 0, null);
+        recipe2 = new Recipe("Random2","Second recipe",0,null);
+        recipe3 = new Recipe("Random3","Third recipe",0,null);
+        testArrayList = new ArrayList<>();
+        testArrayList.add(recipe1);
+        testArrayList.add(recipe2);
+        testRecipeBook = new RecipeBook(testArrayList);
+    }
+
+    @Test
+    void testConstructor() {
+        assertEquals(testArrayList, testRecipeBook.getRecipeBook());
+    }
+
+    @Test
+    void testAddRestaurant() {
+        testRecipeBook.addRecipe(recipe3);
+        assertEquals(recipe3, testRecipeBook.getRecipeBook().get(2));
+    }
+
+    @Test
+    void testRemoveRestaurant() {
+        testRecipeBook.removeRecipe(0);
+        assertEquals(1, testRecipeBook.getRecipeBook().size());
+        assertEquals(recipe2, testRecipeBook.getRecipeBook().get(0));
+    }
+
+    @Test
+    void testRandomRestaurant() {
+        assertNotNull(testRecipeBook.randomRecipe());
+    }
+}
