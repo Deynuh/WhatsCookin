@@ -42,6 +42,7 @@ public class WhatsCookinApp {
         System.out.println("Goodbye!");
     }
 
+    // EFFECTS: proesses user input
     private void processCommand(int command) {
         boolean keepGoing = true;
 

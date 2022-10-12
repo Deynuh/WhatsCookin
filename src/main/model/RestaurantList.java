@@ -35,7 +35,6 @@ public class RestaurantList {
         try {
             return restaurantList.get(random.nextInt(restaurantList.size()));
         } catch (Exception e) {
-            System.out.println("There was a problem with the Random Restaurant Generator.");
             return null;
         }
     }

@@ -36,7 +36,6 @@ public class RecipeBook {
         try {
             return recipeBook.get(random.nextInt(recipeBook.size()));
         } catch (Exception e) {
-            System.out.println("There was a problem with the Random Recipe Generator.");
             return null;
         }
     }
