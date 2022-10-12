@@ -6,8 +6,8 @@ import java.util.Random;
 // Represents a "book" (list) of recipes
 public class RecipeBook {
 
-    private ArrayList<Recipe> recipeBook;
-    private Random random = new Random();
+    private final ArrayList<Recipe> recipeBook;
+    private final Random random = new Random();
 
     public RecipeBook(ArrayList<Recipe> recipeBook) {
         this.recipeBook = recipeBook;
@@ -36,7 +36,7 @@ public class RecipeBook {
         try {
             return recipeBook.get(random.nextInt(recipeBook.size()));
         } catch (Exception e) {
-            System.out.println("ye no");
+            System.out.println("There was a problem with the Random Recipe Generator.");
             return null;
         }
     }

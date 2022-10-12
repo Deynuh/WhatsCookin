@@ -47,6 +47,12 @@ class RecipeTest {
     }
 
     @Test
+    void testSetNegativeDuration() {
+        toast.setDuration(-124);
+        assertEquals(0, toast.getDuration());
+    }
+
+    @Test
     void testSetIngredients() {
         ArrayList<String> betterIngredients = new ArrayList<>();
         betterIngredients.add("Whole Wheat Bread");

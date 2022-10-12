@@ -10,13 +10,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class RecipeBookTest {
     private RecipeBook testRecipeBook;
     private ArrayList<Recipe> testArrayList;
+    private Recipe recipe1;
     private Recipe recipe2;
     private Recipe recipe3;
     private Recipe recipe4;
 
     @BeforeEach
     void runBefore() {
-        Recipe recipe1 = new Recipe("Random1","First recipe", 0, null);
+        recipe1 = new Recipe("Random1","First recipe", 0, null);
         recipe2 = new Recipe("Random2","Second recipe",0,null);
         recipe3 = new Recipe("Random3","Third recipe",0,null);
         recipe4 = new Recipe("Random4","Fourth recipe",0,null);
@@ -35,6 +36,7 @@ class RecipeBookTest {
     void testAddRecipe() {
         testRecipeBook.addRecipe(recipe3);
         assertEquals(recipe3, testRecipeBook.getRecipeBook().get(2));
+        assertEquals(3, testRecipeBook.getRecipeBook().size());
     }
 
     @Test
@@ -61,6 +63,8 @@ class RecipeBookTest {
     }
     @Test
     void testRandomRecipe() {
+        RecipeBook nullRecipeBook = new RecipeBook(null);
+        assertNull(nullRecipeBook.randomRecipe());
         assertNotNull(testRecipeBook.randomRecipe());
     }
 }

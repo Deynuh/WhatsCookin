@@ -36,6 +36,7 @@ class RestaurantListTest {
     void testAddRestaurant() {
         testRestaurantList.addRestaurant(restaurant3);
         assertEquals(restaurant3, testRestaurantList.getRestaurantList().get(2));
+        assertEquals(3, testRestaurantList.getRestaurantList().size());
     }
 
     @Test
@@ -63,6 +64,8 @@ class RestaurantListTest {
 
     @Test
     void testRandomRestaurant() {
+        RestaurantList nullRestaurantList = new RestaurantList(null);
         assertNotNull(testRestaurantList.randomRestaurant());
+        assertNull(nullRestaurantList.randomRestaurant());
     }
 }

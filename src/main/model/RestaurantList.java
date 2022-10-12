@@ -32,6 +32,11 @@ public class RestaurantList {
     // REQUIRES: a non-empty restaurant list
     // EFFECTS:  returns a random recipe from restaurant list
     public Restaurant randomRestaurant() {
-        return restaurantList.get(random.nextInt(restaurantList.size()));
+        try {
+            return restaurantList.get(random.nextInt(restaurantList.size()));
+        } catch (Exception e) {
+            System.out.println("There was a problem with the Random Restaurant Generator.");
+            return null;
+        }
     }
 }

@@ -46,7 +46,11 @@ public class Recipe {
     }
 
     public void setDuration(int duration) {
-        this.duration = duration;
+        if (duration < 0) {
+            this.duration = 0;
+        } else {
+            this.duration = duration;
+        }
     }
 
 }
