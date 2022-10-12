@@ -10,7 +10,7 @@ public class RestaurantList {
     private Random random = new Random();
     private ArrayList<Restaurant> restaurantList;
 
-    public RestaurantList() {
+    public RestaurantList(ArrayList<Restaurant> restaurantList) {
         this.restaurantList = restaurantList;
     }
 
@@ -27,8 +27,8 @@ public class RestaurantList {
     // MODIFIES: this
     // REQUIRES: a non-empty restaurant list
     // EFFECTS: deletes a restaurant from the restaurant list
-    public void deleteRestaurant(Restaurant restaurant) {
-        restaurantList.remove(restaurant);
+    public void removeRestaurant(int index) {
+        restaurantList.remove(index);
     }
 
     // REQUIRES: a non-empty restaurant list

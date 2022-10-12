@@ -9,7 +9,7 @@ public class RecipeBook {
     private ArrayList<Recipe> recipeBook;
     private Random random = new Random();
 
-    public RecipeBook() {
+    public RecipeBook(ArrayList<Recipe> recipeBook) {
         this.recipeBook = recipeBook;
     }
 

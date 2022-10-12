@@ -17,6 +17,10 @@ public class Recipe {
         this.ingredients = ingredients;
     }
 
+    public Recipe(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return this.name;
     }
