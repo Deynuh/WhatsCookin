@@ -5,6 +5,7 @@ import model.Restaurant;
 import model.RecipeBook;
 import model.RestaurantList;
 
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Random;
@@ -22,7 +23,7 @@ public class WhatsCookinApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: processes user input
+    // EFFECTS:  processes user input
     private void runApp() {
         boolean keepGoing = true;
         int command;
@@ -30,19 +31,24 @@ public class WhatsCookinApp {
         init();
 
         while (keepGoing) {
-            displayMenu();
-            command = key.nextInt();
+            try {
+                displayMenu();
+                command = key.nextInt();
 
-            if (command == 4) {
-                keepGoing = false;
-            } else {
-                processCommand(command);
+                if (command == 4) {
+                    keepGoing = false;
+                } else {
+                    processCommand(command);
+                }
+            } catch (Exception e) {
+                System.out.println("Please input a valid number.");
             }
+            key.nextLine();
         }
         System.out.println("Goodbye!");
     }
 
-    // EFFECTS: proesses user input
+    // EFFECTS: processes user input
     private void processCommand(int command) {
         boolean keepGoing = true;
 
@@ -68,7 +74,7 @@ public class WhatsCookinApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: initializes recipe book and recipe list
+    // EFFECTS:  initializes recipe book and recipe list
     private void init() {
         ArrayList<Recipe> recipes = new ArrayList<>();
         ArrayList<Restaurant> restaurants = new ArrayList<>();
@@ -81,7 +87,7 @@ public class WhatsCookinApp {
 
     // EFFECTS: displays menu of options
     private void displayMenu() {
-        System.out.println("Welcome to What's Cookin'!");
+        System.out.println("\nWelcome to What's Cookin'!");
         System.out.println("Select from: \n 1: Random Meal Suggestion \n 2: Recipes \n 3: Restaurants \n 4: Exit");
 
     }
@@ -104,10 +110,7 @@ public class WhatsCookinApp {
                 addRecipe();
                 keepGoing = false;
             } else if (input == 2) {
-                System.out.println("Which recipe would you like to delete?");
-                showRecipes();
-                recipesOptions();
-                recipeBook.removeRecipe(key.nextInt());
+                deleteRecipeMenu();
                 keepGoing = false;
             } else if (input == 3) {
                 showRecipes();
@@ -116,6 +119,25 @@ public class WhatsCookinApp {
                 runApp();
             } else {
                 System.out.println("That is not a valid input.");
+            }
+        }
+    }
+
+    private void deleteRecipeMenu() {
+        if (recipeBook.getRecipeBook().size() == 0) {
+            System.out.println("There is nothing in your recipe book to delete.");
+            System.out.println("Returning to main menu...");
+        } else {
+            System.out.println("Which recipe would you like to delete?");
+            showRecipes();
+            //recipesOptions(); not sure why this was here
+            recipeBook.removeRecipe(key.nextInt());
+
+            System.out.println("Would you like to delete another recipe? (y/n)");
+            if (key.next().equals("y")) {
+                deleteRecipeMenu();
+            } else {
+                System.out.println("Returning to main menu...");
             }
         }
     }
@@ -140,7 +162,7 @@ public class WhatsCookinApp {
                     keepGoing = false;
                     break;
                 case 2:
-                    deleteRestaurant();
+                    deleteRestaurantMenu();
                     keepGoing = false;
                     break;
                 case 3:
@@ -158,37 +180,58 @@ public class WhatsCookinApp {
     }
 
     // EFFECTS: displays menu for deleting a restaurant
-    private void deleteRestaurant() {
-        System.out.println("Which restaurant would you like to delete?");
-        showRestaurants();
-        restaurantsOptions();
-        restaurantList.removeRestaurant(key.nextInt());
+    private void deleteRestaurantMenu() {
+        if (restaurantList.getRestaurantList().size() == 0) {
+            System.out.println("There is nothing in your restaurant list to delete.");
+            System.out.println("Returning to main menu...");
+        } else {
+            System.out.println("Which restaurant would you like to delete?");
+            showRestaurants();
+            //restaurantsOptions();
+            int input = key.nextInt();
+            if (input >= 0 && input <= restaurantList.getRestaurantList().size()) {
+                restaurantList.removeRestaurant(input);
+            } else {
+                System.out.println("That is not a valid number.");
+            }
+
+            System.out.println("Would you like to delete another restaurant? (y/n)");
+            if (key.next().equals("y")) {
+                deleteRestaurantMenu();
+            } else {
+                System.out.println("Returning to main menu...");
+            }
+        }
     }
 
     // REQUIRES: non-empty recipe book and restaurant list
     // EFFECTS:  gives the user either a random recipe or restaurant based on their choice
     private void chooseRandom() {
-        boolean keepGoing = true;
-        int input = key.nextInt();
         System.out.println(" 1: Give me a recipe \n 2: Give me a restaurant \n 3: Choose for me");
 
-        try {
-            while (keepGoing) {
-                if (input == 1) {
-                    getRandomRecipe();
-                    keepGoing = false;
-                } else if (input == 2) {
-                    System.out.println("You should get " + restaurantList.randomRestaurant().getName());
-                    keepGoing = false;
-                } else if (input == 3) {
-                    chooseForMe();
-                    keepGoing = false;
-                } else {
-                    System.out.println("That is not a valid input.");
-                }
+        boolean keepGoing = true;
+        int input = key.nextInt();
+
+        while (keepGoing) {
+            if (input == 1) {
+                getRandomRecipe();
+                keepGoing = false;
+            } else if (input == 2) {
+                getRandomRestaurant();
+                keepGoing = false;
+            } else if (input == 3) {
+                chooseForMe();
+                keepGoing = false;
+            } else {
+                System.out.println("That is not a valid input.");
             }
-        } catch (Exception e) {
-            System.out.println("There was a problem with the Random Meal Generator.");
+        }
+
+        System.out.println("Would you like to try again? (y/n)");
+        if (key.next().equals("y")) {
+            chooseRandom();
+        } else {
+            System.out.println("Returning to main menu...");
         }
     }
 
@@ -213,20 +256,36 @@ public class WhatsCookinApp {
 //    }
 
     private void getRandomRecipe() {
-        if (recipeBook.getRecipeBook() == null) {
-            System.out.println("There is nothing in your recipe book!");
+        if (recipeBook.getRecipeBook().size() == 0) {
+            System.out.println("There is nothing in your recipe book! Please add a recipe first.");
         } else {
             System.out.println("You should make " + recipeBook.randomRecipe().getName());
         }
     }
 
+    public void getRandomRestaurant() {
+        if (restaurantList.getRestaurantList().size() == 0) {
+            System.out.println("There is nothing in your restaurant list! Please add a restaurant first.");
+        } else {
+            System.out.println("You should get " + restaurantList.randomRestaurant().getName());
+        }
+
+    }
+
     // REQUIRES: non-empty recipe book and restaurant list
     // EFFECTS:  gives the user a completely random recipe or restaurant
     private void chooseForMe() {
-        if (random.nextInt(2) == 1) {
-            System.out.println("You should make " + recipeBook.randomRecipe().getName());
-        } else {
-            System.out.println("You should get " + restaurantList.randomRestaurant().getName());
+        int rand = random.nextInt(2);
+        boolean noRestaurant = restaurantList.getRestaurantList().size() == 0;
+        boolean noRecipe = recipeBook.getRecipeBook().size() == 0;
+
+        if (noRestaurant && noRecipe) {
+            System.out.println("There is nothing in your restaurant list and recipe book! ");
+            System.out.print("Please add a recipe and/or a restaurant first. \n");
+        } else if (rand == 0 && !noRecipe) {
+            getRandomRecipe();
+        } else if (rand == 1 && !noRestaurant) {
+            getRandomRestaurant();
         }
     }
 
@@ -238,11 +297,17 @@ public class WhatsCookinApp {
         System.out.println("Restaurant name: ");
         restaurant.setName(key.next()); //try nextLine if buggy
 
-        System.out.println("Restaurant description: \n Input 's' to skip");
-        restaurant.setDescription(key.next().equals("s") ? "No description." : key.next());
+        System.out.println("Restaurant description: ");
+        restaurant.setDescription(key.next());
 
         restaurantList.addRestaurant(restaurant);
         System.out.println("Restaurant added successfully!");
+        System.out.println("Would you like to add another restaurant? (y/n)");
+        if (key.next().equals("y")) {
+            addRestaurant();
+        } else {
+            System.out.println("Returning to main menu...");
+        }
     }
 
     // MODIFIES: this
@@ -256,7 +321,7 @@ public class WhatsCookinApp {
         System.out.println("Recipe description: ");
         recipe.setDescription(key.next());
 
-        System.out.println("Recipe duration: ");
+        System.out.println("Recipe duration (in minutes): ");
         recipe.setDuration(key.nextInt());
 
         System.out.println("Number of recipe ingredients: ");
@@ -271,15 +336,33 @@ public class WhatsCookinApp {
 
         recipeBook.addRecipe(recipe);
         System.out.println("Recipe added successfully!");
-
+        System.out.println("Would you like to add another recipe? (y/n)");
+        if (key.next().equals("y")) {
+            addRecipe();
+        } else {
+            System.out.println("Returning to main menu...");
+        }
     }
 
     // REQUIRES: non-empty recipe book
     // EFFECTS:  displays all recipes, numbered, and individual recipes
     private void showRecipes() {
         ArrayList<Recipe> recipes = recipeBook.getRecipeBook();
-        for (int i = 0; i < recipes.size(); i++) {
-            System.out.println((i + 1) + recipes.get(i).getName());
+        if (recipes.size() == 0) {
+            System.out.println("There are no recipes in your recipe book yet.");
+            System.out.println("Returning to main menu...");
+        } else {
+            for (int i = 0; i < recipes.size(); i++) {
+                System.out.println((i + 1) + " — " + recipes.get(i).getName());
+            }
+
+            System.out.println("Would you like to view a recipe in more detail? (y/n)");
+            if (key.next().equalsIgnoreCase("y")) {
+                System.out.println("Input the recipe number.");
+                viewRecipe(recipes.get(key.nextInt() - 1));
+            } else {
+                System.out.println("Returning to main menu...");
+            }
         }
     }
 
@@ -307,11 +390,14 @@ public class WhatsCookinApp {
     // EFFECTS:  displays all restaurants, numbered, and individual restaurants
     private void showRestaurants() {
         ArrayList<Restaurant> restaurants = restaurantList.getRestaurantList();
-
-        for (int i = 0; i < restaurants.size(); i++) {
-            System.out.println((i + 1) + restaurants.get(i).getName());
+        if (restaurants.size() == 0) {
+            System.out.println("There are no restaurants in your restaurant list yet.");
+            System.out.println("Returning to main menu...");
+        } else {
+            for (int i = 0; i < restaurants.size(); i++) {
+                System.out.println((i + 1) + " — " + restaurants.get(i).getName());
+            }
         }
-
     }
 
     // EFFECTS: displays options for restaurants menu
@@ -322,7 +408,7 @@ public class WhatsCookinApp {
         while (keepGoing) {
             System.out.println("Input: \n 1: View a restaurant \n 2: Previous menu");
             if (input == 1) {
-                System.out.println("Input the number of the restaurant you want to see.");
+                System.out.println("Input the number of the restaurant.");
                 viewRestaurant(restaurantList.getRestaurantList().get(key.nextInt() + 1));
                 keepGoing = false;
             } else if (input == 2) {

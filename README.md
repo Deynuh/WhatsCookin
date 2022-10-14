@@ -29,7 +29,7 @@ me keep track of the recipes I can make.
 what meal I should have
 - As a user, I want to be able to choose whether to give an eat-in (recipe) or take-out (restaurant) suggestion
 - As a user, I want to be able to add a restaurant to a list
-- As a user, I want to be able to add a recipe to my list
+- As a user, I want to be able to add a recipe to a list
 - As a user, I want to be able to view a list of my recipes
 - As a user, I want to be able to view a list of my restaurants
 - As a user, I want to be able to select a recipe in my list and view the recipe in detail
