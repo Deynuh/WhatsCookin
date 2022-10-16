@@ -46,15 +46,16 @@ public class Recipe {
     }
 
     // MODIFIES: this
+    // EFFECTS:  sets this recipe's duration.
+    public void setDuration(int duration) {
+        this.duration = Math.max(duration, 0);
+    }
+
+    // MODIFIES: this
     // EFFECTS:  sets this recipe's ingredients list
     public void setIngredients(ArrayList<String> ingredients) {
         this.ingredients = ingredients;
     }
 
-    // MODIFIES: this
-    // EFFECTS:  sets this recipe's duration.
-    public void setDuration(int duration) {
-        this.duration = Math.max(duration, 0);
-    }
 
 }
