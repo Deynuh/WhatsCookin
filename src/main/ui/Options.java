@@ -1,10 +1,12 @@
 package ui;
 
+// Options class to deal with duplication in WhatsCookingApp class
 public class Options {
 
     public Options() {
     }
 
+    // EFFECTS: displays the menu for String type (which can either be recipe or restaurant)
     public void displayMenu(String type) {
         System.out.println("------- " + type.toUpperCase() + "S -------");
         System.out.println(" 1: Add a " + type + " \n 2: Delete a " + type);
@@ -13,7 +15,7 @@ public class Options {
 
     //public void menu() do last?
 
-    public void deleteMenu(String type) {
+    /*public void deleteMenu(String type) {
         String parameter = (type + ".get" + "R" + type.substring(1) + "List().size()");
         if (restaurantList.getRestaurantList().size() == 0) {
             System.out.println("There is nothing in your restaurant list to delete.");
@@ -35,5 +37,8 @@ public class Options {
                 System.out.println("Returning to main menu...");
             }
         }
-    }
+    } */
+
+    //public void getRandom(String )
+
 }

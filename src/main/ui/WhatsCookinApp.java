@@ -156,6 +156,7 @@ public class WhatsCookinApp extends Options {
         }
     }
 
+    // EFFECTS: displays menu for deleting a recipe
     private void deleteRecipeMenu() {
         if (recipeBook.getRecipeBook().size() == 0) {
             System.out.println("There is nothing in your recipe book to delete.");
@@ -230,6 +231,8 @@ public class WhatsCookinApp extends Options {
         }
     }
 
+    // REQUIRES: non-empty recipe book
+    // EFFECTS:  gives the user a random recipe
     private void getRandomRecipe() {
         if (recipeBook.getRecipeBook().size() == 0) {
             System.out.println("There is nothing in your recipe book! Please add a recipe first.");
@@ -238,6 +241,8 @@ public class WhatsCookinApp extends Options {
         }
     }
 
+    // REQUIRES: non-empty restaurant list
+    // EFFECTS:  gives the user a random restaurant
     public void getRandomRestaurant() {
         if (restaurantList.getRestaurantList().size() == 0) {
             System.out.println("There is nothing in your restaurant list! Please add a restaurant first.");

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Tests the Restaurant class
 class RestaurantTest {
 
     private Restaurant swissChalet;

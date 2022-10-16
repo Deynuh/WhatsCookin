@@ -1,6 +1,6 @@
 package model;
 
-// Represents a restaurant having a name and type of cuisine
+// Represents a restaurant having a name and description
 public class Restaurant {
 
     private String name;

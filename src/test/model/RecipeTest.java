@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
+// Tests the Recipe class
 class RecipeTest {
 
     private Recipe toast;

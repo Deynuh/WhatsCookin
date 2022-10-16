@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Tests the RecipeBook class
 class RecipeBookTest {
     private RecipeBook testRecipeBook;
     private ArrayList<Recipe> testArrayList;
@@ -35,6 +36,8 @@ class RecipeBookTest {
     @Test
     void testAddRecipe() {
         testRecipeBook.addRecipe(recipe3);
+        assertTrue(testRecipeBook.getRecipeBook().contains(recipe1));
+        assertTrue(testRecipeBook.getRecipeBook().contains(recipe3));
         assertEquals(recipe3, testRecipeBook.getRecipeBook().get(2));
         assertEquals(3, testRecipeBook.getRecipeBook().size());
     }
@@ -66,5 +69,6 @@ class RecipeBookTest {
         RecipeBook nullRecipeBook = new RecipeBook(null);
         assertNull(nullRecipeBook.randomRecipe());
         assertNotNull(testRecipeBook.randomRecipe());
+        assertTrue(testRecipeBook.getRecipeBook().contains(testRecipeBook.randomRecipe()));
     }
 }

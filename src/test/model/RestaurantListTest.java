@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Tests the RestaurantList class
 class RestaurantListTest {
     private RestaurantList testRestaurantList;
     private ArrayList<Restaurant> testArrayList;
@@ -35,6 +36,8 @@ class RestaurantListTest {
     @Test
     void testAddRestaurant() {
         testRestaurantList.addRestaurant(restaurant3);
+        assertTrue(testRestaurantList.getRestaurantList().contains(restaurant1));
+        assertTrue(testRestaurantList.getRestaurantList().contains(restaurant3));
         assertEquals(restaurant3, testRestaurantList.getRestaurantList().get(2));
         assertEquals(3, testRestaurantList.getRestaurantList().size());
     }

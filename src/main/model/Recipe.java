@@ -33,24 +33,28 @@ public class Recipe {
         return this.duration;
     }
 
+    // MODIFIES: this
+    // EFFECTS:  sets this recipe's name
     public void setName(String name) {
         this.name = name;
     }
 
+    // MODIFIES: this
+    // EFFECTS:  sets this recipe's description
     public void setDescription(String description) {
         this.description = description;
     }
 
+    // MODIFIES: this
+    // EFFECTS:  sets this recipe's ingredients list
     public void setIngredients(ArrayList<String> ingredients) {
         this.ingredients = ingredients;
     }
 
+    // MODIFIES: this
+    // EFFECTS:  sets this recipe's duration.
     public void setDuration(int duration) {
-        if (duration < 0) {
-            this.duration = 0;
-        } else {
-            this.duration = duration;
-        }
+        this.duration = Math.max(duration, 0);
     }
 
 }
