@@ -48,7 +48,11 @@ public class Recipe {
     // MODIFIES: this
     // EFFECTS:  sets this recipe's duration.
     public void setDuration(int duration) {
-        this.duration = Math.max(duration, 0);
+        if (duration < 0) {
+            this.duration = 0;
+        } else {
+            this.duration = duration;
+        }
     }
 
     // MODIFIES: this
