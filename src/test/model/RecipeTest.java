@@ -52,6 +52,11 @@ class RecipeTest {
         toast.setDuration(-124);
         assertEquals(0, toast.getDuration());
     }
+    @Test
+    void testSetZeroDuration() {
+        toast.setDuration(0);
+        assertEquals(0, toast.getDuration());
+    }
 
     @Test
     void testSetIngredients() {
