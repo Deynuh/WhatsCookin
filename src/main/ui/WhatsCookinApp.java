@@ -119,6 +119,7 @@ public class WhatsCookinApp extends Options {
                 keepGoing = false;
             } else if (input == 3) {
                 showRecipes();
+                singleRecipeView();
                 keepGoing = false;
             } else if (input == 4) {
                 runApp();
@@ -164,7 +165,13 @@ public class WhatsCookinApp extends Options {
         } else {
             System.out.println("Which recipe would you like to delete?");
             showRecipes();
-            recipeBook.removeRecipe(key.nextInt());
+            int input = key.nextInt();
+            if (input >= 0 && input <= recipeBook.getRecipeBook().size()) {
+                recipeBook.removeRecipe(input);
+                System.out.println("Recipe removed!");
+            } else {
+                System.out.println("That is not a valid number.");
+            }
 
             System.out.println("Would you like to delete another recipe? (y/n)");
             if (key.next().equals("y")) {
@@ -187,6 +194,7 @@ public class WhatsCookinApp extends Options {
             int input = key.nextInt();
             if (input >= 0 && input <= restaurantList.getRestaurantList().size()) {
                 restaurantList.removeRestaurant(input);
+                System.out.println("Restaurant removed!");
             } else {
                 System.out.println("That is not a valid number.");
             }
@@ -336,13 +344,17 @@ public class WhatsCookinApp extends Options {
                 System.out.println((i + 1) + " — " + recipes.get(i).getName());
             }
 
-            System.out.println("Would you like to view a recipe in more detail? (y/n)");
-            if (key.next().equalsIgnoreCase("y")) {
-                System.out.println("Input the recipe number.");
-                viewRecipe(recipes.get(key.nextInt() - 1));
-                recipeOptions();
-            }
-            System.out.println("Returning to main menu...");
+            //System.out.println("Returning to main menu...");
+        }
+    }
+
+    private void singleRecipeView() {
+        ArrayList<Recipe> recipes = recipeBook.getRecipeBook();
+        System.out.println("Would you like to view a recipe in more detail? (y/n)");
+        if (key.next().equalsIgnoreCase("y")) {
+            System.out.println("Input the recipe number.");
+            viewRecipe(recipes.get(key.nextInt() - 1));
+            recipeOptions();
         }
     }
 

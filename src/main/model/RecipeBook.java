@@ -27,7 +27,7 @@ public class RecipeBook {
     // REQUIRES: a non-empty recipe list
     // EFFECTS:  deletes a recipe from the recipe book
     public void removeRecipe(int index) {
-        recipeBook.remove(index);
+        recipeBook.remove(index - 1);
     }
 
     // REQUIRES: a non-empty recipe book
