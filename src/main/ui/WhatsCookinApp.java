@@ -10,11 +10,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 // Recipe-managing application called "What's Cookin'"
-public class WhatsCookinApp extends Options {
+public class WhatsCookinApp {
     private RecipeBook recipeBook;
     private RestaurantList restaurantList;
     private Scanner key;
     private Random random;
+    private boolean isARecipeBook = true;
+    private int size = 0;
 
     // EFFECTS: runs the application
     public WhatsCookinApp() {
@@ -23,7 +25,7 @@ public class WhatsCookinApp extends Options {
 
     // MODIFIES: this
     // EFFECTS:  processes user input
-    private void runApp() {
+    public void runApp() {
         boolean keepGoing = true;
         int command;
 
@@ -31,7 +33,7 @@ public class WhatsCookinApp extends Options {
 
         while (keepGoing) {
             try {
-                displayMenu();
+                displayMenuOfMainOptions();
                 command = key.nextInt();
 
                 if (command == 4) {
@@ -60,11 +62,13 @@ public class WhatsCookinApp extends Options {
                     keepGoing = false;
                     break;
                 case 2:
-                    displayRecipesMenu();
+                    displayMenu("recipe");
+                    //menu() UNCOMMENT ONCE IMPLEMENTED
                     keepGoing = false;
                     break;
                 case 3:
-                    displayRestaurantsMenu();
+                    displayMenu("restaurant");
+                    //menu() UNCOMMENT ONCE IMPLEMENTED
                     keepGoing = false;
                     break;
                 default:
@@ -86,40 +90,46 @@ public class WhatsCookinApp extends Options {
         random = new Random();
     }
 
-    // EFFECTS: displays menu of options
-    private void displayMenu() {
+    // EFFECTS: displays menu of main options
+    private void displayMenuOfMainOptions() {
         System.out.println("\nWelcome to What's Cookin'!");
         System.out.println("Select from: \n 1: Random Meal Suggestion \n 2: Recipes \n 3: Restaurants \n 4: Exit");
 
     }
 
-    // EFFECTS: displays menu for recipe options
-    private void displayRecipesMenu() {
-        displayMenu("recipe");
-        recipesMenu();
+    // EFFECTS: if type is recipe, displays specific menu for Recipes
+    //          if type is restaurant, displays specific menu for Restaurants
+    private void displayMenu(String type) {
+        System.out.println("------- " + type.toUpperCase() + "S -------");
+        System.out.println(" 1: Add a " + type + " \n 2: Delete a " + type);
+        System.out.println(" 3: View all " + type + "s \n 4: Previous menu");
+
+        if (type.equals("recipe")) {
+            menu(isARecipeBook);
+        } else {
+            menu(!isARecipeBook);
+        }
     }
 
-    // EFFECTS: displays menu for restaurant options
-    private void displayRestaurantsMenu() {
-        displayMenu("restaurant");
-        restaurantsMenu();
-    }
-
-    // EFFECTS: displays recipes menu
-    private void recipesMenu() {
+    // EFFECTS: if type is recipe, handles specific menu for Recipes
+    //          if type is restaurant, handles specific menu for Restaurants
+    private void menu(boolean isARecipeBook) {
         boolean keepGoing = true;
         int input = key.nextInt();
 
         while (keepGoing) {
             if (input == 1) {
-                addRecipe();
+                if (isARecipeBook) {
+                    addRecipe();
+                } else {
+                    addRestaurant();
+                }
                 keepGoing = false;
             } else if (input == 2) {
-                deleteRecipeMenu();
+                deleteMenu("recipe", recipeBook.getRecipeBook());
                 keepGoing = false;
             } else if (input == 3) {
-                showRecipes();
-                singleRecipeView();
+                menuForViewing();
                 keepGoing = false;
             } else if (input == 4) {
                 runApp();
@@ -129,87 +139,68 @@ public class WhatsCookinApp extends Options {
         }
     }
 
-    // EFFECTS: displays restaurants menu
-    private void restaurantsMenu() {
-        boolean keepGoing = true;
-
-        while (keepGoing) {
-            switch (key.nextInt()) {
-                case 1:
-                    addRestaurant();
-                    keepGoing = false;
-                    break;
-                case 2:
-                    deleteRestaurantMenu();
-                    keepGoing = false;
-                    break;
-                case 3:
-                    showRestaurants();
-                    keepGoing = false;
-                    break;
-                case 4:
-                    runApp();
-                    break;
-                default:
-                    System.out.println("That is not a valid input.");
-                    break;
-            }
+    private void menuForViewing() {
+        if (isARecipeBook) {
+            show("recipe", recipeBook);
+            singleView("recipe", recipeBook);
+        } else {
+            show("restaurant", restaurantList);
+            singleView("restaurant", restaurantList);
         }
     }
 
-    // EFFECTS: displays menu for deleting a recipe
-    private void deleteRecipeMenu() {
-        if (recipeBook.getRecipeBook().size() == 0) {
-            System.out.println("There is nothing in your recipe book to delete.");
+    // EFFECTS: if type is recipe, displays delete menu for RecipeBook
+    //          if type is restaurant, displays delete menu for RestaurantList
+    private void deleteMenu(String type, Object o) {
+        chooseObjectSize(o);
+
+        if (size == 0) {
+            System.out.println("You have no " + type + "s to delete.");
             System.out.println("Returning to main menu...");
         } else {
-            System.out.println("Which recipe would you like to delete?");
-            showRecipes();
+            System.out.println("Which " + type + " would you like to delete?");
+            show(type, o);
             int input = key.nextInt();
-            if (input >= 0 && input <= recipeBook.getRecipeBook().size()) {
-                recipeBook.removeRecipe(input);
-                System.out.println("Recipe removed!");
+            if (input >= 0 && input <= size) {
+                deleteMenuWorking(isARecipeBook, input);
+                System.out.println("Deleted successfully!");
             } else {
                 System.out.println("That is not a valid number.");
             }
 
-            System.out.println("Would you like to delete another recipe? (y/n)");
+            System.out.println("Would you like to delete another " + type + "? (y/n)");
             if (key.next().equals("y")) {
-                deleteRecipeMenu();
+                deleteMenu(type, o);
             } else {
                 System.out.println("Returning to main menu...");
             }
         }
     }
 
+    // EFFECTS: if Object o is a RecipeBook, set size to size of the RecipeBook
+    //          if Object o is a RestaurantList, set size to size of the RestaurantList
+    private void chooseObjectSize(Object o) {
+        if (o instanceof RecipeBook) {
+            size = (recipeBook.getRecipeBook().size());
+            isARecipeBook = true;
+        } else if (o instanceof RestaurantList) {
+            size = (restaurantList.getRestaurantList().size());
+            isARecipeBook = false;
+        }
+    }
 
-    // EFFECTS: displays menu for deleting a restaurant
-    private void deleteRestaurantMenu() {
-        if (restaurantList.getRestaurantList().size() == 0) {
-            System.out.println("There is nothing in your restaurant list to delete.");
-            System.out.println("Returning to main menu...");
+    // EFFECTS: if Object o is a RecipeBook, remove the recipe at the index of the input
+    //          if Object o is a RestaurantList, remove the restaurant at the index of the input
+    private void deleteMenuWorking(boolean isARecipeBook, int input) {
+        if (isARecipeBook) {
+            recipeBook.removeRecipe(input);
         } else {
-            System.out.println("Which restaurant would you like to delete?");
-            showRestaurants();
-            int input = key.nextInt();
-            if (input >= 0 && input <= restaurantList.getRestaurantList().size()) {
-                restaurantList.removeRestaurant(input);
-                System.out.println("Restaurant removed!");
-            } else {
-                System.out.println("That is not a valid number.");
-            }
-
-            System.out.println("Would you like to delete another restaurant? (y/n)");
-            if (key.next().equals("y")) {
-                deleteRestaurantMenu();
-            } else {
-                System.out.println("Returning to main menu...");
-            }
+            restaurantList.removeRestaurant(input);
         }
     }
 
     // REQUIRES: non-empty recipe book and restaurant list
-    // EFFECTS:  gives the user either a random recipe or restaurant based on their choice
+    // EFFECTS:  displays options and handles input for choosing a random recipe or restaurant
     private void chooseRandom() {
         System.out.println(" 1: Give me a recipe \n 2: Give me a restaurant \n 3: Choose for me");
 
@@ -218,10 +209,10 @@ public class WhatsCookinApp extends Options {
 
         while (keepGoing) {
             if (input == 1) {
-                getRandomRecipe();
+                getRandom("recipe", recipeBook);
                 keepGoing = false;
             } else if (input == 2) {
-                getRandomRestaurant();
+                getRandom("restaurant", restaurantList);
                 keepGoing = false;
             } else if (input == 3) {
                 chooseForMe();
@@ -239,29 +230,25 @@ public class WhatsCookinApp extends Options {
         }
     }
 
-    // REQUIRES: non-empty recipe book
-    // EFFECTS:  gives the user a random recipe
-    private void getRandomRecipe() {
-        if (recipeBook.getRecipeBook().size() == 0) {
-            System.out.println("There is nothing in your recipe book! Please add a recipe first.");
+    // REQUIRES: non-empty RecipeBook if getting a RecipeBook
+    //           non-empty RestaurantList if getting a RestaurantList
+    // EFFECTS:  gives the user a random recipe or restaurant based on user input
+    private void getRandom(String type, Object o) {
+        chooseObjectSize(o);
+        if (size == 0) {
+            System.out.println("You have no " + type + "s. Please add a " + type + " first.");
         } else {
-            System.out.println("You should make " + recipeBook.randomRecipe().getName());
+            System.out.println("You should make ");
+            if (isARecipeBook) {
+                System.out.println(recipeBook.randomRecipe().getName());
+            } else {
+                System.out.println(restaurantList.randomRestaurant().getName());
+            }
         }
-    }
-
-    // REQUIRES: non-empty restaurant list
-    // EFFECTS:  gives the user a random restaurant
-    public void getRandomRestaurant() {
-        if (restaurantList.getRestaurantList().size() == 0) {
-            System.out.println("There is nothing in your restaurant list! Please add a restaurant first.");
-        } else {
-            System.out.println("You should get " + restaurantList.randomRestaurant().getName());
-        }
-
     }
 
     // REQUIRES: non-empty recipe book and restaurant list
-    // EFFECTS:  gives the user a completely random recipe or restaurant
+    // EFFECTS:  gives the user a random recipe or restaurant based on random
     private void chooseForMe() {
         int rand = random.nextInt(2);
         boolean noRestaurant = restaurantList.getRestaurantList().size() == 0;
@@ -271,9 +258,9 @@ public class WhatsCookinApp extends Options {
             System.out.println("There is nothing in your restaurant list and recipe book! ");
             System.out.print("Please add a recipe and/or a restaurant first. \n");
         } else if (rand == 0 && !noRecipe) {
-            getRandomRecipe();
+            getRandom("recipe", recipeBook);
         } else if (rand == 1 && !noRestaurant) {
-            getRandomRestaurant();
+            getRandom("restaurant", restaurantList);
         }
     }
 
@@ -302,13 +289,7 @@ public class WhatsCookinApp extends Options {
         recipe.setIngredients(listedIngredients);
 
         recipeBook.addRecipe(recipe);
-        System.out.println("Recipe added successfully!");
-        System.out.println("Would you like to add another recipe? (y/n)");
-        if (key.next().equals("y")) {
-            addRecipe();
-        } else {
-            System.out.println("Returning to main menu...");
-        }
+        addAnother("recipe");
     }
 
     // MODIFIES: this
@@ -323,94 +304,83 @@ public class WhatsCookinApp extends Options {
         restaurant.setDescription(key.next());
 
         restaurantList.addRestaurant(restaurant);
-        System.out.println("Restaurant added successfully!");
-        System.out.println("Would you like to add another restaurant? (y/n)");
+        addAnother("restaurant");
+    }
+
+    // EFFECTS: if dealing with a RecipeBook, asks if user would like to add another recipe
+    //          if dealing with a RestaurantList, asks if user would like to add another restaurant
+    private void addAnother(String type) {
+        System.out.println("Added successfully!");
+        System.out.println("Would you like to add another " + type + " (y/n)");
         if (key.next().equals("y")) {
-            addRestaurant();
+            if (isARecipeBook) {
+                addRecipe();
+            } else {
+                addRestaurant();
+            }
         } else {
             System.out.println("Returning to main menu...");
         }
     }
 
-    // REQUIRES: non-empty recipe book
-    // EFFECTS:  displays all recipes, numbered, and individual recipes
-    private void showRecipes() {
-        ArrayList<Recipe> recipes = recipeBook.getRecipeBook();
-        if (recipes.size() == 0) {
-            System.out.println("There are no recipes in your recipe book yet.");
+    // REQUIRES: non-empty RecipeBook if dealing with RecipeBook
+    //           non-empty RestaurantList if dealing with RestaurantList
+    // EFFECTS:  if dealing with RecipeBook, displays all recipes, numbered, and option to view individual recipes
+    //           if dealing with RestaurantList, displays all restaurants, numbered,
+    //           and option to view individual restaurants
+    private void show(String type, Object o) {
+        chooseObjectSize(o);
+        if (size == 0) {
+            System.out.println("You do not have any " + type + "s yet.");
             System.out.println("Returning to main menu...");
         } else {
-            for (int i = 0; i < recipes.size(); i++) {
-                System.out.println((i + 1) + " — " + recipes.get(i).getName());
+            for (int i = 0; i < size; i++) {
+                if (isARecipeBook) {
+                    System.out.println((i + 1) + " — " + recipeBook.getRecipeBook().get(i).getName());
+                } else {
+                    System.out.println((i + 1) + " — " + restaurantList.getRestaurantList().get(i).getName());
+                }
             }
 
-            //System.out.println("Returning to main menu...");
+            singleView(type, o);
         }
     }
 
-    private void singleRecipeView() {
-        ArrayList<Recipe> recipes = recipeBook.getRecipeBook();
-        System.out.println("Would you like to view a recipe in more detail? (y/n)");
+    private void singleView(String type, Object o) {
+        System.out.println("Would you like to view a " + type + " in more detail? (y/n)");
         if (key.next().equalsIgnoreCase("y")) {
-            System.out.println("Input the recipe number.");
-            viewRecipe(recipes.get(key.nextInt() - 1));
-            recipeOptions();
+            System.out.println("Input the " + type + " number.");
+            if (isARecipeBook) {
+                viewRecipe(((RecipeBook) o).getRecipeBook().get(key.nextInt() - 1));
+                options("recipe");
+            } else {
+                viewRestaurant(((RestaurantList) o).getRestaurantList().get(key.nextInt() - 1));
+                options("restaurant");
+            }
         }
+        System.out.println("Returning to main menu...");
     }
 
-
-    // REQUIRES: non-empty restaurant list
-    // EFFECTS:  displays all restaurants, numbered, and individual restaurants
-    private void showRestaurants() {
-        ArrayList<Restaurant> restaurants = restaurantList.getRestaurantList();
-        if (restaurants.size() == 0) {
-            System.out.println("There are no restaurants in your restaurant list yet.");
-            System.out.println("Returning to main menu...");
-        } else {
-            for (int i = 0; i < restaurants.size(); i++) {
-                System.out.println((i + 1) + " — " + restaurants.get(i).getName());
-            }
-
-            System.out.println("Would you like to view a restaurant in more detail? (y/n)");
-            if (key.next().equalsIgnoreCase("y")) {
-                System.out.println("Input the restaurant number.");
-                viewRestaurant(restaurants.get(key.nextInt() - 1));
-                restaurantOptions();
-            }
-            System.out.println("Returning to main menu...");
-        }
-    }
-
-    // EFFECTS: displays options for recipes
-    private void recipeOptions() {
-        System.out.println("View another recipe? (y/n)");
+    // EFFECTS: if dealing with RecipeBook, displays options for RecipeBook menu
+    //          if dealing with RestaurantList, displays options for RestaurantList menu
+    private void options(String type) {
+        System.out.println("\n View another " + type + "? (y/n)");
         String input = key.next();
 
         if (input.equals("y")) {
-            System.out.println("Input the recipe number.");
-            viewRecipe(recipeBook.getRecipeBook().get(key.nextInt() - 1));
-            recipeOptions();
+            System.out.println("Input the number of the " + type);
+            if (isARecipeBook) {
+                viewRecipe(recipeBook.getRecipeBook().get(key.nextInt() + 1));
+            } else {
+                viewRestaurant(restaurantList.getRestaurantList().get(key.nextInt() + 1));
+            }
         } else if (input.equals("n")) {
             System.out.println("Returning to previous menu...");
-            displayRecipesMenu();
-        } else {
-            System.out.println("That is not a valid input.");
-            System.out.println("Returning to main menu...");
-        }
-    }
-
-
-    // EFFECTS: displays options for restaurants menu
-    private void restaurantOptions() {
-        System.out.println("\n View another restaurant? (y/n)");
-        String input = key.next();
-
-        if (input.equals("y")) {
-            System.out.println("Input the number of the restaurant.");
-            viewRestaurant(restaurantList.getRestaurantList().get(key.nextInt() + 1));
-        } else if (input.equals("n")) {
-            System.out.println("Returning to previous menu...");
-            displayRestaurantsMenu();
+            if (isARecipeBook) {
+                displayMenu("restaurant");
+            } else {
+                displayMenu("restaurant");
+            }
         } else {
             System.out.println("That is not a valid input.");
 

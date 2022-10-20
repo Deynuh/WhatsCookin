@@ -26,7 +26,11 @@ public class RestaurantList {
     // REQUIRES: a non-empty restaurant list
     // EFFECTS: deletes a restaurant from the restaurant list
     public void removeRestaurant(int index) {
-        restaurantList.remove(index + 1);
+        if (index == 0) {
+            restaurantList.remove(0);
+        } else {
+            restaurantList.remove(index - 1);
+        }
     }
 
     // REQUIRES: a non-empty restaurant list
