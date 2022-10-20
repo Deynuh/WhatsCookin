@@ -5,6 +5,7 @@ import model.Restaurant;
 import model.RecipeBook;
 import model.RestaurantList;
 
+import java.util.MissingFormatArgumentException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Random;
@@ -63,12 +64,12 @@ public class WhatsCookinApp {
                     break;
                 case 2:
                     displayMenu("recipe");
-                    //menu() UNCOMMENT ONCE IMPLEMENTED
+                    menu(true);
                     keepGoing = false;
                     break;
                 case 3:
                     displayMenu("restaurant");
-                    //menu() UNCOMMENT ONCE IMPLEMENTED
+                    menu(false);
                     keepGoing = false;
                     break;
                 default:
@@ -104,11 +105,7 @@ public class WhatsCookinApp {
         System.out.println(" 1: Add a " + type + " \n 2: Delete a " + type);
         System.out.println(" 3: View all " + type + "s \n 4: Previous menu");
 
-        if (type.equals("recipe")) {
-            menu(isARecipeBook);
-        } else {
-            menu(!isARecipeBook);
-        }
+        menu(type.equals("recipe"));
     }
 
     // EFFECTS: if type is recipe, handles specific menu for Recipes
@@ -129,7 +126,7 @@ public class WhatsCookinApp {
                 deleteMenu("recipe", recipeBook.getRecipeBook());
                 keepGoing = false;
             } else if (input == 3) {
-                menuForViewing();
+                menuForViewing(isARecipeBook);
                 keepGoing = false;
             } else if (input == 4) {
                 runApp();
@@ -139,7 +136,7 @@ public class WhatsCookinApp {
         }
     }
 
-    private void menuForViewing() {
+    private void menuForViewing(boolean isARecipeBook) {
         if (isARecipeBook) {
             show("recipe", recipeBook);
             singleView("recipe", recipeBook);
@@ -235,14 +232,14 @@ public class WhatsCookinApp {
     // EFFECTS:  gives the user a random recipe or restaurant based on user input
     private void getRandom(String type, Object o) {
         chooseObjectSize(o);
+        isARecipeBook = o instanceof RecipeBook;
         if (size == 0) {
             System.out.println("You have no " + type + "s. Please add a " + type + " first.");
         } else {
-            System.out.println("You should make ");
             if (isARecipeBook) {
-                System.out.println(recipeBook.randomRecipe().getName());
+                System.out.println("You should make: " + recipeBook.randomRecipe().getName());
             } else {
-                System.out.println(restaurantList.randomRestaurant().getName());
+                System.out.println("You should get: " + restaurantList.randomRestaurant().getName());
             }
         }
     }
@@ -289,6 +286,7 @@ public class WhatsCookinApp {
         recipe.setIngredients(listedIngredients);
 
         recipeBook.addRecipe(recipe);
+        isARecipeBook = true;
         addAnother("recipe");
     }
 
@@ -304,6 +302,7 @@ public class WhatsCookinApp {
         restaurant.setDescription(key.next());
 
         restaurantList.addRestaurant(restaurant);
+        isARecipeBook = false;
         addAnother("restaurant");
     }
 
@@ -321,6 +320,7 @@ public class WhatsCookinApp {
         } else {
             System.out.println("Returning to main menu...");
         }
+        //BUG: goes back to addRecipe/Restaurant instead of main menu
     }
 
     // REQUIRES: non-empty RecipeBook if dealing with RecipeBook
