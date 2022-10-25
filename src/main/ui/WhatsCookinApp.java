@@ -5,7 +5,6 @@ import model.Restaurant;
 import model.RecipeBook;
 import model.RestaurantList;
 
-import java.util.MissingFormatArgumentException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Random;
@@ -416,7 +415,7 @@ public class WhatsCookinApp {
     }
 
     //ceebs for now
-    /*private boolean confirmCorrectInfo {
+    /*private boolean confirmCorrectInfo(Recipe recipe) {
         System.out.println("----------------------------------------");
         System.out.println("Is this information correct?");
         System.out.println("Recipe name: " + recipe.getName());
@@ -438,14 +437,35 @@ public class WhatsCookinApp {
                 System.out.println("2: Recipe description");
                 System.out.println("3: Recipe duration");
                 System.out.println("4: Recipe ingredients");
+                int input = key.nextInt();
 
-                switch () {
+                switch (input) {
+                    case 1:
+                        System.out.println("Enter the new recipe name:");
+                        recipe.setName(key.next());
+                        confirmCorrectInfo(recipe);
+                        break;
+                    case 2:
+                        System.out.println("Enter the new recipe description:");
+                        recipe.setDescription(key.next());
+                        confirmCorrectInfo(recipe);
+                        break;
+                    case 3:
+                        System.out.println("Enter the new recipe duration:");
+                        recipe.setDuration(key.nextInt());
+                        confirmCorrectInfo(recipe);
+                        break;
+                    case 4:
+                        System.out.println("Enter the new recipe ingredients:");
+                        recipe.setDescription(key.next());
+                        confirmCorrectInfo(recipe);
+                        break;
 
                 }
             case 3:
                 System.out.println("Recipe addition cancelled.");
-                recipeBook.removeRecipe(recipe);
+                //recipeBook.removeRecipe();
                 break;
         }
-    } */
+    }  */
 }
