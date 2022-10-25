@@ -36,3 +36,9 @@ what meal I should have
 - As a user, I want to be able to select a restaurant in my list and view the restaurant in detail
 - As a user, I want to be able to delete recipes from my list
 - As a user, I want to be able to delete restaurants from my list
+
+
+
+STUFF TO ADD: 
+- confirming recipe/restaurant details
+
