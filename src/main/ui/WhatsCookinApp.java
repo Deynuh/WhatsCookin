@@ -101,11 +101,17 @@ public class WhatsCookinApp {
     // EFFECTS: if type is recipe, displays specific menu for Recipes
     //          if type is restaurant, displays specific menu for Restaurants
     private void displayMenu(String type) {
+        if (type.equals("recipe")) {
+            isARecipeBook = true;
+        } else {
+            isARecipeBook = false;
+        }
+
         System.out.println("------- " + type.toUpperCase() + "S -------");
         System.out.println(" 1: Add a " + type + " \n 2: Delete a " + type);
         System.out.println(" 3: View all " + type + "s \n 4: Previous menu");
 
-        menu(type.equals("recipe"));
+        //menu(isARecipeBook);
     }
 
     // EFFECTS: if type is recipe, handles specific menu for Recipes
@@ -116,17 +122,13 @@ public class WhatsCookinApp {
 
         while (keepGoing) {
             if (input == 1) {
-                if (isARecipeBook) {
-                    addRecipe();
-                } else {
-                    addRestaurant();
-                }
+                menuForAdding();
                 keepGoing = false;
             } else if (input == 2) {
-                deleteMenu("recipe", recipeBook.getRecipeBook());
+                menuForDeleting();
                 keepGoing = false;
             } else if (input == 3) {
-                menuForViewing(isARecipeBook);
+                menuForViewing();
                 keepGoing = false;
             } else if (input == 4) {
                 runApp();
@@ -136,13 +138,29 @@ public class WhatsCookinApp {
         }
     }
 
-    private void menuForViewing(boolean isARecipeBook) {
+    private void menuForAdding() {
+        if (isARecipeBook) {
+            addRecipe();
+        } else {
+            addRestaurant();
+        }
+    }
+
+    private void menuForDeleting() {
+        if (isARecipeBook) {
+            deleteMenu("recipe", recipeBook);
+        } else {
+            deleteMenu("recipe", recipeBook);
+        }
+    }
+
+    private void menuForViewing() {
         if (isARecipeBook) {
             show("recipe", recipeBook);
-            singleView("recipe", recipeBook);
+            singleView("recipe");
         } else {
             show("restaurant", restaurantList);
-            singleView("restaurant", restaurantList);
+            singleView("restaurant");
         }
     }
 
@@ -341,20 +359,19 @@ public class WhatsCookinApp {
                     System.out.println((i + 1) + " — " + restaurantList.getRestaurantList().get(i).getName());
                 }
             }
-
-            singleView(type, o);
+            singleView(type);
         }
     }
 
-    private void singleView(String type, Object o) {
+    private void singleView(String type) {
         System.out.println("Would you like to view a " + type + " in more detail? (y/n)");
         if (key.next().equalsIgnoreCase("y")) {
             System.out.println("Input the " + type + " number.");
             if (isARecipeBook) {
-                viewRecipe(((RecipeBook) o).getRecipeBook().get(key.nextInt() - 1));
+                viewRecipe(recipeBook.getRecipeBook().get(key.nextInt() - 1));
                 options("recipe");
             } else {
-                viewRestaurant(((RestaurantList) o).getRestaurantList().get(key.nextInt() - 1));
+                viewRestaurant(restaurantList.getRestaurantList().get(key.nextInt() - 1));
                 options("restaurant");
             }
         }
@@ -364,7 +381,7 @@ public class WhatsCookinApp {
     // EFFECTS: if dealing with RecipeBook, displays options for RecipeBook menu
     //          if dealing with RestaurantList, displays options for RestaurantList menu
     private void options(String type) {
-        System.out.println("\n View another " + type + "? (y/n)");
+        System.out.println("\nView another " + type + "? (y/n)");
         String input = key.next();
 
         if (input.equals("y")) {
