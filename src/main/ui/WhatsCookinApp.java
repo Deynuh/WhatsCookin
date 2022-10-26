@@ -247,7 +247,6 @@ public class WhatsCookinApp {
     // EFFECTS:  gives the user a random recipe or restaurant based on user input
     private void getRandom(String type, Object o) {
         chooseObjectSize(o);
-        isARecipeBook = o instanceof RecipeBook;
         if (size == 0) {
             System.out.println("You have no " + type + "s. Please add a " + type + " first.");
         } else {
