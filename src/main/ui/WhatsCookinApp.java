@@ -133,6 +133,7 @@ public class WhatsCookinApp {
         }
     }
 
+    // EFFECTS: displays menu for adding in either the RecipeBook or RestaurantList
     private void menuForAdding(boolean isARecipeBook) {
         if (isARecipeBook) {
             addRecipe();
@@ -141,6 +142,7 @@ public class WhatsCookinApp {
         }
     }
 
+    // EFFECTS: displays menu for deleting in either the RecipeBook or RestaurantList
     private void menuForDeleting(boolean isARecipeBook) {
         if (isARecipeBook) {
             deleteMenu("recipe", recipeBook);
@@ -149,6 +151,7 @@ public class WhatsCookinApp {
         }
     }
 
+    // EFFECTS: displays menu for viewing either the RecipeBook or RestaurantList
     private void menuForViewing(boolean isARecipeBook) {
         if (isARecipeBook) {
             show("recipe", recipeBook);
@@ -334,7 +337,6 @@ public class WhatsCookinApp {
         } else {
             System.out.println("Returning to main menu...");
         }
-        //BUG: goes back to addRecipe/Restaurant instead of main menu
     }
 
     // REQUIRES: non-empty RecipeBook if dealing with RecipeBook
