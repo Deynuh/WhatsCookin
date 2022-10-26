@@ -152,10 +152,14 @@ public class WhatsCookinApp {
     private void menuForViewing(boolean isARecipeBook) {
         if (isARecipeBook) {
             show("recipe", recipeBook);
-            //singleView("recipe");
+            if (!(size == 0)) {
+                singleView("recipe");
+            }
         } else {
             show("restaurant", restaurantList);
-            //singleView("restaurant");
+            if (!(size == 0)) {
+                singleView("restaurant=");
+            }
         }
     }
 
@@ -345,7 +349,6 @@ public class WhatsCookinApp {
             System.out.println("You do not have any " + type + "s yet.");
             System.out.println("Returning to main menu...");
         } else {
-            singleView(type);
             for (int i = 0; i < size; i++) {
                 if (isARecipeBook) {
                     System.out.println((i + 1) + " — " + recipeBook.getRecipeBook().get(i).getName());
