@@ -1,9 +1,12 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 // Represents a recipe having a name, description, duration to make it (in minutes), and ingredients
-public class Recipe {
+public class Recipe implements Writable {
 
     private String name;
     private String description;
@@ -61,5 +64,13 @@ public class Recipe {
         this.ingredients = ingredients;
     }
 
-
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("Name", name);
+        json.put("Description", description);
+        json.put("Duration", duration);
+        json.put("Ingredients", ingredients);
+        return json;
+    }
 }

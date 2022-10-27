@@ -1,10 +1,14 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 // Represents a "book" (list) of recipes
-public class RecipeBook {
+public class RecipeBook implements Writable {
 
     private final ArrayList<Recipe> recipeBook;
     private final Random random = new Random();
@@ -16,6 +20,7 @@ public class RecipeBook {
     public ArrayList<Recipe> getRecipeBook() {
         return this.recipeBook;
     }
+
 
     // MODIFIES: this
     // EFFECTS:  adds a recipe to the recipe book
@@ -43,4 +48,24 @@ public class RecipeBook {
             return null;
         }
     }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("recipeBook", recipeBookToJson());
+        return json;
+    }
+
+
+    // EFFECTS: returns things in this workroom as a JSON array
+    private JSONArray recipeBookToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Recipe r : recipeBook) {
+            jsonArray.put(r.toJson());
+        }
+
+        return jsonArray;
+    }
+
 }
