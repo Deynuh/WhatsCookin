@@ -51,7 +51,7 @@ public class JsonReader {
     // MODIFIES: rb
     // EFFECTS: parses Recipes from JSON object and adds them to RecipeBook
     private void addRecipes(RecipeBook rb, JSONObject jsonObject) {
-        JSONArray jsonArray = jsonObject.getJSONArray("recipes");
+        JSONArray jsonArray = jsonObject.getJSONArray("recipeBook");
         for (Object json : jsonArray) {
             JSONObject nextRecipe = (JSONObject) json;
             addRecipe(rb, nextRecipe);
