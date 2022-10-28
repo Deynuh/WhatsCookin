@@ -31,8 +31,20 @@ class RecipeBookTest {
 
     @Test
     void testConstructor() {
+        assertEquals("test", testRecipeBook.getName());
         assertEquals(testArrayList, testRecipeBook.getRecipeBook());
     }
+
+    @Test
+    void testConstructorNameVariations() {
+        RecipeBook noName = new RecipeBook("");
+        assertEquals("", noName.getName());
+
+        RecipeBook noSetName = new RecipeBook("");
+        noSetName.setName("test2");
+        assertEquals("test2", noSetName.getName());
+    }
+
 
     @Test
     void testAddRecipe() {

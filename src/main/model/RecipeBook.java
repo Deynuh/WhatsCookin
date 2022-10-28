@@ -23,6 +23,10 @@ public class RecipeBook implements Writable {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public ArrayList<Recipe> getRecipeBook() {
         return this.recipeBook;
     }
@@ -65,7 +69,6 @@ public class RecipeBook implements Writable {
         json.put("recipeBook", recipeBookToJson());
         return json;
     }
-
 
     // EFFECTS: returns things in this workroom as a JSON array
     private JSONArray recipeBookToJson() {

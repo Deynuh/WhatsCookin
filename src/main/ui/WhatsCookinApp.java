@@ -44,7 +44,7 @@ public class WhatsCookinApp {
                 displayMenuOfMainOptions();
                 command = key.nextInt();
 
-                if (command == 4) {
+                if (command == 6) {
                     keepGoing = false;
                 } else {
                     processCommand(command);
@@ -78,23 +78,20 @@ public class WhatsCookinApp {
                     keepGoing = false;
                     break;
                 default:
-                    additionalOptions(command, keepGoing);
-
+                    additionalOptions(command);
+                    keepGoing = false;
                     break;
             }
         }
     }
 
-    private void additionalOptions(int command, boolean keepGoing) {
+    private void additionalOptions(int command) {
         if (command == 4) {
             saveRecipeBook();
-            keepGoing = false;
         } else if (command == 5) {
             loadRecipeBook();
-            keepGoing = false;
-        } else if (command == 6) {
-            System.out.println("Goodbye!");
-            System.exit(0);
+        } else {
+            System.out.println("That is not a valid input.");
         }
     }
 
