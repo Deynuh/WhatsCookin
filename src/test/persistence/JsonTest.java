@@ -1,3 +1,7 @@
+/*
+Note: this file is modelled after the JSonSerializationDemo project provided by the course coordinators.
+ */
+
 package persistence;
 
 import model.Recipe;
@@ -8,6 +12,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JsonTest {
+
     protected void checkRecipe(String name, String description, int duration,
                                ArrayList<String> ingredients, Recipe recipe) {
         assertEquals(name, recipe.getName());

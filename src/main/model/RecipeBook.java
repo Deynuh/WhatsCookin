@@ -61,6 +61,7 @@ public class RecipeBook implements Writable {
         }
     }
 
+    // EFFECTS: returns a recipe in this recipe book as a JSON Object
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -69,7 +70,7 @@ public class RecipeBook implements Writable {
         return json;
     }
 
-    // EFFECTS: returns things in this workroom as a JSON array
+    // EFFECTS: returns recipes in this recipe book as a JSON array
     private JSONArray recipeBookToJson() {
         JSONArray jsonArray = new JSONArray();
 

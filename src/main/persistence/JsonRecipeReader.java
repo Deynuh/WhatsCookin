@@ -1,3 +1,7 @@
+/*
+Note: this file is modelled after the JSonSerializationDemo project provided by the course coordinators.
+ */
+
 package persistence;
 
 import model.RecipeBook;
@@ -12,7 +16,7 @@ import java.util.stream.Stream;
 
 import org.json.*;
 
-// Represents a reader that reads workroom from JSON data stored in file
+// Represents a reader that reads recipe book from JSON data stored in file
 public class JsonRecipeReader {
     private String source;
 
@@ -40,7 +44,7 @@ public class JsonRecipeReader {
         return contentBuilder.toString();
     }
 
-    // EFFECTS: parses RecipeBook from JSON object and returns it
+    // EFFECTS: parses recipe book from JSON object and returns it
     private RecipeBook parseRecipeBook(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         RecipeBook rb = new RecipeBook(name);
@@ -49,7 +53,7 @@ public class JsonRecipeReader {
     }
 
     // MODIFIES: rb
-    // EFFECTS: parses Recipes from JSON object and adds them to RecipeBook
+    // EFFECTS: parses recipes from JSON object and adds them to recipe book
     private void addRecipes(RecipeBook rb, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("recipeBook");
         for (Object json : jsonArray) {
@@ -59,7 +63,7 @@ public class JsonRecipeReader {
     }
 
     // MODIFIES: rb
-    // EFFECTS: parses Recipe from JSON object and adds it to RecipeBook
+    // EFFECTS: parses recipe from JSON object and adds it to recipe book
     private void addRecipe(RecipeBook rb, JSONObject jsonObject) {
         String name = jsonObject.getString("Name");
         String description = jsonObject.getString("Description");

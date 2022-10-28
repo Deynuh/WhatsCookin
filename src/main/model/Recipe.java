@@ -64,6 +64,7 @@ public class Recipe implements Writable {
         this.ingredients = ingredients;
     }
 
+    // EFFECTS: returns this recipe as a JSONObject
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

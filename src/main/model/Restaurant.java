@@ -34,6 +34,7 @@ public class Restaurant implements Writable {
         this.description = description;
     }
 
+    // EFFECTS: returns this restaurant as a JSONObject
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

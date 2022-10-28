@@ -1,3 +1,7 @@
+/*
+Note: this file is modelled after the JSonSerializationDemo project provided by the course coordinators.
+ */
+
 package persistence;
 
 import model.Restaurant;

@@ -61,6 +61,7 @@ public class RestaurantList implements Writable {
         }
     }
 
+    // EFFECTS: returns a restaurant in this restaurant list as a JSON object
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -69,7 +70,7 @@ public class RestaurantList implements Writable {
         return json;
     }
 
-    // EFFECTS: returns things in this workroom as a JSON array
+    // EFFECTS: returns things in this restaurant list as a JSON array
     private JSONArray restaurantListToJson() {
         JSONArray jsonArray = new JSONArray();
 
