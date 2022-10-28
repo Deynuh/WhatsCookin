@@ -9,11 +9,11 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class JsonReaderTest extends JsonTest {
+class JsonRecipeReaderTest extends JsonTest {
 
     @Test
     void testReaderNonExistentFile() {
-        JsonReader reader = new JsonReader("./data/noSuchFile.json");
+        JsonRecipeReader reader = new JsonRecipeReader("./data/noSuchFile.json");
         try {
             RecipeBook rb = reader.read();
             fail("IOException expected");
@@ -24,7 +24,7 @@ class JsonReaderTest extends JsonTest {
 
     @Test
     void testReaderEmptyWorkRoom() {
-        JsonReader reader = new JsonReader("./data/testReaderEmptyWorkRoom.json");
+        JsonRecipeReader reader = new JsonRecipeReader("./data/testReaderEmptyRecipeBook.json");
         try {
             RecipeBook rb = reader.read();
             assertEquals(0, rb.getRecipeBook().size());
@@ -35,7 +35,7 @@ class JsonReaderTest extends JsonTest {
 
     @Test
     void testReaderGeneralWorkRoom() {
-        JsonReader reader = new JsonReader("./data/testReaderGeneralWorkRoom.json");
+        JsonRecipeReader reader = new JsonRecipeReader("./data/testReaderGeneralRecipeBook.json");
         try {
             RecipeBook rb = reader.read();
             ArrayList<Recipe> recipes = rb.getRecipeBook();

@@ -7,13 +7,13 @@ import org.json.JSONObject;
 import java.io.*;
 
 // Represents a writer that writes JSON representation of workroom to file
-public class JsonWriter {
+public class JsonRecipeWriter {
     private static final int TAB = 4;
     private PrintWriter writer;
     private String destination;
 
     // EFFECTS: constructs writer to write to destination file
-    public JsonWriter(String destination) {
+    public JsonRecipeWriter(String destination) {
         this.destination = destination;
     }
 

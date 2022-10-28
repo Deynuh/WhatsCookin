@@ -1,7 +1,7 @@
 package persistence;
 
-import model.RecipeBook;
-import model.Recipe;
+import model.RestaurantList;
+import model.Restaurant;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -13,20 +13,20 @@ import java.util.stream.Stream;
 import org.json.*;
 
 // Represents a reader that reads workroom from JSON data stored in file
-public class JsonReader {
+public class JsonRestaurantReader {
     private String source;
 
     // EFFECTS: constructs reader to read from source file
-    public JsonReader(String source) {
+    public JsonRestaurantReader(String source) {
         this.source = source;
     }
 
-    // EFFECTS: reads recipe book from file and returns it;
+    // EFFECTS: reads restaurant list from file and returns it;
     // throws IOException if an error occurs reading data from file
-    public RecipeBook read() throws IOException {
+    public RestaurantList read() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
-        return parseRecipeBook(jsonObject);
+        return parseRestaurantList(jsonObject);
     }
 
     // EFFECTS: reads source file as string and returns it
@@ -41,38 +41,30 @@ public class JsonReader {
     }
 
     // EFFECTS: parses RecipeBook from JSON object and returns it
-    private RecipeBook parseRecipeBook(JSONObject jsonObject) {
+    private RestaurantList parseRestaurantList(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
-        RecipeBook rb = new RecipeBook(name);
-        addRecipes(rb, jsonObject);
-        return rb;
+        RestaurantList rl = new RestaurantList(name);
+        addRestaurants(rl, jsonObject);
+        return rl;
     }
 
     // MODIFIES: rb
     // EFFECTS: parses Recipes from JSON object and adds them to RecipeBook
-    private void addRecipes(RecipeBook rb, JSONObject jsonObject) {
-        JSONArray jsonArray = jsonObject.getJSONArray("recipeBook");
+    private void addRestaurants(RestaurantList rl, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("restaurantList");
         for (Object json : jsonArray) {
-            JSONObject nextRecipe = (JSONObject) json;
-            addRecipe(rb, nextRecipe);
+            JSONObject nextRestaurant = (JSONObject) json;
+            addRestaurant(rl, nextRestaurant);
         }
     }
 
     // MODIFIES: rb
     // EFFECTS: parses Recipe from JSON object and adds it to RecipeBook
-    private void addRecipe(RecipeBook rb, JSONObject jsonObject) {
+    private void addRestaurant(RestaurantList rl, JSONObject jsonObject) {
         String name = jsonObject.getString("Name");
         String description = jsonObject.getString("Description");
-        int duration = jsonObject.getInt("Duration");
-        ArrayList<String> temp = new ArrayList<>();
 
-        JSONArray jsonArray = jsonObject.getJSONArray("Ingredients");
-        for (int i = 0; i < jsonArray.length(); i++) {
-            String ingredient = jsonArray.getString(i);
-            temp.add(ingredient);
-        }
-
-        Recipe recipe = new Recipe(name, description, duration, temp);
-        rb.addRecipe(recipe);
+        Restaurant restaurant = new Restaurant(name, description);
+        rl.addRestaurant(restaurant);
     }
 }

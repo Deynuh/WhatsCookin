@@ -1,6 +1,7 @@
 package persistence;
 
 import model.Recipe;
+import model.Restaurant;
 
 import java.util.ArrayList;
 
@@ -13,5 +14,11 @@ public class JsonTest {
         assertEquals(description, recipe.getDescription());
         assertEquals(duration, recipe.getDuration());
         assertEquals(ingredients, recipe.getIngredients());
+    }
+
+
+    protected void checkRestaurant(String name, String description, Restaurant restaurant) {
+        assertEquals(name, restaurant.getName());
+        assertEquals(description, restaurant.getDescription());
     }
 }

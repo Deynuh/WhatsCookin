@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // Represents a restaurant having a name and description
-public class Restaurant {
+public class Restaurant implements Writable {
 
     private String name;
     private String description;
@@ -31,4 +34,11 @@ public class Restaurant {
         this.description = description;
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("Name", name);
+        json.put("Description", description);
+        return json;
+    }
 }

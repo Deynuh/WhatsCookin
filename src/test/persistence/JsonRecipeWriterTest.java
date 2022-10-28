@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class JsonWriterTest extends JsonTest {
+class JsonRecipeWriterTest extends JsonTest {
     //NOTE TO CPSC 210 STUDENTS: the strategy in designing tests for the JsonWriter is to
     //write data to a file and then use the reader to read it back in and check that we
     //read in a copy of what was written out.
@@ -18,7 +18,7 @@ class JsonWriterTest extends JsonTest {
     void testWriterInvalidFile() {
         try {
             RecipeBook rb = new RecipeBook("recipeBook");
-            JsonWriter writer = new JsonWriter("./data/my\0illegal:fileName.json");
+            JsonRecipeWriter writer = new JsonRecipeWriter("./data/my\0illegal:fileName.json");
             writer.open();
             fail("IOException was expected");
         } catch (IOException e) {
@@ -30,12 +30,12 @@ class JsonWriterTest extends JsonTest {
     void testWriterEmptyWorkroom() {
         try {
             RecipeBook rb = new RecipeBook("Recipe Book");
-            JsonWriter writer = new JsonWriter("./data/testWriterEmptyWorkroom.json");
+            JsonRecipeWriter writer = new JsonRecipeWriter("./data/testWriterEmptyRecipeBook.json");
             writer.open();
             writer.write(rb);
             writer.close();
 
-            JsonReader reader = new JsonReader("./data/testWriterEmptyWorkroom.json");
+            JsonRecipeReader reader = new JsonRecipeReader("./data/testWriterEmptyRecipeBook.json");
             rb = reader.read();
             assertEquals("Recipe Book", rb.getName());
             assertEquals(0, rb.getRecipeBook().size());
@@ -53,12 +53,12 @@ class JsonWriterTest extends JsonTest {
             test.add("1st ingredient");
             test.add("2nd ingredient");
             rb.addRecipe(new Recipe("D","E",2, test));
-            JsonWriter writer = new JsonWriter("./data/testWriterGeneralWorkroom.json");
+            JsonRecipeWriter writer = new JsonRecipeWriter("./data/testWriterGeneralRecipeBook.json");
             writer.open();
             writer.write(rb);
             writer.close();
 
-            JsonReader reader = new JsonReader("./data/testWriterGeneralWorkroom.json");
+            JsonRecipeReader reader = new JsonRecipeReader("./data/testWriterGeneralRecipeBook.json");
             rb = reader.read();
             assertEquals("Recipe Book", rb.getName());
             ArrayList<Recipe> recipes = rb.getRecipeBook();
