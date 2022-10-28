@@ -77,21 +77,24 @@ public class WhatsCookinApp {
                     displayMenu("restaurant");
                     keepGoing = false;
                     break;
-                case 4:
-                    saveRecipeBook();
-                    keepGoing = false;
-                    break;
-                case 5:
-                    loadRecipeBook();
-                    keepGoing = false;
-                    break;
-                case 6:
-                    System.out.println("Goodbye!");
-                    System.exit(0);
                 default:
-                    System.out.println("That is not a valid input.");
+                    additionalOptions(command, keepGoing);
+
                     break;
             }
+        }
+    }
+
+    private void additionalOptions(int command, boolean keepGoing) {
+        if (command == 4) {
+            saveRecipeBook();
+            keepGoing = false;
+        } else if (command == 5) {
+            loadRecipeBook();
+            keepGoing = false;
+        } else if (command == 6) {
+            System.out.println("Goodbye!");
+            System.exit(0);
         }
     }
 
@@ -100,7 +103,7 @@ public class WhatsCookinApp {
     private void init() {
         ArrayList<Recipe> recipes = new ArrayList<>();
         ArrayList<Restaurant> restaurants = new ArrayList<>();
-        recipeBook = new RecipeBook("recipeBook");
+        recipeBook = new RecipeBook("Recipe Book");
         recipeBook.setRecipeBook(recipes);
         restaurantList = new RestaurantList(restaurants);
         key = new Scanner(System.in);
