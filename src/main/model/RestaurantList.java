@@ -29,7 +29,7 @@ public class RestaurantList {
         if (index == 0) {
             restaurantList.remove(0);
         } else {
-            restaurantList.remove(index - 1);
+            restaurantList.remove(index);
         }
     }
 

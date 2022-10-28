@@ -48,7 +48,7 @@ public class RecipeBook implements Writable {
         if (index == 0) {
             recipeBook.remove(0);
         } else {
-            recipeBook.remove(index - 1);
+            recipeBook.remove(index);
         }
     }
 

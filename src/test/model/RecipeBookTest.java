@@ -66,9 +66,9 @@ class RecipeBookTest {
 
     @Test
     void testRemoveRecipe() {
-        testRecipeBook.removeRecipe(0);
+        testRecipeBook.removeRecipe(1);
         assertEquals(1, testRecipeBook.getRecipeBook().size());
-        assertEquals(recipe2, testRecipeBook.getRecipeBook().get(0));
+        assertEquals(recipe1, testRecipeBook.getRecipeBook().get(0));
     }
 
     @Test

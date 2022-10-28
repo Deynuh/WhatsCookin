@@ -53,9 +53,9 @@ class RestaurantListTest {
 
     @Test
     void testRemoveRestaurant() {
-        testRestaurantList.removeRestaurant(0);
+        testRestaurantList.removeRestaurant(1);
         assertEquals(1, testRestaurantList.getRestaurantList().size());
-        assertEquals(restaurant2, testRestaurantList.getRestaurantList().get(0));
+        assertEquals(restaurant1, testRestaurantList.getRestaurantList().get(0));
     }
 
     @Test

@@ -230,9 +230,9 @@ public class WhatsCookinApp {
     //          if Object o is a RestaurantList, remove the restaurant at the index of the input
     private void deleteMenuWorking(boolean isARecipeBook, int input) {
         if (isARecipeBook) {
-            recipeBook.removeRecipe(input);
+            recipeBook.removeRecipe(input - 1);
         } else {
-            restaurantList.removeRestaurant(input);
+            restaurantList.removeRestaurant(input - 1);
         }
     }
 
