@@ -9,7 +9,6 @@ import java.util.Random;
 
 // Represents a "book" (list) of recipes
 public class RecipeBook implements Writable {
-
     private ArrayList<Recipe> recipeBook;
     private String name;
     private final Random random = new Random();
@@ -20,7 +19,7 @@ public class RecipeBook implements Writable {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {

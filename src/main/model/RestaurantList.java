@@ -1,19 +1,37 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 // Represents a list of restaurants
-public class RestaurantList {
+public class RestaurantList implements Writable {
     private final Random random = new Random();
-    private final ArrayList<Restaurant> restaurantList;
+    private String name;
+    private ArrayList<Restaurant> restaurantList;
 
-    public RestaurantList(ArrayList<Restaurant> restaurantList) {
-        this.restaurantList = restaurantList;
+    public RestaurantList(String name) {
+        this.name = name;
+        restaurantList = new ArrayList<>();
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public ArrayList<Restaurant> getRestaurantList() {
         return this.restaurantList;
+    }
+
+    public void setRestaurantList(ArrayList<Restaurant> restaurantList) {
+        this.restaurantList = restaurantList;
     }
 
     // MODIFIES: this
@@ -41,5 +59,24 @@ public class RestaurantList {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("restaurantList", restaurantListToJson());
+        return json;
+    }
+
+    // EFFECTS: returns things in this workroom as a JSON array
+    private JSONArray restaurantListToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Restaurant r : restaurantList) {
+            jsonArray.put(r.toJson());
+        }
+
+        return jsonArray;
     }
 }

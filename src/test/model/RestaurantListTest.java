@@ -25,7 +25,8 @@ class RestaurantListTest {
         testArrayList = new ArrayList<>();
         testArrayList.add(restaurant1);
         testArrayList.add(restaurant2);
-        testRestaurantList = new RestaurantList(testArrayList);
+        testRestaurantList = new RestaurantList("Restaurant List");
+        testRestaurantList.setRestaurantList(testArrayList);
     }
 
     @Test
@@ -67,7 +68,7 @@ class RestaurantListTest {
 
     @Test
     void testRandomRestaurant() {
-        RestaurantList nullRestaurantList = new RestaurantList(null);
+        RestaurantList nullRestaurantList = new RestaurantList("Null Restaurant");
         assertNotNull(testRestaurantList.randomRestaurant());
         assertNull(nullRestaurantList.randomRestaurant());
         //assertTrue(testRestaurantList.getRestaurantList().contains(testRestaurantList.randomRestaurant()));

@@ -4,8 +4,8 @@ import model.Recipe;
 import model.Restaurant;
 import model.RecipeBook;
 import model.RestaurantList;
-import persistence.JsonReader;
-import persistence.JsonWriter;
+import persistence.JsonRecipeReader;
+import persistence.JsonRecipeWriter;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -23,8 +23,8 @@ public class WhatsCookinApp {
     private int size = 0;
 
     private static final String JSON_STORE = "./data/workroom.json";
-    private JsonWriter jsonWriter;
-    private JsonReader jsonReader;
+    private JsonRecipeWriter jsonRecipeWriter;
+    private JsonRecipeReader jsonRecipeReader;
 
     // EFFECTS: runs the application
     public WhatsCookinApp() throws FileNotFoundException {
@@ -102,13 +102,14 @@ public class WhatsCookinApp {
         ArrayList<Restaurant> restaurants = new ArrayList<>();
         recipeBook = new RecipeBook("Recipe Book");
         recipeBook.setRecipeBook(recipes);
-        restaurantList = new RestaurantList(restaurants);
+        restaurantList = new RestaurantList("Restaurant List");
+        restaurantList.setRestaurantList(restaurants);
         key = new Scanner(System.in);
         //key.useDelimiter("\n"); //not sure what this does, remove if key buggy
         random = new Random();
 
-        jsonWriter = new JsonWriter(JSON_STORE);
-        jsonReader = new JsonReader(JSON_STORE);
+        jsonRecipeWriter = new JsonRecipeWriter(JSON_STORE);
+        jsonRecipeReader = new JsonRecipeReader(JSON_STORE);
     }
 
     // EFFECTS: displays menu of main options
@@ -443,9 +444,9 @@ public class WhatsCookinApp {
     // EFFECTS: saves the workroom to file
     private void saveRecipeBook() {
         try {
-            jsonWriter.open();
-            jsonWriter.write(recipeBook);
-            jsonWriter.close();
+            jsonRecipeWriter.open();
+            jsonRecipeWriter.write(recipeBook);
+            jsonRecipeWriter.close();
             System.out.println("Saved recipe book to " + JSON_STORE);
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
@@ -456,7 +457,7 @@ public class WhatsCookinApp {
     // EFFECTS: loads workroom from file
     private void loadRecipeBook() {
         try {
-            recipeBook = jsonReader.read();
+            recipeBook = jsonRecipeReader.read();
             System.out.println("Loaded recipe book from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);

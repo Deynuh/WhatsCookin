@@ -23,7 +23,7 @@ class JsonRestaurantReaderTest extends JsonTest {
     }
 
     @Test
-    void testReaderEmptyWorkRoom() {
+    void testReaderEmptyRestaurantList() {
         JsonRestaurantReader reader = new JsonRestaurantReader("./data/testReaderEmptyRestaurantList.json");
         try {
             RestaurantList rl = reader.read();
@@ -34,12 +34,12 @@ class JsonRestaurantReaderTest extends JsonTest {
     }
 
     @Test
-    void testReaderGeneralWorkRoom() {
+    void testReaderGeneralRestaurantList() {
         JsonRestaurantReader reader = new JsonRestaurantReader("./data/testReaderGeneralRestaurantList.json");
         try {
             RestaurantList rl = reader.read();
             ArrayList<Restaurant> restaurants = rl.getRestaurantList();
-            assertEquals(2, restaurants.size());
+            assertEquals(1, restaurants.size());
         } catch (IOException e) {
             fail("Couldn't read from file");
         }
