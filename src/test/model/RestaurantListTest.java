@@ -35,6 +35,13 @@ class RestaurantListTest {
     }
 
     @Test
+    void testSetName() {
+        RestaurantList noName = new RestaurantList("");
+        noName.setName("A Name");
+        assertEquals("A Name", noName.getName());
+    }
+
+    @Test
     void testAddRestaurant() {
         testRestaurantList.addRestaurant(restaurant3);
         //assertTrue(testRestaurantList.getRestaurantList().contains(restaurant1));
