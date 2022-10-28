@@ -6,6 +6,8 @@ import model.RecipeBook;
 import model.RestaurantList;
 import persistence.JsonRecipeReader;
 import persistence.JsonRecipeWriter;
+import persistence.JsonRestaurantReader;
+import persistence.JsonRestaurantWriter;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -22,9 +24,11 @@ public class WhatsCookinApp {
     private boolean isARecipeBook = true;
     private int size = 0;
 
-    private static final String JSON_STORE = "./data/workroom.json";
+    private static final String JSON_STORE = "./data/lists.json";
     private JsonRecipeWriter jsonRecipeWriter;
     private JsonRecipeReader jsonRecipeReader;
+    private JsonRestaurantWriter jsonRestaurantWriter;
+    private JsonRestaurantReader jsonRestaurantReader;
 
     // EFFECTS: runs the application
     public WhatsCookinApp() throws FileNotFoundException {
@@ -87,9 +91,9 @@ public class WhatsCookinApp {
 
     private void additionalOptions(int command) {
         if (command == 4) {
-            saveRecipeBook();
+            save();
         } else if (command == 5) {
-            loadRecipeBook();
+            load();
         } else {
             System.out.println("That is not a valid input.");
         }
@@ -110,13 +114,16 @@ public class WhatsCookinApp {
 
         jsonRecipeWriter = new JsonRecipeWriter(JSON_STORE);
         jsonRecipeReader = new JsonRecipeReader(JSON_STORE);
+
+        jsonRestaurantWriter = new JsonRestaurantWriter(JSON_STORE);
+        jsonRestaurantReader = new JsonRestaurantReader(JSON_STORE);
     }
 
     // EFFECTS: displays menu of main options
     private void displayMenuOfMainOptions() {
         System.out.println("\nWelcome to What's Cookin'!");
         System.out.println("Select from: \n 1: Random Meal Suggestion \n 2: Recipes \n 3: Restaurants");
-        System.out.println(" 4: Save Recipes \n 5: Load Recipes \n 6: Quit");
+        System.out.println(" 4: Save Recipes and Restaurants \n 5: Load Recipes and Restaurants \n 6: Quit");
 
     }
 
@@ -441,24 +448,31 @@ public class WhatsCookinApp {
         System.out.println("Description: " + restaurant.getDescription());
     }
 
-    // EFFECTS: saves the workroom to file
-    private void saveRecipeBook() {
+    // EFFECTS: saves the recipe book and restaurant list to file
+    private void save() {
         try {
             jsonRecipeWriter.open();
             jsonRecipeWriter.write(recipeBook);
             jsonRecipeWriter.close();
             System.out.println("Saved recipe book to " + JSON_STORE);
+            jsonRestaurantWriter.open();
+            jsonRestaurantWriter.write(restaurantList);
+            jsonRestaurantWriter.close();
+            System.out.println("Saved restaurant list to " + JSON_STORE);
+
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
         }
     }
 
     // MODIFIES: this
-    // EFFECTS: loads workroom from file
-    private void loadRecipeBook() {
+    // EFFECTS: loads RecipeBook and RestaurantList from file
+    private void load() {
         try {
             recipeBook = jsonRecipeReader.read();
             System.out.println("Loaded recipe book from " + JSON_STORE);
+            restaurantList = jsonRestaurantReader.read();
+            System.out.println("Loaded restaurant list from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
