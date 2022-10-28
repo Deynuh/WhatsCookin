@@ -64,8 +64,23 @@ public class JsonReader {
         String name = jsonObject.getString("Name");
         String description = jsonObject.getString("Description");
         int duration = jsonObject.getInt("Duration");
-        //ArrayList<String> ingredients = jsonObject.get("ingredients");
-        Recipe recipe = new Recipe(name, description, duration, null);
+        ArrayList<String> temp = new ArrayList<>();
+
+        try {
+            JSONArray jsonArray = jsonObject.getJSONArray("Ingredients");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                String ingredient = jsonArray.getString(i);
+                temp.add(ingredient);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Recipe recipe = new Recipe(name, description, duration, temp);
         rb.addRecipe(recipe);
+    }
+
+    public void onResponse(JSONObject response) {
+
     }
 }
