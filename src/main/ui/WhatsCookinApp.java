@@ -100,7 +100,8 @@ public class WhatsCookinApp {
     private void init() {
         ArrayList<Recipe> recipes = new ArrayList<>();
         ArrayList<Restaurant> restaurants = new ArrayList<>();
-        recipeBook = new RecipeBook(recipes);
+        recipeBook = new RecipeBook("recipeBook");
+        recipeBook.setRecipeBook(recipes);
         restaurantList = new RestaurantList(restaurants);
         key = new Scanner(System.in);
         //key.useDelimiter("\n"); //not sure what this does, remove if key buggy

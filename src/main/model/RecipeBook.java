@@ -10,17 +10,26 @@ import java.util.Random;
 // Represents a "book" (list) of recipes
 public class RecipeBook implements Writable {
 
-    private final ArrayList<Recipe> recipeBook;
+    private ArrayList<Recipe> recipeBook;
+    private String name;
     private final Random random = new Random();
 
-    public RecipeBook(ArrayList<Recipe> recipeBook) {
-        this.recipeBook = recipeBook;
+    public RecipeBook(String name) {
+        this.name = name;
+        recipeBook = new ArrayList<>();
+    }
+
+    public String getName() {
+        return name;
     }
 
     public ArrayList<Recipe> getRecipeBook() {
         return this.recipeBook;
     }
 
+    public void setRecipeBook(ArrayList<Recipe> recipeBook) {
+        this.recipeBook = recipeBook;
+    }
 
     // MODIFIES: this
     // EFFECTS:  adds a recipe to the recipe book
@@ -52,6 +61,7 @@ public class RecipeBook implements Writable {
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
+        json.put("name", name);
         json.put("recipeBook", recipeBookToJson());
         return json;
     }

@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,7 +17,7 @@ class JsonWriterTest extends JsonTest {
     @Test
     void testWriterInvalidFile() {
         try {
-            RecipeBook rb = new RecipeBook(null);
+            RecipeBook rb = new RecipeBook("recipeBook");
             JsonWriter writer = new JsonWriter("./data/my\0illegal:fileName.json");
             writer.open();
             fail("IOException was expected");
@@ -30,7 +29,7 @@ class JsonWriterTest extends JsonTest {
     @Test
     void testWriterEmptyWorkroom() {
         try {
-            RecipeBook rb = new RecipeBook(null);
+            RecipeBook rb = new RecipeBook("Recipe Book");
             JsonWriter writer = new JsonWriter("./data/testWriterEmptyWorkroom.json");
             writer.open();
             writer.write(rb);
@@ -38,6 +37,7 @@ class JsonWriterTest extends JsonTest {
 
             JsonReader reader = new JsonReader("./data/testWriterEmptyWorkroom.json");
             rb = reader.read();
+            assertEquals("Recipe Book", rb.getName());
             assertEquals(0, rb.getRecipeBook().size());
         } catch (IOException e) {
             fail("Exception should not have been thrown");
@@ -45,14 +45,14 @@ class JsonWriterTest extends JsonTest {
     }
 
     @Test
-    void testWriterGeneralWorkroom() {
+    void testWriterGeneralRecipeBook() {
         try {
-            RecipeBook rb = new RecipeBook(null);
+            RecipeBook rb = new RecipeBook("Recipe Book");
             rb.addRecipe(new Recipe("a","b",1,null));
             ArrayList<String> test = new ArrayList<>();
             test.add("1st ingredient");
             test.add("2nd ingredient");
-            rb.addRecipe(new Recipe("b","c",2, test));
+            rb.addRecipe(new Recipe("D","E",2, test));
             JsonWriter writer = new JsonWriter("./data/testWriterGeneralWorkroom.json");
             writer.open();
             writer.write(rb);
@@ -60,10 +60,11 @@ class JsonWriterTest extends JsonTest {
 
             JsonReader reader = new JsonReader("./data/testWriterGeneralWorkroom.json");
             rb = reader.read();
+            assertEquals("Recipe Book", rb.getName());
             ArrayList<Recipe> recipes = rb.getRecipeBook();
             assertEquals(2, recipes.size());
             checkRecipe("a","b",1,null, recipes.get(0));
-            checkRecipe("b","c",2,null, recipes.get(0));
+            checkRecipe("D","E",2, recipes.get(1).getIngredients(), recipes.get(1));
 
         } catch (IOException e) {
             fail("Exception should not have been thrown");

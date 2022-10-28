@@ -42,8 +42,8 @@ public class JsonReader {
 
     // EFFECTS: parses RecipeBook from JSON object and returns it
     private RecipeBook parseRecipeBook(JSONObject jsonObject) {
-        ArrayList<Recipe> recipeBook = (ArrayList<Recipe>) jsonObject.get("recipeBook");
-        RecipeBook rb = new RecipeBook(recipeBook);
+        String name = jsonObject.getString("name");
+        RecipeBook rb = new RecipeBook(name);
         addRecipes(rb, jsonObject);
         return rb;
     }
@@ -64,8 +64,8 @@ public class JsonReader {
         String name = jsonObject.getString("Name");
         String description = jsonObject.getString("Description");
         int duration = jsonObject.getInt("Duration");
-        ArrayList<String> ingredients = (ArrayList<String>) jsonObject.get("Ingredients");
-        Recipe recipe = new Recipe(name, description, duration, ingredients);
+        //ArrayList<String> ingredients = jsonObject.get("ingredients");
+        Recipe recipe = new Recipe(name, description, duration, null);
         rb.addRecipe(recipe);
     }
 }

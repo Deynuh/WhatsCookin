@@ -25,7 +25,8 @@ class RecipeBookTest {
         testArrayList = new ArrayList<>();
         testArrayList.add(recipe1);
         testArrayList.add(recipe2);
-        testRecipeBook = new RecipeBook(testArrayList);
+        testRecipeBook = new RecipeBook("test");
+        testRecipeBook.setRecipeBook(testArrayList);
     }
 
     @Test
@@ -66,7 +67,7 @@ class RecipeBookTest {
     }
     @Test
     void testRandomRecipe() {
-        RecipeBook nullRecipeBook = new RecipeBook(null);
+        RecipeBook nullRecipeBook = new RecipeBook("null");
         assertNull(nullRecipeBook.randomRecipe());
         assertNotNull(testRecipeBook.randomRecipe());
         //assertTrue(testRecipeBook.getRecipeBook().contains(testRecipeBook.randomRecipe()));
