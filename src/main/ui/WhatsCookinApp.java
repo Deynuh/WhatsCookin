@@ -24,7 +24,8 @@ public class WhatsCookinApp {
     private boolean isARecipeBook = true;
     private int size = 0;
 
-    private static final String JSON_STORE = "./data/lists.json";
+    private static final String RESTAURANTS_JSON = "./data/restaurants.json";
+    private static final String RECIPES_JSON = "./data/recipes.json";
     private JsonRecipeWriter jsonRecipeWriter;
     private JsonRecipeReader jsonRecipeReader;
     private JsonRestaurantWriter jsonRestaurantWriter;
@@ -112,11 +113,11 @@ public class WhatsCookinApp {
         //key.useDelimiter("\n"); //not sure what this does, remove if key buggy
         random = new Random();
 
-        jsonRecipeWriter = new JsonRecipeWriter(JSON_STORE);
-        jsonRecipeReader = new JsonRecipeReader(JSON_STORE);
+        jsonRecipeWriter = new JsonRecipeWriter(RECIPES_JSON);
+        jsonRecipeReader = new JsonRecipeReader(RECIPES_JSON);
 
-        jsonRestaurantWriter = new JsonRestaurantWriter(JSON_STORE);
-        jsonRestaurantReader = new JsonRestaurantReader(JSON_STORE);
+        jsonRestaurantWriter = new JsonRestaurantWriter(RESTAURANTS_JSON);
+        jsonRestaurantReader = new JsonRestaurantReader(RESTAURANTS_JSON);
     }
 
     // EFFECTS: displays menu of main options
@@ -454,14 +455,15 @@ public class WhatsCookinApp {
             jsonRecipeWriter.open();
             jsonRecipeWriter.write(recipeBook);
             jsonRecipeWriter.close();
-            System.out.println("Saved recipe book to " + JSON_STORE);
+            System.out.println("Saved recipe book to " + RECIPES_JSON);
             jsonRestaurantWriter.open();
             jsonRestaurantWriter.write(restaurantList);
             jsonRestaurantWriter.close();
-            System.out.println("Saved restaurant list to " + JSON_STORE);
+            System.out.println("Saved restaurant list to " + RESTAURANTS_JSON);
 
         } catch (FileNotFoundException e) {
-            System.out.println("Unable to write to file: " + JSON_STORE);
+            System.out.println("Unable to write to file: " + RECIPES_JSON);
+            System.out.println("Unable to write to file: " + RESTAURANTS_JSON);
         }
     }
 
@@ -470,11 +472,12 @@ public class WhatsCookinApp {
     private void load() {
         try {
             recipeBook = jsonRecipeReader.read();
-            System.out.println("Loaded recipe book from " + JSON_STORE);
+            System.out.println("Loaded recipe book from " + RECIPES_JSON);
             restaurantList = jsonRestaurantReader.read();
-            System.out.println("Loaded restaurant list from " + JSON_STORE);
+            System.out.println("Loaded restaurant list from " + RESTAURANTS_JSON);
         } catch (IOException e) {
-            System.out.println("Unable to read from file: " + JSON_STORE);
+            System.out.println("Unable to read from file: " + RECIPES_JSON);
+            System.out.println("Unable to read from file: " + RESTAURANTS_JSON);
         }
     }
 
