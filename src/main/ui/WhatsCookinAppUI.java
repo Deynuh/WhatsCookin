@@ -1,22 +1,22 @@
 /*
 Note: this file is modelled after the AlarmSystem file provided by the course coordinators
  */
+
 package ui;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.FileNotFoundException;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 
 public class WhatsCookinAppUI extends JFrame {
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
 
-    private JDesktopPane desktop;
-    private JInternalFrame controlPanel;
+    private JPanel panel;
 
     private Color fillColor;
 
@@ -24,39 +24,36 @@ public class WhatsCookinAppUI extends JFrame {
 
     // EFFECTS: constructor creates interface to display WhatsCookingApp UI
     public WhatsCookinAppUI() {
-        try {
+        /*try {
             wca = new WhatsCookinApp();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
-        }
+        }*/
 
-        desktop = new JDesktopPane();
-        desktop.addMouseListener(new DesktopFocusAction());
-        controlPanel = new JInternalFrame("Control Panel", false, false, false, false);
-        controlPanel.setLayout(new BorderLayout());
-
-        setContentPane(desktop);
-        setTitle("What's Cookin?");
+        setDefaultLookAndFeelDecorated(true);
         setSize(WIDTH, HEIGHT);
+        setTitle("What's Cookin'?");
+//
+//        panel = new JPanel();
+//        //panel.setLayout(new GridLayout(2, 2));
+//        panel.addMouseListener(new DesktopFocusAction());
+//
+        addButtons();
+//        add(panel);
 
-        addButtonPanel(); //buttons for randomizer, recipes menu, restaurants menu
-        //addMenu(); //save and load menus?
-
-        controlPanel.pack();
-        controlPanel.setVisible(true);
-        desktop.add(controlPanel);
-
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        //pack();
         centreOnScreen();
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //panel.setVisible(true);
         setVisible(true);
     }
 
     @Override
     public void paint(Graphics g) {
-        super.paint(g);
-        g.setColor(fillColor);
-        g.fillRect(0, 0, getWidth(), getHeight());
-        g.setColor(Color.BLACK);
+        //super.paint(g);
+        //g.setColor(fillColor);
+        //g.fillRect(0, 0, getWidth(), getHeight());
+        //g.setColor(Color.BLACK);
     }
 
     /**
@@ -82,14 +79,13 @@ public class WhatsCookinAppUI extends JFrame {
     /**
      * Helper to add control buttons.
      */
-    private void addButtonPanel() {
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(1,2));
-        buttonPanel.add(new JButton(new RandomizerAction()));
-        buttonPanel.add(new JButton(new RemoveCodeAction()));
-        buttonPanel.add(new JButton(new ArmAction()));
+    private void addButtons() {
+        add(new JButton(new RandomizerAction()));
+        add(new JButton(new RecipesAction()));
+        add(new JButton(new RestaurantsAction()));
+        add(new JButton(new SaveAction()));
+        add(new JButton(new LoadAction()));
 
-        controlPanel.add(buttonPanel, BorderLayout.\);
     }
 
     private class RandomizerAction extends AbstractAction {
@@ -100,14 +96,58 @@ public class WhatsCookinAppUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            AlarmCode alarmCode = new AlarmCode(kp.getCode());
-            kp.clearCode();
-            try {
-                ac.addCode(alarmCode);
-            } catch (NotValidCodeException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "System Error",
-                        JOptionPane.ERROR_MESSAGE);
-            }
+            String test = JOptionPane.showInputDialog(null,
+                    "test message",
+                    "test title",
+                    JOptionPane.QUESTION_MESSAGE);
+        }
+    }
+
+    private class RecipesAction extends AbstractAction {
+
+        RecipesAction() {
+            super("Recipes");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+
+        }
+    }
+
+    private class RestaurantsAction extends AbstractAction {
+
+        RestaurantsAction() {
+            super("Restaurants");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+
+        }
+    }
+
+    private class SaveAction extends AbstractAction {
+
+        SaveAction() {
+            super("Save");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+
+        }
+    }
+
+    private class LoadAction extends AbstractAction {
+
+        LoadAction() {
+            super("Load");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+
         }
     }
 
