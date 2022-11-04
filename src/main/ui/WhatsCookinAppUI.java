@@ -8,14 +8,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.border.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 public class WhatsCookinAppUI extends JFrame {
     private static final int WIDTH = 800;
@@ -49,6 +45,7 @@ public class WhatsCookinAppUI extends JFrame {
         setDefaultLookAndFeelDecorated(true);
         panel.setVisible(true);
         setVisible(true);
+        setResizable(false);
     }
 
     @Override
@@ -179,10 +176,13 @@ public class WhatsCookinAppUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            String test = JOptionPane.showInputDialog(null,
-                    "test message",
-                    "test title",
-                    JOptionPane.QUESTION_MESSAGE);
+            JFrame randomFrame = new JFrame("Test");
+            randomFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            randomFrame.getContentPane().add(BorderLayout.CENTER, panel);
+            randomFrame.pack();
+            randomFrame.setLocationByPlatform(true);
+            randomFrame.setVisible(true);
+            randomFrame.setResizable(false);
         }
     }
 
