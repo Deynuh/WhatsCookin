@@ -23,8 +23,6 @@ public class WhatsCookinAppUI extends JFrame {
 
     private JPanel panel;
 
-    private Color fillColor;
-
     private WhatsCookinApp wca;
 
     // EFFECTS: constructor creates interface to display WhatsCookingApp UI
@@ -36,7 +34,7 @@ public class WhatsCookinAppUI extends JFrame {
         }*/
         panel = new JPanel();
         //panel.setLayout(new GridLayout(2,3));
-        panel.setBackground(new Color(255, 253, 208));
+        panel.setBackground(new Color(238, 233, 207));
         addButtons();
 
         add(panel);
@@ -46,7 +44,7 @@ public class WhatsCookinAppUI extends JFrame {
         pack();
         setSize(new Dimension(WIDTH, HEIGHT));
         centreOnScreen();
-        setBackground(new Color(255, 253, 208));
+        setBackground(new Color(238, 233, 207));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setDefaultLookAndFeelDecorated(true);
         panel.setVisible(true);
@@ -103,14 +101,13 @@ public class WhatsCookinAppUI extends JFrame {
         editButtonAppearance(buttons);
         addButtonHoverAction(buttons);
 
-        for (int i = 0; i < buttons.size(); i++) {
-            panel.add(buttons.get(i));
+        for (JButton button : buttons) {
+            panel.add(button);
         }
     }
 
     private void addButtonHoverAction(ArrayList<JButton> buttons) {
-        for (int i = 0; i < buttons.size(); i++) {
-            JButton button = buttons.get(i);
+        for (JButton button : buttons) {
             button.addMouseListener(new MouseAdapter() {
                 public void mouseEntered(MouseEvent me) {
                     button.setBorder(new SoftBevelBorder(BevelBorder.LOWERED));
