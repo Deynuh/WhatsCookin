@@ -10,7 +10,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 
 public class WhatsCookinAppUI extends JFrame {
     private static final int WIDTH = 800;
@@ -31,26 +30,20 @@ public class WhatsCookinAppUI extends JFrame {
         }*/
 
         setDefaultLookAndFeelDecorated(true);
+        setLayout(new GridLayout(2,3));
         setSize(WIDTH, HEIGHT);
         setTitle("What's Cookin'?");
-//
-//        panel = new JPanel();
-//        //panel.setLayout(new GridLayout(2, 2));
-//        panel.addMouseListener(new DesktopFocusAction());
-//
-        addButtons();
-//        add(panel);
 
-        //pack();
+        addButtons();
+        pack();
         centreOnScreen();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        //panel.setVisible(true);
         setVisible(true);
     }
 
     @Override
     public void paint(Graphics g) {
-        //super.paint(g);
+        super.paint(g);
         //g.setColor(fillColor);
         //g.fillRect(0, 0, getWidth(), getHeight());
         //g.setColor(Color.BLACK);
@@ -86,6 +79,8 @@ public class WhatsCookinAppUI extends JFrame {
         add(new JButton(new SaveAction()));
         add(new JButton(new LoadAction()));
 
+        //revalidate();
+        //repaint();
     }
 
     private class RandomizerAction extends AbstractAction {
