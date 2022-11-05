@@ -17,7 +17,12 @@ public class WhatsCookinAppUI extends JFrame {
     private static final int WIDTH = 800;
     private static final int HEIGHT = 250;
 
-    private JPanel panel;
+    private JPanel panelHolder;
+    private JPanel mainPanel;
+    private JPanel randomizerPanel;
+    private JPanel recipesPanel;
+    private JPanel restaurantsPanel;
+    private CardLayout layout;
 
     private WhatsCookinApp wca;
 
@@ -28,13 +33,17 @@ public class WhatsCookinAppUI extends JFrame {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }*/
-        panel = new JPanel();
-        //panel.setLayout(new GridLayout(2,3));
-        panel.setBackground(new Color(238, 233, 207));
+
+        layout = new CardLayout();
+        panelHolder = new JPanel();
+        panelHolder.setLayout(layout);
+
+        mainPanel = new JPanel();
+        mainPanel.setBackground(new Color(238, 233, 207));
         addButtons();
 
-        add(panel);
-        //setSize(WIDTH, HEIGHT);
+        panelHolder.add(mainPanel, "main");
+        add(panelHolder);
         setTitle("What's Cookin'?");
 
         pack();
@@ -43,7 +52,7 @@ public class WhatsCookinAppUI extends JFrame {
         setBackground(new Color(238, 233, 207));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setDefaultLookAndFeelDecorated(true);
-        panel.setVisible(true);
+        mainPanel.setVisible(true);
         setVisible(true);
         setResizable(false);
     }
@@ -99,7 +108,7 @@ public class WhatsCookinAppUI extends JFrame {
         addButtonHoverAction(buttons);
 
         for (JButton button : buttons) {
-            panel.add(button);
+            mainPanel.add(button);
         }
     }
 
@@ -176,13 +185,73 @@ public class WhatsCookinAppUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            JFrame randomFrame = new JFrame("Test");
-            randomFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            randomFrame.getContentPane().add(BorderLayout.CENTER, panel);
-            randomFrame.pack();
-            randomFrame.setLocationByPlatform(true);
-            randomFrame.setVisible(true);
-            randomFrame.setResizable(false);
+            createRandomizerPanel();
+            layout.show(panelHolder, "Randomizer");
+        }
+    }
+
+    private void createRandomizerPanel() {
+        randomizerPanel = new JPanel();
+        randomizerPanel.setBackground(new Color(238, 233, 207));
+
+        addRandomizerButtons();
+
+        panelHolder.add(randomizerPanel, "Randomizer");
+        mainPanel.setVisible(false);
+        randomizerPanel.setVisible(true);
+    }
+
+    private void addRandomizerButtons() {
+        ArrayList<JButton> buttons = new ArrayList<>();
+        JButton b1 = new JButton(new RandRecipeAction());
+        JButton b2 = new JButton(new RandRestoAction());
+        JButton b3 = new JButton(new RandAnyAction());
+
+        buttons.add(b1);
+        buttons.add(b2);
+        buttons.add(b3);
+
+        editButtonAppearance(buttons);
+        addButtonHoverAction(buttons);
+
+        for (JButton button : buttons) {
+            randomizerPanel.add(button);
+        }
+    }
+
+    private class RandRecipeAction extends AbstractAction {
+
+        RandRecipeAction() {
+            super("Choose a recipe");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+
+        }
+    }
+
+    private class RandRestoAction extends AbstractAction {
+
+        RandRestoAction() {
+            super("Choose a restaurant");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+
+        }
+    }
+
+    private class RandAnyAction extends AbstractAction {
+
+        RandAnyAction() {
+            super("Choose for me");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+
         }
     }
 
@@ -190,6 +259,72 @@ public class WhatsCookinAppUI extends JFrame {
 
         RecipesAction() {
             super("Recipes");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            createRecipesPanel();
+            layout.show(panelHolder, "Recipes");
+        }
+    }
+
+    private void createRecipesPanel() {
+        recipesPanel = new JPanel();
+        recipesPanel.setBackground(new Color(238, 233, 207));
+
+        addRecipesButtons();
+
+        panelHolder.add(recipesPanel, "Recipes");
+        mainPanel.setVisible(false);
+        recipesPanel.setVisible(true);
+    }
+
+    private void addRecipesButtons() {
+        ArrayList<JButton> buttons = new ArrayList<>();
+        JButton b1 = new JButton(new AddRecipeAction());
+        JButton b2 = new JButton(new DeleteRecipeAction());
+        JButton b3 = new JButton(new ViewRecipeAction());
+
+        buttons.add(b1);
+        buttons.add(b2);
+        buttons.add(b3);
+
+        editButtonAppearance(buttons);
+        addButtonHoverAction(buttons);
+
+        for (JButton button : buttons) {
+            recipesPanel.add(button);
+        }
+    }
+
+    private class AddRecipeAction extends AbstractAction {
+
+        AddRecipeAction() {
+            super("Add");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+
+        }
+    }
+
+    private class DeleteRecipeAction extends AbstractAction {
+
+        DeleteRecipeAction() {
+            super("Delete");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+
+        }
+    }
+
+    private class ViewRecipeAction extends AbstractAction {
+
+        ViewRecipeAction() {
+            super("View Recipes");
         }
 
         @Override
@@ -206,6 +341,72 @@ public class WhatsCookinAppUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
+            createRestaurantsPanel();
+            layout.show(panelHolder, "Restaurants");
+        }
+    }
+
+    private void createRestaurantsPanel() {
+        restaurantsPanel = new JPanel();
+        restaurantsPanel.setBackground(new Color(238, 233, 207));
+
+        addRestaurantsButtons();
+
+        panelHolder.add(restaurantsPanel, "Restaurants");
+        mainPanel.setVisible(false);
+        restaurantsPanel.setVisible(true);
+    }
+
+    private void addRestaurantsButtons() {
+        ArrayList<JButton> buttons = new ArrayList<>();
+        JButton b1 = new JButton(new AddRestaurantAction());
+        JButton b2 = new JButton(new DeleteRestaurantAction());
+        JButton b3 = new JButton(new ViewRestaurantAction());
+
+        buttons.add(b1);
+        buttons.add(b2);
+        buttons.add(b3);
+
+        editButtonAppearance(buttons);
+        addButtonHoverAction(buttons);
+
+        for (JButton button : buttons) {
+            restaurantsPanel.add(button);
+        }
+    }
+
+    private class AddRestaurantAction extends AbstractAction {
+
+        AddRestaurantAction() {
+            super("Add");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+
+        }
+    }
+
+    private class DeleteRestaurantAction extends AbstractAction {
+
+        DeleteRestaurantAction() {
+            super("Delete");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+
+        }
+    }
+
+    private class ViewRestaurantAction extends AbstractAction {
+
+        ViewRestaurantAction() {
+            super("View Restaurants");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent evt) {
 
         }
     }
@@ -218,7 +419,9 @@ public class WhatsCookinAppUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-
+            Graphics g = mainPanel.getGraphics();
+            mainPanel.paint(g);
+            g.drawString("Saved!",380, 200);
         }
     }
 
@@ -230,7 +433,9 @@ public class WhatsCookinAppUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-
+            Graphics g = mainPanel.getGraphics();
+            mainPanel.paint(g);
+            g.drawString("Loaded!",375, 200);
         }
     }
 
