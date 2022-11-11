@@ -4,6 +4,9 @@ Note: this file is modelled after the AlarmSystem file provided by the course co
 
 package ui;
 
+import model.RecipeBook;
+import model.RestaurantList;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -26,6 +29,8 @@ public class WhatsCookinAppUI extends JFrame {
     private CardLayout layout;
 
     private WhatsCookinApp wca;
+    private RecipeBook rb;
+    private RestaurantList rl;
 
     // EFFECTS: constructor creates interface to display WhatsCookingApp UI
     public WhatsCookinAppUI() {
@@ -227,7 +232,15 @@ public class WhatsCookinAppUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            //randomizer thingie
+            //wca.getRandom("recipe", rb.getRecipeBook());
+            Graphics g = mainPanel.getGraphics();
+            randomizerPanel.paint(g);
+
+            if (rb.getRecipeBook().size() == 0) {
+                g.drawString("You have no recipes. Please add a recipe first.",375, 200);
+            } else {
+                g.drawString("You should make: " + rb.randomRecipe().getName(), 375, 200);
+            }
         }
     }
 

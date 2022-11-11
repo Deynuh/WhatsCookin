@@ -103,7 +103,7 @@ public class WhatsCookinApp {
 
     // MODIFIES: this
     // EFFECTS:  initializes recipe book and recipe list
-    private void init() {
+    public void init() {
         ArrayList<Recipe> recipes = new ArrayList<>();
         ArrayList<Restaurant> restaurants = new ArrayList<>();
         recipeBook = new RecipeBook("Recipe Book");
@@ -226,7 +226,7 @@ public class WhatsCookinApp {
 
     // EFFECTS: if Object o is a RecipeBook, set size to size of the RecipeBook
     //          if Object o is a RestaurantList, set size to size of the RestaurantList
-    private void chooseObjectSize(Object o) {
+    public void chooseObjectSize(Object o) {
         if (o instanceof RecipeBook) {
             size = (recipeBook.getRecipeBook().size());
             isARecipeBook = true;
@@ -280,7 +280,7 @@ public class WhatsCookinApp {
     // REQUIRES: non-empty RecipeBook if getting a RecipeBook
     //           non-empty RestaurantList if getting a RestaurantList
     // EFFECTS:  gives the user a random recipe or restaurant based on user input
-    private void getRandom(String type, Object o) {
+    public void getRandom(String type, Object o) {
         chooseObjectSize(o);
         if (size == 0) {
             System.out.println("You have no " + type + "s. Please add a " + type + " first.");
