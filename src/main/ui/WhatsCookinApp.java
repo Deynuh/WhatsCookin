@@ -33,7 +33,8 @@ public class WhatsCookinApp {
 
     // EFFECTS: runs the application
     public WhatsCookinApp() throws FileNotFoundException {
-        runApp();
+        //runApp();
+        init();
     }
 
     // MODIFIES: this

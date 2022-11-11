@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -28,11 +29,11 @@ public class WhatsCookinAppUI extends JFrame {
 
     // EFFECTS: constructor creates interface to display WhatsCookingApp UI
     public WhatsCookinAppUI() {
-        /*try {
+        try {
             wca = new WhatsCookinApp();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
-        }*/
+        }
 
         layout = new CardLayout();
         panelHolder = new JPanel();
@@ -176,7 +177,6 @@ public class WhatsCookinAppUI extends JFrame {
         buttons.get(4).setIcon(saveImage);
     }
 
-
     private class RandomizerAction extends AbstractAction {
 
         RandomizerAction() {
@@ -227,7 +227,7 @@ public class WhatsCookinAppUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-
+            //randomizer thingie
         }
     }
 
