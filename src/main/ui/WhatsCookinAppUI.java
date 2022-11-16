@@ -4,6 +4,7 @@ Note: this file is modelled after the AlarmSystem file provided by the course co
 
 package ui;
 
+import model.Recipe;
 import model.RecipeBook;
 import model.RestaurantList;
 
@@ -380,6 +381,19 @@ public class WhatsCookinAppUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
+            Object[] recipeArray = wca.recipeBook().getRecipeBook().toArray();
+            String[] names = new String[recipeArray.length];
+            for (int i = 0; i < recipeArray.length; i++) {
+                names[i] = recipeArray[i].toString();
+            }
+
+            JComboBox deleteOptions = new JComboBox<>(names);
+
+            JPanel deleteRecipePanel = new JPanel();
+            deleteRecipePanel.add(deleteOptions);
+
+            JOptionPane.showConfirmDialog(null, deleteRecipePanel,
+                    "Deleting A Recipe", JOptionPane.OK_CANCEL_OPTION);
 
         }
     }
