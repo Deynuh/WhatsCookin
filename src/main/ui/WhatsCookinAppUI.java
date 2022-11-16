@@ -21,16 +21,14 @@ public class WhatsCookinAppUI extends JFrame {
     private static final int WIDTH = 800;
     private static final int HEIGHT = 250;
 
-    private JPanel panelHolder;
     private JPanel mainPanel;
     private JPanel randomizerPanel;
     private JPanel recipesPanel;
     private JPanel restaurantsPanel;
-    private CardLayout layout;
 
     private WhatsCookinApp wca;
-    private RecipeBook rb;
-    private RestaurantList rl;
+    //private RecipeBook rb;
+    //private RestaurantList rl;
 
     // EFFECTS: constructor creates interface to display WhatsCookingApp UI
     public WhatsCookinAppUI() {
@@ -40,19 +38,13 @@ public class WhatsCookinAppUI extends JFrame {
             throw new RuntimeException(e);
         }
 
-        layout = new CardLayout();
-        panelHolder = new JPanel();
-        panelHolder.setLayout(layout);
-
         mainPanel = new JPanel();
         mainPanel.setBackground(new Color(238, 233, 207));
         addButtons();
 
-        panelHolder.add(mainPanel, "main");
-        add(panelHolder);
-        setTitle("What's Cookin'?");
-
+        add(mainPanel);
         pack();
+        setTitle("What's Cookin'?");
         setSize(new Dimension(WIDTH, HEIGHT));
         centreOnScreen();
         setBackground(new Color(238, 233, 207));
@@ -146,6 +138,7 @@ public class WhatsCookinAppUI extends JFrame {
             button.setBorder(new SoftBevelBorder(BevelBorder.RAISED));
             button.setBorderPainted(true);
             button.setBackground(new Color(232, 211, 185));
+
             button.setForeground(Color.BLACK);
         }
     }
@@ -191,7 +184,9 @@ public class WhatsCookinAppUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent evt) {
             createRandomizerPanel();
-            layout.show(panelHolder, "Randomizer");
+            mainPanel.setVisible(false);
+            setContentPane(randomizerPanel);
+            randomizerPanel.setVisible(true);
         }
     }
 
@@ -200,10 +195,6 @@ public class WhatsCookinAppUI extends JFrame {
         randomizerPanel.setBackground(new Color(238, 233, 207));
 
         addRandomizerButtons();
-
-        panelHolder.add(randomizerPanel, "Randomizer");
-        mainPanel.setVisible(false);
-        randomizerPanel.setVisible(true);
     }
 
     private void addRandomizerButtons() {
@@ -211,16 +202,30 @@ public class WhatsCookinAppUI extends JFrame {
         JButton b1 = new JButton(new RandRecipeAction());
         JButton b2 = new JButton(new RandRestoAction());
         JButton b3 = new JButton(new RandAnyAction());
+        JButton b4 = new JButton(new BackButtonAction());
 
         buttons.add(b1);
         buttons.add(b2);
         buttons.add(b3);
+        buttons.add(b4);
 
         editButtonAppearance(buttons);
         addButtonHoverAction(buttons);
 
         for (JButton button : buttons) {
             randomizerPanel.add(button);
+        }
+    }
+
+    private class BackButtonAction extends AbstractAction {
+        BackButtonAction() {
+            super("Go back");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            setContentPane(mainPanel);
+            mainPanel.setVisible(true);
         }
     }
 
@@ -236,10 +241,10 @@ public class WhatsCookinAppUI extends JFrame {
             Graphics g = mainPanel.getGraphics();
             randomizerPanel.paint(g);
 
-            if (rb.getRecipeBook().size() == 0) {
+            if (wca.recipeBook.getRecipeBook().size() == 0) {
                 g.drawString("You have no recipes. Please add a recipe first.",375, 200);
             } else {
-                g.drawString("You should make: " + rb.randomRecipe().getName(), 375, 200);
+                g.drawString("You should make: " + wca.recipeBook.randomRecipe().getName(), 375, 200);
             }
         }
     }
@@ -252,7 +257,7 @@ public class WhatsCookinAppUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-
+            //wca.
         }
     }
 
@@ -277,7 +282,9 @@ public class WhatsCookinAppUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent evt) {
             createRecipesPanel();
-            layout.show(panelHolder, "Recipes");
+            mainPanel.setVisible(false);
+            setContentPane(recipesPanel);
+            recipesPanel.setVisible(true);
         }
     }
 
@@ -286,10 +293,6 @@ public class WhatsCookinAppUI extends JFrame {
         recipesPanel.setBackground(new Color(238, 233, 207));
 
         addRecipesButtons();
-
-        panelHolder.add(recipesPanel, "Recipes");
-        mainPanel.setVisible(false);
-        recipesPanel.setVisible(true);
     }
 
     private void addRecipesButtons() {
@@ -297,10 +300,12 @@ public class WhatsCookinAppUI extends JFrame {
         JButton b1 = new JButton(new AddRecipeAction());
         JButton b2 = new JButton(new DeleteRecipeAction());
         JButton b3 = new JButton(new ViewRecipeAction());
+        JButton b4 = new JButton(new BackButtonAction());
 
         buttons.add(b1);
         buttons.add(b2);
         buttons.add(b3);
+        buttons.add(b4);
 
         editButtonAppearance(buttons);
         addButtonHoverAction(buttons);
@@ -318,9 +323,48 @@ public class WhatsCookinAppUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
+            JTextField recipeName = new JTextField(10);
+            JTextArea recipeDescription = new JTextArea(2, 20);
+            JTextField recipeDuration = new JTextField(5);
+            //recipeIngredients = new JTextField(5); //CREATE A LIST, ceebs rn
+
+            JButton repeatButton = new JButton(new RepeatAction());
+
+            JPanel addRecipePanel = new JPanel();
+            addRecipePanel.add(new JLabel("Recipe name "));
+            addRecipePanel.add(recipeName);
+            addRecipePanel.add(Box.createHorizontalStrut(5)); // a spacer
+            addRecipePanel.add(new JLabel("Recipe description "));
+            addRecipePanel.add(recipeDescription);
+            addRecipePanel.add(Box.createHorizontalStrut(5)); // a spacer
+            addRecipePanel.add(new JLabel("Recipe duration (minutes) "));
+            addRecipePanel.add(recipeDuration);
+            addRecipePanel.add(repeatButton);
+
+            JOptionPane.showConfirmDialog(null, addRecipePanel,
+                    "Adding A Recipe", JOptionPane.OK_CANCEL_OPTION); //how to make just ok?
+
+            String name = recipeName.getText().toString();
+            String description = recipeDescription.getText().toString();
+            int duration = Integer.parseInt(recipeDuration.getText().toString());
+
+            wca.addRecipe(name, description, duration);
+            System.out.println(wca.recipeBook.getRecipeBook().get(0).getName()); //for testing
+        }
+    }
+
+    private class RepeatAction extends AbstractAction {
+
+        RepeatAction() {
+            super("Add another one");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent evt) {
 
         }
     }
+
 
     private class DeleteRecipeAction extends AbstractAction {
 
@@ -355,7 +399,9 @@ public class WhatsCookinAppUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent evt) {
             createRestaurantsPanel();
-            layout.show(panelHolder, "Restaurants");
+            mainPanel.setVisible(false);
+            setContentPane(restaurantsPanel);
+            restaurantsPanel.setVisible(true);
         }
     }
 
@@ -364,10 +410,6 @@ public class WhatsCookinAppUI extends JFrame {
         restaurantsPanel.setBackground(new Color(238, 233, 207));
 
         addRestaurantsButtons();
-
-        panelHolder.add(restaurantsPanel, "Restaurants");
-        mainPanel.setVisible(false);
-        restaurantsPanel.setVisible(true);
     }
 
     private void addRestaurantsButtons() {
@@ -375,10 +417,12 @@ public class WhatsCookinAppUI extends JFrame {
         JButton b1 = new JButton(new AddRestaurantAction());
         JButton b2 = new JButton(new DeleteRestaurantAction());
         JButton b3 = new JButton(new ViewRestaurantAction());
+        JButton b4 = new JButton(new BackButtonAction());
 
         buttons.add(b1);
         buttons.add(b2);
         buttons.add(b3);
+        buttons.add(b4);
 
         editButtonAppearance(buttons);
         addButtonHoverAction(buttons);
@@ -451,5 +495,4 @@ public class WhatsCookinAppUI extends JFrame {
             g.drawString("Loaded!",375, 200);
         }
     }
-
 }

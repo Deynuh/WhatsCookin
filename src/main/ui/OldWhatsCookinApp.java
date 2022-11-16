@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 // Recipe-managing application called "What's Cookin'"
-public class WhatsCookinApp {
+public class OldWhatsCookinApp {
     public RecipeBook recipeBook; //changed for testing
     private RestaurantList restaurantList;
     private Scanner key;
@@ -32,7 +32,7 @@ public class WhatsCookinApp {
     private JsonRestaurantReader jsonRestaurantReader;
 
     // EFFECTS: runs the application
-    public WhatsCookinApp() throws FileNotFoundException {
+    public OldWhatsCookinApp() throws FileNotFoundException {
         //runApp();
         init();
     }
