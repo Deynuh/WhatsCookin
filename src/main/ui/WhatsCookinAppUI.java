@@ -241,10 +241,10 @@ public class WhatsCookinAppUI extends JFrame {
             Graphics g = mainPanel.getGraphics();
             randomizerPanel.paint(g);
 
-            if (wca.recipeBook.getRecipeBook().size() == 0) {
+            if (wca.recipeBook().getRecipeBook().size() == 0) {
                 g.drawString("You have no recipes. Please add a recipe first.",375, 200);
             } else {
-                g.drawString("You should make: " + wca.recipeBook.randomRecipe().getName(), 375, 200);
+                g.drawString("You should make: " + wca.recipeBook().randomRecipe().getName(), 375, 200);
             }
         }
     }
@@ -323,12 +323,16 @@ public class WhatsCookinAppUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
+//            JButton repeatButton = new JButton(new RepeatAction()); //implement
+//
+//            if (repeatButton.isSelected())
             JTextField recipeName = new JTextField(10);
             JTextArea recipeDescription = new JTextArea(2, 20);
             JTextField recipeDuration = new JTextField(5);
-            //recipeIngredients = new JTextField(5); //CREATE A LIST, ceebs rn
+            //recipeIngredients = new JTextField(5); //CREATE A LIST, implement
+            //ArrayList<String> listOfIngredients = new ArrayList<>();
+            //JList recipeIngredients = new JList(listOfIngredients);
 
-            JButton repeatButton = new JButton(new RepeatAction());
 
             JPanel addRecipePanel = new JPanel();
             addRecipePanel.add(new JLabel("Recipe name "));
@@ -339,7 +343,7 @@ public class WhatsCookinAppUI extends JFrame {
             addRecipePanel.add(Box.createHorizontalStrut(5)); // a spacer
             addRecipePanel.add(new JLabel("Recipe duration (minutes) "));
             addRecipePanel.add(recipeDuration);
-            addRecipePanel.add(repeatButton);
+            //addRecipePanel.add(repeatButton);
 
             JOptionPane.showConfirmDialog(null, addRecipePanel,
                     "Adding A Recipe", JOptionPane.OK_CANCEL_OPTION); //how to make just ok?
@@ -349,21 +353,23 @@ public class WhatsCookinAppUI extends JFrame {
             int duration = Integer.parseInt(recipeDuration.getText().toString());
 
             wca.addRecipe(name, description, duration);
-            System.out.println(wca.recipeBook.getRecipeBook().get(0).getName()); //for testing
+            for (int i = 0; i < wca.recipeBook().getRecipeBook().size(); i++) {
+                System.out.println(wca.recipeBook().getRecipeBook().get(i).getName()); //for testing
+            }
         }
     }
 
-    private class RepeatAction extends AbstractAction {
-
-        RepeatAction() {
-            super("Add another one");
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent evt) {
-
-        }
-    }
+//    private class RepeatAction extends AbstractAction {
+//
+//        RepeatAction() {
+//            super("Add another one");
+//        }
+//
+//        @Override
+//        public void actionPerformed(ActionEvent evt) {
+//            new AddRecipeAction();
+//        }
+//    }
 
 
     private class DeleteRecipeAction extends AbstractAction {
