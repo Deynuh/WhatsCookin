@@ -79,36 +79,25 @@ public class WhatsCookinApp {
     // MODIFIES: this
     // EFFECTS:  adds a recipe to the recipe book
     public void addRecipe(String name, String description, int duration) {
-        Recipe recipe = new Recipe("", "", 0, null);
-
-        recipe.setName(name);
-        recipe.setDescription(description);
-        recipe.setDuration(duration);
-        //recipe.setIngredients(ingredients);
+        Recipe recipe = new Recipe(name, description, duration, null);
 
         recipeBook.addRecipe(recipe);
-        isARecipeBook = true;
+        //isARecipeBook = true;
+    }
+
+    public void addRestaurant(String name, String description) {
+        Restaurant restaurant = new Restaurant(name, description);
+        restaurantList.addRestaurant(restaurant);
+        //isARecipeBook
     }
 
     public void deleteRecipe(int index) {
         recipeBook.removeRecipe(index);
     }
 
-    // MODIFIES: this
-    // EFFECTS:  adds a restaurant to the restaurant list
-    private void addRestaurant() {
-        Restaurant restaurant = new Restaurant("", "");
-
-        System.out.println("Restaurant name: ");
-        restaurant.setName(key.next()); //try nextLine if buggy
-
-        System.out.println("Restaurant description: ");
-        restaurant.setDescription(key.next());
-
-        restaurantList.addRestaurant(restaurant);
-        isARecipeBook = false;
+    public void deleteRestaurant(int index) {
+        restaurantList.removeRestaurant(index);
     }
-
 
     // EFFECTS: saves the recipe book and restaurant list to file
     public void save() {

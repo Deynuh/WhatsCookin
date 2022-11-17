@@ -5,14 +5,12 @@ Note: this file is modelled after the AlarmSystem file provided by the course co
 package ui;
 
 import model.Recipe;
-import model.RecipeBook;
-import model.RestaurantList;
+import model.Restaurant;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
@@ -27,13 +25,14 @@ public class WhatsCookinAppUI extends JFrame {
     private JPanel randomizerPanel;
     private JFrame viewRecipesFrame;
     private JPanel viewRecipesPanel;
-    private JPanel restaurantsPanel;
+    private JFrame viewRestaurantsFrame;
+    private JPanel viewRestaurantsPanel;
+
 
     private JList recipes;
+    private JList restaurants;
 
     private WhatsCookinApp wca;
-    //private RecipeBook rb;
-    //private RestaurantList rl;
 
     // EFFECTS: constructor creates interface to display WhatsCookingApp UI
     public WhatsCookinAppUI() {
@@ -96,7 +95,7 @@ public class WhatsCookinAppUI extends JFrame {
         ArrayList<JButton> buttons = new ArrayList<>();
         JButton b1 = new JButton(new RandomizerAction());
         JButton b2 = new JButton(new ViewRecipesAction());
-        JButton b3 = new JButton(new RestaurantsAction());
+        JButton b3 = new JButton(new ViewRestaurantAction());
         JButton b4 = new JButton(new SaveAction());
         JButton b5 = new JButton(new LoadAction());
 
@@ -410,47 +409,6 @@ public class WhatsCookinAppUI extends JFrame {
         }
     }
 
-    private class RestaurantsAction extends AbstractAction {
-
-        RestaurantsAction() {
-            super("Restaurants");
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent evt) {
-            createRestaurantsPanel();
-            mainPanel.setVisible(false);
-            setContentPane(restaurantsPanel);
-            restaurantsPanel.setVisible(true);
-        }
-    }
-
-    private void createRestaurantsPanel() {
-        restaurantsPanel = new JPanel();
-        restaurantsPanel.setBackground(new Color(238, 233, 207));
-
-        addRestaurantsButtons();
-    }
-
-    private void addRestaurantsButtons() {
-        ArrayList<JButton> buttons = new ArrayList<>();
-        JButton b1 = new JButton(new AddRestaurantAction());
-        JButton b2 = new JButton(new DeleteRestaurantAction());
-        JButton b3 = new JButton(new ViewRestaurantAction());
-        JButton b4 = new JButton(new BackButtonAction());
-
-        buttons.add(b1);
-        buttons.add(b2);
-        buttons.add(b3);
-        buttons.add(b4);
-
-        editButtonAppearance(buttons);
-        addButtonHoverAction(buttons);
-
-        for (JButton button : buttons) {
-            restaurantsPanel.add(button);
-        }
-    }
 
     private class AddRestaurantAction extends AbstractAction {
 
@@ -460,7 +418,23 @@ public class WhatsCookinAppUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
+            JTextField restaurantName = new JTextField(10);
+            JTextField restaurantDescription = new JTextField(10);
 
+            JPanel addRestaurantPanel = new JPanel();
+            addRestaurantPanel.add(new JLabel("Restaurant name "));
+            addRestaurantPanel.add(restaurantName);
+            addRestaurantPanel.add(Box.createHorizontalStrut(5)); // a spacer
+            addRestaurantPanel.add(new JLabel("Restaurant description "));
+            addRestaurantPanel.add(restaurantDescription);
+
+            JOptionPane.showConfirmDialog(null, addRestaurantPanel,
+                    "Adding A Restaurant", JOptionPane.OK_CANCEL_OPTION); //how to make just ok?
+
+            String name = restaurantName.getText().toString();
+            String description = restaurantDescription.getText().toString();
+
+            wca.addRestaurant(name, description);
         }
     }
 
@@ -472,18 +446,61 @@ public class WhatsCookinAppUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
+            Object[] restaurantArray = wca.restaurantList().getRestaurantList().toArray();
+            String[] names = new String[restaurantArray.length];
+            for (int i = 0; i < restaurantArray.length; i++) {
+                names[i] = ((Restaurant) restaurantArray[i]).getName();
+            }
 
+            JComboBox deleteOptions = new JComboBox<>(names);
+
+            JPanel deleteRestaurantPanel = new JPanel();
+            deleteRestaurantPanel.add(deleteOptions);
+
+            JOptionPane.showConfirmDialog(null, deleteRestaurantPanel,
+                    "Delete A Restaurant", JOptionPane.OK_CANCEL_OPTION);
+
+            //System.out.println(deleteOptions.getSelectedItem());
+
+            String name = deleteOptions.getSelectedItem().toString();
+
+            for (int i = 0; i < wca.restaurantList().getRestaurantList().size(); i++) {
+                if (wca.restaurantList().getRestaurantList().get(i).getName().equals(name)) {
+                    wca.deleteRestaurant(i);
+                }
+            }
         }
     }
 
     private class ViewRestaurantAction extends AbstractAction {
 
         ViewRestaurantAction() {
-            super("View Restaurants");
+            super("Restaurant");
         }
 
         @Override
         public void actionPerformed(ActionEvent evt) {
+            Object[] restaurantsArray = wca.restaurantList().getRestaurantList().toArray();
+            String[] names = new String[restaurantsArray.length];
+            for (int i = 0; i < restaurantsArray.length; i++) {
+                names[i] = ((Restaurant) restaurantsArray[i]).getName();
+            }
+            restaurants = new JList(names);
+
+            viewRestaurantsFrame = new JFrame();
+            viewRestaurantsPanel = new JPanel();
+
+            JButton addOneRestaurant = new JButton(new AddRestaurantAction());
+            JButton deleteOneRestaurant = new JButton(new DeleteRestaurantAction());
+
+            viewRestaurantsPanel.add(addOneRestaurant);
+            viewRestaurantsPanel.add(deleteOneRestaurant); //make better eventually
+
+            viewRestaurantsPanel.add(restaurants);
+            viewRestaurantsFrame.add(viewRestaurantsPanel);
+
+            viewRestaurantsFrame.setSize(500,500);
+            viewRestaurantsFrame.setVisible(true);
 
         }
     }
@@ -497,7 +514,6 @@ public class WhatsCookinAppUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent evt) {
             wca.save();
-
 
             //Displaying "Saved!"
             Graphics g = mainPanel.getGraphics();
@@ -515,7 +531,6 @@ public class WhatsCookinAppUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent evt) {
             wca.load();
-
 
             //Displaying "Loaded!"
             Graphics g = mainPanel.getGraphics();
