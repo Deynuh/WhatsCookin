@@ -93,7 +93,7 @@ public class WhatsCookinAppUI extends JFrame {
     private void addButtons() { //figure out how to make it look the same full screen
         ArrayList<JButton> buttons = new ArrayList<>();
         JButton b1 = new JButton(new RandomizerAction());
-        JButton b2 = new JButton(new RecipesAction());
+        JButton b2 = new JButton(new ViewRecipesAction());
         JButton b3 = new JButton(new RestaurantsAction());
         JButton b4 = new JButton(new SaveAction());
         JButton b5 = new JButton(new LoadAction());
@@ -276,47 +276,6 @@ public class WhatsCookinAppUI extends JFrame {
         }
     }
 
-    private class RecipesAction extends AbstractAction {
-
-        RecipesAction() {
-            super("Recipes");
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent evt) {
-            createRecipesPanel();
-            mainPanel.setVisible(false);
-            setContentPane(recipesPanel);
-            recipesPanel.setVisible(true);
-        }
-    }
-
-    private void createRecipesPanel() {
-        recipesPanel = new JPanel();
-        recipesPanel.setBackground(new Color(238, 233, 207));
-
-        addRecipesButtons();
-    }
-
-    private void addRecipesButtons() {
-        ArrayList<JButton> buttons = new ArrayList<>();
-        JButton b1 = new JButton(new AddRecipeAction());
-        JButton b2 = new JButton(new DeleteRecipeAction());
-        JButton b3 = new JButton(new ViewRecipeAction());
-        JButton b4 = new JButton(new BackButtonAction());
-
-        buttons.add(b1);
-        buttons.add(b2);
-        buttons.add(b3);
-        buttons.add(b4);
-
-        editButtonAppearance(buttons);
-        addButtonHoverAction(buttons);
-
-        for (JButton button : buttons) {
-            recipesPanel.add(button);
-        }
-    }
 
     private class AddRecipeAction extends AbstractAction {
 
@@ -404,10 +363,10 @@ public class WhatsCookinAppUI extends JFrame {
         }
     }
 
-    private class ViewRecipeAction extends AbstractAction {
+    private class ViewRecipesAction extends AbstractAction {
 
-        ViewRecipeAction() {
-            super("View Recipes");
+        ViewRecipesAction() {
+            super("Recipes");
         }
 
         @Override
@@ -422,9 +381,9 @@ public class WhatsCookinAppUI extends JFrame {
             JFrame viewRecipesFrame = new JFrame();
             JPanel viewRecipesPanel = new JPanel();
 
-            //JButton addOneRecipe = new JButton(new AddRecipeAction());
+            JButton addOneRecipe = new JButton(new AddRecipeAction());
 
-            //viewRecipesPanel.add(addOneRecipe);
+            viewRecipesPanel.add(addOneRecipe);
 
             //display that recipe or refresh the list!
 
