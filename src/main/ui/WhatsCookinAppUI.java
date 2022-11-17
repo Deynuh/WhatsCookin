@@ -27,6 +27,8 @@ public class WhatsCookinAppUI extends JFrame {
     private JPanel recipesPanel;
     private JPanel restaurantsPanel;
 
+    private JList recipes;
+
     private WhatsCookinApp wca;
     //private RecipeBook rb;
     //private RestaurantList rl;
@@ -353,7 +355,11 @@ public class WhatsCookinAppUI extends JFrame {
             String description = recipeDescription.getText().toString();
             int duration = Integer.parseInt(recipeDuration.getText().toString());
 
+
             wca.addRecipe(name, description, duration);
+
+            //find a way to add it to the JList and update JList
+
             for (int i = 0; i < wca.recipeBook().getRecipeBook().size(); i++) {
                 System.out.println(wca.recipeBook().getRecipeBook().get(i).getName()); //for testing
             }
@@ -384,7 +390,7 @@ public class WhatsCookinAppUI extends JFrame {
             Object[] recipeArray = wca.recipeBook().getRecipeBook().toArray();
             String[] names = new String[recipeArray.length];
             for (int i = 0; i < recipeArray.length; i++) {
-                names[i] = recipeArray[i].toString();
+                names[i] = ((Recipe) recipeArray[i]).getName();
             }
 
             JComboBox deleteOptions = new JComboBox<>(names);
@@ -406,6 +412,32 @@ public class WhatsCookinAppUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
+            Object[] recipeArray = wca.recipeBook().getRecipeBook().toArray();
+            String[] names = new String[recipeArray.length];
+            for (int i = 0; i < recipeArray.length; i++) {
+                names[i] = ((Recipe) recipeArray[i]).getName();
+            }
+            recipes = new JList(names);
+
+            JFrame viewRecipesFrame = new JFrame();
+            JPanel viewRecipesPanel = new JPanel();
+
+            //JButton addOneRecipe = new JButton(new AddRecipeAction());
+
+            //viewRecipesPanel.add(addOneRecipe);
+
+            //display that recipe or refresh the list!
+
+//            while (addOneRecipe.isSelected()) {
+//                recipes.ensureIndexIsVisible(names.length);
+//                recipes.updateUI(); // DO THIS IN ADD BUTTON ACTION?
+//            }
+
+            viewRecipesPanel.add(recipes);
+            viewRecipesFrame.add(viewRecipesPanel);
+
+            viewRecipesFrame.setSize(500,500);
+            viewRecipesFrame.setVisible(true);
 
         }
     }
