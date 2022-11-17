@@ -1,7 +1,4 @@
 {
-    "restaurantList": [{
-        "Description": "a",
-        "Name": "a"
-    }],
+    "restaurantList": [],
     "name": "Restaurant List"
 }

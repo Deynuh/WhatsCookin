@@ -111,7 +111,7 @@ public class WhatsCookinApp {
 
 
     // EFFECTS: saves the recipe book and restaurant list to file
-    private void save() {
+    public void save() {
         try {
             jsonRecipeWriter.open();
             jsonRecipeWriter.write(recipeBook);
@@ -130,7 +130,7 @@ public class WhatsCookinApp {
 
     // MODIFIES: this
     // EFFECTS: loads RecipeBook and RestaurantList from file
-    private void load() {
+    public void load() {
         try {
             recipeBook = jsonRecipeReader.read();
             System.out.println("Loaded recipe book from " + RECIPES_JSON);

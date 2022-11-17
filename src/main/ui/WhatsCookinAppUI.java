@@ -496,6 +496,10 @@ public class WhatsCookinAppUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
+            wca.save();
+
+
+            //Displaying "Saved!"
             Graphics g = mainPanel.getGraphics();
             mainPanel.paint(g);
             g.drawString("Saved!",380, 200);
@@ -510,6 +514,10 @@ public class WhatsCookinAppUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
+            wca.load();
+
+
+            //Displaying "Loaded!"
             Graphics g = mainPanel.getGraphics();
             mainPanel.paint(g);
             g.drawString("Loaded!",375, 200);
