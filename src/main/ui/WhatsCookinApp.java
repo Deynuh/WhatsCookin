@@ -90,6 +90,10 @@ public class WhatsCookinApp {
         isARecipeBook = true;
     }
 
+    public void deleteRecipe(int index) {
+        recipeBook.removeRecipe(index);
+    }
+
     // MODIFIES: this
     // EFFECTS:  adds a restaurant to the restaurant list
     private void addRestaurant() {

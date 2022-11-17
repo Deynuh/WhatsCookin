@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
@@ -24,7 +25,8 @@ public class WhatsCookinAppUI extends JFrame {
 
     private JPanel mainPanel;
     private JPanel randomizerPanel;
-    private JPanel recipesPanel;
+    private JFrame viewRecipesFrame;
+    private JPanel viewRecipesPanel;
     private JPanel restaurantsPanel;
 
     private JList recipes;
@@ -317,11 +319,9 @@ public class WhatsCookinAppUI extends JFrame {
 
             wca.addRecipe(name, description, duration);
 
+            //viewRecipesPanel.validate();
+            //wviewRecipesPanel.repaint();
             //find a way to add it to the JList and update JList
-
-            for (int i = 0; i < wca.recipeBook().getRecipeBook().size(); i++) {
-                System.out.println(wca.recipeBook().getRecipeBook().get(i).getName()); //for testing
-            }
         }
     }
 
@@ -358,8 +358,17 @@ public class WhatsCookinAppUI extends JFrame {
             deleteRecipePanel.add(deleteOptions);
 
             JOptionPane.showConfirmDialog(null, deleteRecipePanel,
-                    "Deleting A Recipe", JOptionPane.OK_CANCEL_OPTION);
+                    "Delete A Recipe", JOptionPane.OK_CANCEL_OPTION);
 
+            //System.out.println(deleteOptions.getSelectedItem());
+
+            String name = deleteOptions.getSelectedItem().toString();
+
+            for (int i = 0; i < wca.recipeBook().getRecipeBook().size(); i++) {
+                if (wca.recipeBook().getRecipeBook().get(i).getName().equals(name)) {
+                    wca.deleteRecipe(i);
+                }
+            }
         }
     }
 
@@ -378,19 +387,14 @@ public class WhatsCookinAppUI extends JFrame {
             }
             recipes = new JList(names);
 
-            JFrame viewRecipesFrame = new JFrame();
-            JPanel viewRecipesPanel = new JPanel();
+            viewRecipesFrame = new JFrame();
+            viewRecipesPanel = new JPanel();
 
             JButton addOneRecipe = new JButton(new AddRecipeAction());
+            JButton deleteOneRecipe = new JButton(new DeleteRecipeAction());
 
             viewRecipesPanel.add(addOneRecipe);
-
-            //display that recipe or refresh the list!
-
-//            while (addOneRecipe.isSelected()) {
-//                recipes.ensureIndexIsVisible(names.length);
-//                recipes.updateUI(); // DO THIS IN ADD BUTTON ACTION?
-//            }
+            viewRecipesPanel.add(deleteOneRecipe); //make better eventually
 
             viewRecipesPanel.add(recipes);
             viewRecipesFrame.add(viewRecipesPanel);
@@ -398,6 +402,11 @@ public class WhatsCookinAppUI extends JFrame {
             viewRecipesFrame.setSize(500,500);
             viewRecipesFrame.setVisible(true);
 
+//            while (viewRecipesFrame.hasFocus()) {
+//                System.out.println("do stuff");
+//                recipes.ensureIndexIsVisible(names.length);
+//                recipes.updateUI();
+//            }
         }
     }
 
