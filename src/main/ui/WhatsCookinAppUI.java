@@ -13,6 +13,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.concurrent.Flow;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -50,7 +51,7 @@ public class WhatsCookinAppUI extends JFrame {
         pack();
         setTitle("What's Cookin'?");
         setSize(new Dimension(WIDTH, HEIGHT));
-        centreOnScreen();
+        centreOnScreen(this);
         setBackground(new Color(238, 233, 207));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setDefaultLookAndFeelDecorated(true);
@@ -59,6 +60,8 @@ public class WhatsCookinAppUI extends JFrame {
         setResizable(false);
     }
 
+    // MODIFIES: this
+    // EFFECTS:  paints the frame
     @Override
     public void paint(Graphics g) {
         super.paint(g);
@@ -68,30 +71,17 @@ public class WhatsCookinAppUI extends JFrame {
         //g.fillRect(0, 0, getWidth(), getHeight());
     }
 
-    /**
-     * Represents action to be taken when user clicks desktop
-     * to switch focus. (Needed for key handling.)
-     */
-    private class DesktopFocusAction extends MouseAdapter {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            WhatsCookinAppUI.this.requestFocusInWindow();
-        }
-    }
-
-    /**
-     * Helper to centre main application window on desktop
-     */
-    private void centreOnScreen() {
+     // MODIFIES: this
+     // EFFECTS: centres main application window on desktop
+    private void centreOnScreen(JFrame frame) {
         int width = Toolkit.getDefaultToolkit().getScreenSize().width;
         int height = Toolkit.getDefaultToolkit().getScreenSize().height;
-        setLocation((width - getWidth()) / 2, (height - getHeight()) / 2);
+        frame.setLocation((width - getWidth()) / 2, (height - getHeight()) / 2);
     }
 
-    /**
-     * Helper to add control buttons.
-     */
-    private void addButtons() { //figure out how to make it look the same full screen
+    // MODIFIES: mainPanel, this
+    // EFFECTS:  adds buttons to the main panel
+    private void addButtons() {
         ArrayList<JButton> buttons = new ArrayList<>();
         JButton b1 = new JButton(new RandomizerAction());
         JButton b2 = new JButton(new ViewRecipesAction());
@@ -114,6 +104,7 @@ public class WhatsCookinAppUI extends JFrame {
         }
     }
 
+    // EFFECTS: adds hover animation to buttons
     private void addButtonHoverAction(ArrayList<JButton> buttons) {
         for (JButton button : buttons) {
             button.addMouseListener(new MouseAdapter() {
@@ -128,6 +119,7 @@ public class WhatsCookinAppUI extends JFrame {
         }
     }
 
+    // EFFECTS: edits button appearances
     private void editButtonAppearance(ArrayList<JButton> buttons) {
         for (int i = 0; i < buttons.size(); i++) {
             JButton button = buttons.get(i);
@@ -147,6 +139,7 @@ public class WhatsCookinAppUI extends JFrame {
         }
     }
 
+    // EFFECTS: adds image icons to buttons
     private void addButtonIcons(ArrayList<JButton> buttons) {
         // RANDOMIZER BUTTON
         ImageIcon randomImage = new ImageIcon("images/random.png");
@@ -179,6 +172,7 @@ public class WhatsCookinAppUI extends JFrame {
         buttons.get(4).setIcon(saveImage);
     }
 
+    // EFFECTS: creates randomizer panel and sets it to content pane
     private class RandomizerAction extends AbstractAction {
 
         RandomizerAction() {
@@ -194,6 +188,7 @@ public class WhatsCookinAppUI extends JFrame {
         }
     }
 
+    // EFFECTS: creates a new JPanel for the randomizer
     private void createRandomizerPanel() {
         randomizerPanel = new JPanel();
         randomizerPanel.setBackground(new Color(238, 233, 207));
@@ -201,6 +196,8 @@ public class WhatsCookinAppUI extends JFrame {
         addRandomizerButtons();
     }
 
+    // MODIFIES: randomizerPanel
+    // EFFECTS: adds buttons to the randomizer panel
     private void addRandomizerButtons() {
         ArrayList<JButton> buttons = new ArrayList<>();
         JButton b1 = new JButton(new RandRecipeAction());
@@ -221,6 +218,7 @@ public class WhatsCookinAppUI extends JFrame {
         }
     }
 
+    // EFFECTS: goes back to main page
     private class BackButtonAction extends AbstractAction {
         BackButtonAction() {
             super("Go back");
@@ -233,6 +231,7 @@ public class WhatsCookinAppUI extends JFrame {
         }
     }
 
+    // EFFECTS: gives a random recipe or asks the user to add a recipe if no recipes
     private class RandRecipeAction extends AbstractAction {
 
         RandRecipeAction() {
@@ -253,6 +252,7 @@ public class WhatsCookinAppUI extends JFrame {
         }
     }
 
+    // EFFECTS: gives a random restaurant or asks the user to add a restaurant if no restaurants
     private class RandRestoAction extends AbstractAction {
 
         RandRestoAction() {
@@ -265,6 +265,7 @@ public class WhatsCookinAppUI extends JFrame {
         }
     }
 
+    // EFFECTS: gives a random recipe/restaurant or asks the user to add a recipe/restaurant if no recipes/restaurants
     private class RandAnyAction extends AbstractAction {
 
         RandAnyAction() {
@@ -277,7 +278,8 @@ public class WhatsCookinAppUI extends JFrame {
         }
     }
 
-
+    // MODIFIES: recipeBook
+    // EFFECTS: adds a recipe to the recipe book
     private class AddRecipeAction extends AbstractAction {
 
         AddRecipeAction() {
@@ -297,7 +299,7 @@ public class WhatsCookinAppUI extends JFrame {
             //JList recipeIngredients = new JList(listOfIngredients);
 
 
-            JPanel addRecipePanel = new JPanel();
+            JPanel addRecipePanel = new JPanel(new FlowLayout());
             addRecipePanel.add(new JLabel("Recipe name "));
             addRecipePanel.add(recipeName);
             addRecipePanel.add(Box.createHorizontalStrut(5)); // a spacer
@@ -311,9 +313,9 @@ public class WhatsCookinAppUI extends JFrame {
             JOptionPane.showConfirmDialog(null, addRecipePanel,
                     "Adding A Recipe", JOptionPane.OK_CANCEL_OPTION); //how to make just ok?
 
-            String name = recipeName.getText().toString();
-            String description = recipeDescription.getText().toString();
-            int duration = Integer.parseInt(recipeDuration.getText().toString());
+            String name = recipeName.getText();
+            String description = recipeDescription.getText();
+            int duration = Integer.parseInt(recipeDuration.getText());
 
 
             wca.addRecipe(name, description, duration);
@@ -336,7 +338,8 @@ public class WhatsCookinAppUI extends JFrame {
 //        }
 //    }
 
-
+    // MODIFIES: recipeBook
+    // EFFECTS: removes a recipe from the recipe book
     private class DeleteRecipeAction extends AbstractAction {
 
         DeleteRecipeAction() {
@@ -371,6 +374,7 @@ public class WhatsCookinAppUI extends JFrame {
         }
     }
 
+    // EFFECTS: shows the recipe book with add and delete functions
     private class ViewRecipesAction extends AbstractAction {
 
         ViewRecipesAction() {
@@ -392,24 +396,36 @@ public class WhatsCookinAppUI extends JFrame {
             JButton addOneRecipe = new JButton(new AddRecipeAction());
             JButton deleteOneRecipe = new JButton(new DeleteRecipeAction());
 
+            ArrayList<JButton> buttons = new ArrayList<>();
+            buttons.add(addOneRecipe);
+            buttons.add(deleteOneRecipe);
+
+            editRecipeButtons(buttons);
+
+            centreOnScreen(viewRecipesFrame);
+            viewRecipesPanel.setBackground(new Color(238, 233, 207));
+
             viewRecipesPanel.add(addOneRecipe);
             viewRecipesPanel.add(deleteOneRecipe); //make better eventually
-
             viewRecipesPanel.add(recipes);
-            viewRecipesFrame.add(viewRecipesPanel);
 
+            viewRecipesFrame.add(viewRecipesPanel);
             viewRecipesFrame.setSize(500,500);
             viewRecipesFrame.setVisible(true);
-
-//            while (viewRecipesFrame.hasFocus()) {
-//                System.out.println("do stuff");
-//                recipes.ensureIndexIsVisible(names.length);
-//                recipes.updateUI();
-//            }
         }
     }
 
+    // EFFECTS: edits recipe buttons appearance
+    private void editRecipeButtons(ArrayList<JButton> buttons) {
+        editButtonAppearance(buttons);
+        addButtonHoverAction(buttons);
+        for (JButton button : buttons) {
+            button.setPreferredSize(new Dimension(75, 25));
+        }
+    }
 
+    // MODIFIES: restaurantList
+    // EFFECTS: adds a restaurant to the restaurant list
     private class AddRestaurantAction extends AbstractAction {
 
         AddRestaurantAction() {
@@ -438,6 +454,8 @@ public class WhatsCookinAppUI extends JFrame {
         }
     }
 
+    // MODIFIES: restaurantList
+    // EFFECTS: adds a restaurant to the restaurant list
     private class DeleteRestaurantAction extends AbstractAction {
 
         DeleteRestaurantAction() {
@@ -472,6 +490,7 @@ public class WhatsCookinAppUI extends JFrame {
         }
     }
 
+    // EFFECTS: shows the restaurant list with add and delete functions
     private class ViewRestaurantAction extends AbstractAction {
 
         ViewRestaurantAction() {
@@ -492,6 +511,14 @@ public class WhatsCookinAppUI extends JFrame {
 
             JButton addOneRestaurant = new JButton(new AddRestaurantAction());
             JButton deleteOneRestaurant = new JButton(new DeleteRestaurantAction());
+            ArrayList<JButton> buttons = new ArrayList<>();
+            buttons.add(addOneRestaurant);
+            buttons.add(deleteOneRestaurant);
+
+            editRestaurantButtons(buttons);
+
+            centreOnScreen(viewRestaurantsFrame);
+            viewRestaurantsPanel.setBackground(new Color(238, 233, 207));
 
             viewRestaurantsPanel.add(addOneRestaurant);
             viewRestaurantsPanel.add(deleteOneRestaurant); //make better eventually
@@ -505,6 +532,17 @@ public class WhatsCookinAppUI extends JFrame {
         }
     }
 
+    // EFFECTS: edits restaurant button appearance
+    private void editRestaurantButtons(ArrayList<JButton> buttons) {
+        editButtonAppearance(buttons);
+        addButtonHoverAction(buttons);
+
+        for (JButton button : buttons) {
+            button.setPreferredSize(new Dimension(75, 25));
+        }
+    }
+
+    // EFFECTS: saves recipes to recipe book and restaurants to restaurant list
     private class SaveAction extends AbstractAction {
 
         SaveAction() {
@@ -522,6 +560,7 @@ public class WhatsCookinAppUI extends JFrame {
         }
     }
 
+    // EFFECTS: loads recipes from recipe book and restaurants from restaurant list
     private class LoadAction extends AbstractAction {
 
         LoadAction() {

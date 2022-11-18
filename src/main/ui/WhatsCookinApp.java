@@ -85,16 +85,22 @@ public class WhatsCookinApp {
         //isARecipeBook = true;
     }
 
+    // MODIFIES: this
+    // EFFECTS:  adds a restaurant to the recipe book
     public void addRestaurant(String name, String description) {
         Restaurant restaurant = new Restaurant(name, description);
         restaurantList.addRestaurant(restaurant);
         //isARecipeBook
     }
 
+    // MODIFIES: this
+    // EFFECTS:  removes a recipe from the recipe book
     public void deleteRecipe(int index) {
         recipeBook.removeRecipe(index);
     }
 
+    // MODIFIES: this
+    // EFFECTS:  removes a restaurant from the recipe book
     public void deleteRestaurant(int index) {
         restaurantList.removeRestaurant(index);
     }
