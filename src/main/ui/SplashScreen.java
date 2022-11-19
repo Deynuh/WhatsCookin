@@ -58,6 +58,8 @@ public class SplashScreen extends JWindow {
         gbc.gridx = 0;
         gbc.gridy = 2;
         panel.add(label, gbc);
+
+        progressBar.setStringPainted(true);
         progressBar.setMaximum(PROGBAR_MAX);
         container.add(panel);
         container.add(progressBar, BorderLayout.SOUTH);
