@@ -9,7 +9,6 @@ import model.Restaurant;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
@@ -17,6 +16,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.*;
 
+// Recipe-managing application called "What's Cookin'"
 public class WhatsCookinAppUI extends JFrame {
     private static final int WIDTH = 800;
     private static final int HEIGHT = 250;

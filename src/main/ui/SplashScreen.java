@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
+// Splash screen for the application
 public class SplashScreen extends JWindow {
 
     private static JProgressBar progressBar = new JProgressBar();
@@ -16,6 +17,7 @@ public class SplashScreen extends JWindow {
     private static int TIMER_PAUSE = 25;
     private static int PROGBAR_MAX = 40;
     private static Timer progressBarTimer;
+
     ActionListener al = new ActionListener() {
 
         @Override
@@ -31,10 +33,13 @@ public class SplashScreen extends JWindow {
         }
     };
 
+
     public SplashScreen() {
         createSplash();
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates the splash screen
     private void createSplash() {
         Container container = getContentPane();
 
@@ -64,6 +69,7 @@ public class SplashScreen extends JWindow {
         startProgressBar();
     }
 
+    // EFFECTS: creates and adds logo image
     private JLabel getLogo() {
         ImageIcon logo = new ImageIcon("images/logo.png");
         Image newLogo = logo.getImage().getScaledInstance(300,250, Image.SCALE_SMOOTH);
@@ -71,11 +77,13 @@ public class SplashScreen extends JWindow {
         return new JLabel(logo);
     }
 
+    // EFFECTS: starts the progress bar
     private void startProgressBar() {
         progressBarTimer = new Timer(TIMER_PAUSE, al);
         progressBarTimer.start();
     }
 
+    // EFFECTS: helps the splash screen run
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
 
