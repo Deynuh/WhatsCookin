@@ -9,6 +9,7 @@ import model.Restaurant;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
@@ -33,8 +34,12 @@ public class WhatsCookinAppUI extends JFrame {
 
     private WhatsCookinApp wca;
 
+    private static SplashScreen splashScreen;
+
     // EFFECTS: constructor creates interface to display WhatsCookingApp UI
     public WhatsCookinAppUI() {
+        splashScreen = new SplashScreen();
+
         try {
             wca = new WhatsCookinApp();
         } catch (FileNotFoundException e) {
@@ -56,6 +61,7 @@ public class WhatsCookinAppUI extends JFrame {
         mainPanel.setVisible(true);
         setVisible(true);
         setResizable(false);
+
     }
 
     // MODIFIES: this
@@ -324,18 +330,6 @@ public class WhatsCookinAppUI extends JFrame {
         }
     }
 
-//    private class RepeatAction extends AbstractAction {
-//
-//        RepeatAction() {
-//            super("Add another one");
-//        }
-//
-//        @Override
-//        public void actionPerformed(ActionEvent evt) {
-//            new AddRecipeAction();
-//        }
-//    }
-
     // MODIFIES: recipeBook
     // EFFECTS: removes a recipe from the recipe book
     private class DeleteRecipeAction extends AbstractAction {
@@ -359,8 +353,6 @@ public class WhatsCookinAppUI extends JFrame {
 
             JOptionPane.showConfirmDialog(null, deleteRecipePanel,
                     "Delete A Recipe", JOptionPane.OK_CANCEL_OPTION);
-
-            //System.out.println(deleteOptions.getSelectedItem());
 
             String name = deleteOptions.getSelectedItem().toString();
 
@@ -475,8 +467,6 @@ public class WhatsCookinAppUI extends JFrame {
 
             JOptionPane.showConfirmDialog(null, deleteRestaurantPanel,
                     "Delete A Restaurant", JOptionPane.OK_CANCEL_OPTION);
-
-            //System.out.println(deleteOptions.getSelectedItem());
 
             String name = deleteOptions.getSelectedItem().toString();
 

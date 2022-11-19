@@ -46,6 +46,6 @@ clicking on ***Recipes***, clicking ***Add***, inputting a recipe ***Name (Strin
 ***Duration (int)***, then clicking ***OK***.
 - You can generate the second required event related to adding recipes to a recipe book by clicking on ***Recipes***, 
 clicking ***Delete***, choosing which recipe you want to delete in the dropdown, then clicking ***OK***.
-- You can locate my visual component by starting the application
+- You can locate my visual component by starting the application and seeing the splash screen.
 - You can save the state of my application by clicking ***Save*** in the main menu.
 - You can reload the state of my application by clicking ***Load*** in the main menu.
