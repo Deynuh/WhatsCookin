@@ -41,11 +41,12 @@ what meal I should have
 
 # Instructions for Grader
 
-- You can generate the first required event related to adding recipes to a recipe book by starting the application, 
-clicking on ***Recipes***, clicking ***Add***, inputting a recipe ***Name (String)***, ***Description (String)***, and 
-***Duration (int)***, then clicking ***OK***.
-- You can generate the second required event related to adding recipes to a recipe book by clicking on ***Recipes***, 
-clicking ***Delete***, choosing which recipe you want to delete in the dropdown, then clicking ***OK***.
+- You can generate the first required event related to adding restaurants to a restaurant list by starting the 
+application, clicking on ***Restaurants***, clicking ***Add***, inputting a restaurant ***Name (String)***, 
+***Description (String)*** then clicking ***OK***.
+- You can generate the second required event related to adding restaurants to a restaurant list by clicking on 
+***Restaurants***, clicking ***Delete***, choosing which restaurant you want to delete in the dropdown, 
+then clicking ***OK***.
 - You can locate my visual component by starting the application and seeing the splash screen.
 - You can save the state of my application by clicking ***Save*** in the main menu.
 - You can reload the state of my application by clicking ***Load*** in the main menu.
