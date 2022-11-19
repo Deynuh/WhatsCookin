@@ -13,6 +13,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.*;
 import javax.swing.border.*;
 
@@ -27,6 +28,7 @@ public class WhatsCookinAppUI extends JFrame {
     private JPanel viewRecipesPanel;
     private JFrame viewRestaurantsFrame;
     private JPanel viewRestaurantsPanel;
+    private JLabel output = new JLabel("");
 
 
     private JList recipes;
@@ -198,6 +200,8 @@ public class WhatsCookinAppUI extends JFrame {
         randomizerPanel.setBackground(new Color(238, 233, 207));
 
         addRandomizerButtons();
+
+        randomizerPanel.add(output);
     }
 
     // MODIFIES: randomizerPanel
@@ -244,15 +248,13 @@ public class WhatsCookinAppUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            //wca.getRandom("recipe", rb.getRecipeBook());
-            Graphics g = mainPanel.getGraphics();
-            randomizerPanel.paint(g);
-
             if (wca.recipeBook().getRecipeBook().size() == 0) {
-                g.drawString("You have no recipes. Please add a recipe first.",375, 200);
+                output.setText("You have no recipes yet. Please add a recipe first.");
             } else {
-                g.drawString("You should make: " + wca.recipeBook().randomRecipe().getName(), 375, 200);
+                output.setText("You should make: " + wca.recipeBook().randomRecipe().getName());
             }
+            randomizerPanel.revalidate();
+            randomizerPanel.repaint();
         }
     }
 
@@ -265,7 +267,13 @@ public class WhatsCookinAppUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            //wca.
+            if (wca.restaurantList().getRestaurantList().size() == 0) {
+                output.setText("You have no restaurants yet. Please add a restaurant first.");
+            } else {
+                output.setText("You should get: " + wca.restaurantList().randomRestaurant().getName());
+            }
+            randomizerPanel.revalidate();
+            randomizerPanel.repaint();
         }
     }
 
@@ -278,7 +286,20 @@ public class WhatsCookinAppUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
+            Random random = new Random();
+            int rand = random.nextInt(2);
+            boolean noRecipe = wca.recipeBook().getRecipeBook().size() == 0;
+            boolean noRestaurant = wca.restaurantList().getRestaurantList().size() == 0;
 
+            if (noRecipe && noRestaurant) {
+                output.setText("You have no recipes or restaurants yet. Please add a recipe or restaurant first.");
+            } else if (rand == 0 && !noRecipe) {
+                output.setText("You should make: " + wca.recipeBook().randomRecipe().getName());
+            } else if (rand == 1 && !noRestaurant) {
+                output.setText("You should get: " + wca.restaurantList().randomRestaurant().getName());
+            }
+            randomizerPanel.revalidate();
+            randomizerPanel.repaint();
         }
     }
 
