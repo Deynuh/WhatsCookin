@@ -70,6 +70,7 @@ public class SplashScreen extends JWindow {
         logo = new ImageIcon(newLogo);
         return new JLabel(logo);
     }
+
     private void startProgressBar() {
         progressBarTimer = new Timer(TIMER_PAUSE, al);
         progressBarTimer.start();
