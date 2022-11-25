@@ -32,7 +32,6 @@ public class WhatsCookinAppUI extends JFrame {
     private JPanel viewRestaurantsPanel;
     private JLabel output = new JLabel("");
 
-
     private JList recipes;
     private JList restaurants;
 
