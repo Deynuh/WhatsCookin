@@ -70,6 +70,7 @@ public class WhatsCookinAppUI extends JFrame {
 
     }
 
+    // EFFECTS: prints the log before window closes
     public void addListener() {
         addWindowListener(new java.awt.event.WindowAdapter() {
             // EFFECTS: prints the log before closing the window
@@ -82,6 +83,7 @@ public class WhatsCookinAppUI extends JFrame {
         });
     }
 
+    // EFFECTS: prints the log
     public void printLog(EventLog el) {
         for (Event next : el) {
             System.out.println(next.toString());

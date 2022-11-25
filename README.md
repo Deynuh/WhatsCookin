@@ -52,13 +52,21 @@ random restaurant from the application.
 - You can reload the state of my application by clicking ***Load*** in the main menu.
 
 # Phase 4: Task 2
-Fri Nov 25 12:53:54 PST 2022
-Added a new recipe called: recipe1
-Fri Nov 25 12:54:00 PST 2022
-Added a new recipe called: recipe2
-Fri Nov 25 12:54:13 PST 2022
-Added a new restaurant called: resto1
-Fri Nov 25 12:54:17 PST 2022
-Added a new restaurant called: resto2
-Fri Nov 25 12:54:20 PST 2022
-Removed restaurant: resto2
+Fri Nov 25 12:53:54 PST 2022  
+Added a new recipe called: recipe1  
+Fri Nov 25 12:54:00 PST 2022  
+Added a new recipe called: recipe2  
+Fri Nov 25 12:54:13 PST 2022  
+Added a new restaurant called: resto1  
+Fri Nov 25 12:54:17 PST 2022  
+Added a new restaurant called: resto2  
+Fri Nov 25 12:54:20 PST 2022  
+Removed restaurant: resto2  
+
+
+# Phase 4: Task 3
+If I had more time to work on the project, I would:
+- Remove a lot of the duplicity in my Recipe and Restaurant related classes by
+creating relationships between types with extends and implements.
+- Implement a way to view a single Recipe and Restaurant in detail in the GUI.
+
