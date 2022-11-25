@@ -23,7 +23,6 @@ public class SplashScreen extends JWindow {
         @Override
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             progressBar.setValue(count);
-            System.out.println(count);
             if (PROGBAR_MAX == count) {
                 progressBarTimer.stop();//stop the timer
                 dispose();
