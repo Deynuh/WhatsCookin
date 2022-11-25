@@ -20,6 +20,7 @@ public class SplashScreen extends JWindow {
 
     ActionListener al = new ActionListener() {
 
+        // EFFECTS: starts the progress bar and removes it once it reaches count
         @Override
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             progressBar.setValue(count);

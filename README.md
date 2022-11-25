@@ -50,3 +50,15 @@ random restaurant from the application.
 - You can locate my visual component by starting the application and seeing the splash screen.
 - You can save the state of my application by clicking ***Save*** in the main menu.
 - You can reload the state of my application by clicking ***Load*** in the main menu.
+
+# Phase 4: Task 2
+Fri Nov 25 12:53:54 PST 2022
+Added a new recipe called: recipe1
+Fri Nov 25 12:54:00 PST 2022
+Added a new recipe called: recipe2
+Fri Nov 25 12:54:13 PST 2022
+Added a new restaurant called: resto1
+Fri Nov 25 12:54:17 PST 2022
+Added a new restaurant called: resto2
+Fri Nov 25 12:54:20 PST 2022
+Removed restaurant: resto2

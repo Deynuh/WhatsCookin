@@ -1,16 +1,12 @@
 {
     "restaurantList": [
         {
-            "Description": "1",
-            "Name": "1"
+            "Description": "a",
+            "Name": "a"
         },
         {
-            "Description": "2",
-            "Name": "2"
-        },
-        {
-            "Description": "3",
-            "Name": "3"
+            "Description": "c",
+            "Name": "c"
         }
     ],
     "name": "Restaurant List"

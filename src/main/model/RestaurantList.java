@@ -38,6 +38,7 @@ public class RestaurantList implements Writable {
     // EFFECTS: adds a restaurant to the restaurant list
     public void addRestaurant(Restaurant restaurant) {
         restaurantList.add(restaurant);
+        EventLog.getInstance().logEvent(new Event("Added a new restaurant called: " + restaurant.getName()));
     }
 
     // MODIFIES: this
@@ -49,6 +50,7 @@ public class RestaurantList implements Writable {
         } else {
             restaurantList.remove(index);
         }
+        EventLog.getInstance().logEvent(new Event("Removed restaurant: " + restaurantList.get(index).getName()));
     }
 
     // REQUIRES: a non-empty restaurant list

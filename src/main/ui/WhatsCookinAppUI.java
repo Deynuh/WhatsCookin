@@ -4,6 +4,8 @@ Note: this file is modelled after the AlarmSystem file provided by the course co
 
 package ui;
 
+import model.Event;
+import model.EventLog;
 import model.Recipe;
 import model.Restaurant;
 
@@ -58,12 +60,32 @@ public class WhatsCookinAppUI extends JFrame {
         setSize(new Dimension(WIDTH, HEIGHT));
         centreOnScreen(this);
         setBackground(new Color(238, 233, 207));
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setDefaultLookAndFeelDecorated(true);
         mainPanel.setVisible(true);
         setVisible(true);
         setResizable(false);
 
+        addListener();
+
+    }
+
+    public void addListener() {
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            // EFFECTS: prints the log before closing the window
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                //System.out.println("GUI has been closed");
+                printLog(EventLog.getInstance());
+                System.exit(0);
+            }
+        });
+    }
+
+    public void printLog(EventLog el) {
+        for (Event next : el) {
+            System.out.println(next.toString());
+        }
     }
 
     // MODIFIES: this

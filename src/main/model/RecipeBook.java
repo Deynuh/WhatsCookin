@@ -38,6 +38,7 @@ public class RecipeBook implements Writable {
     // EFFECTS:  adds a recipe to the recipe book
     public void addRecipe(Recipe recipe) {
         recipeBook.add(recipe);
+        EventLog.getInstance().logEvent(new Event("Added a new recipe called: " + recipe.getName()));
     }
 
     // MODIFIES: this
@@ -49,6 +50,7 @@ public class RecipeBook implements Writable {
         } else {
             recipeBook.remove(index);
         }
+        EventLog.getInstance().logEvent(new Event("Removed recipe: " + recipeBook.get(index).getName()));
     }
 
     // REQUIRES: a non-empty recipe book
