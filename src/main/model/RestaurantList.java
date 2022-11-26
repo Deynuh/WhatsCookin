@@ -45,12 +45,12 @@ public class RestaurantList implements Writable {
     // REQUIRES: a non-empty restaurant list
     // EFFECTS: deletes a restaurant from the restaurant list
     public void removeRestaurant(int index) {
+        EventLog.getInstance().logEvent(new Event("Removed restaurant: " + restaurantList.get(index).getName()));
         if (index == 0) {
             restaurantList.remove(0);
         } else {
             restaurantList.remove(index);
         }
-        EventLog.getInstance().logEvent(new Event("Removed restaurant: " + restaurantList.get(index).getName()));
     }
 
     // REQUIRES: a non-empty restaurant list

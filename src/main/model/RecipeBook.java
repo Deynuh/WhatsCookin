@@ -45,12 +45,12 @@ public class RecipeBook implements Writable {
     // REQUIRES: a non-empty recipe list
     // EFFECTS:  deletes a recipe from the recipe book
     public void removeRecipe(int index) {
+        EventLog.getInstance().logEvent(new Event("Removed recipe: " + recipeBook.get(index).getName()));
         if (index == 0) {
             recipeBook.remove(0);
         } else {
             recipeBook.remove(index);
         }
-        EventLog.getInstance().logEvent(new Event("Removed recipe: " + recipeBook.get(index).getName()));
     }
 
     // REQUIRES: a non-empty recipe book

@@ -77,6 +77,7 @@ class RecipeBookTest {
         testRecipeBook.removeRecipe(0);
         assertEquals(0, testRecipeBook.getRecipeBook().size());
     }
+
     @Test
     void testRandomRecipe() {
         RecipeBook nullRecipeBook = new RecipeBook("null");
