@@ -69,4 +69,5 @@ If I had more time to work on the project, I would:
 - Remove a lot of the duplicity in my Recipe and Restaurant related classes by
 creating relationships between types with extends and implements.
 - Implement a way to view a single Recipe and Restaurant in detail in the GUI.
+- Figure out a way to only have on JSON Reader and Writer for Recipes and Restaurants
 
